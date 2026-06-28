@@ -31,6 +31,7 @@ import Layout from '../layouts/Layout.astro';
 				</p>
 			</div>
 			<form class="contact-form" data-contact-form>
+				<input type="text" name="honeypot" autocomplete="off" tabindex="-1" hidden />
 				<div class="form-field">
 					<label for="contact-name" data-i18n="contact.form.nameLabel">Name</label>
 					<input
@@ -146,10 +147,62 @@ import Layout from '../layouts/Layout.astro';
 		}
 		window.addEventListener('fhugawz:languagechange', applySelectedService);
 
-		form.addEventListener('submit', (event) => {
+		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const status = form.querySelector('[data-contact-status]');
-			if (status instanceof HTMLElement) status.hidden = false;
+			const submit = form.querySelector('.contact-submit');
+
+			if (!form.checkValidity()) {
+				form.reportValidity();
+				return;
+			}
+
+			if (status instanceof HTMLElement) {
+				status.textContent = 'Sending message...';
+				status.hidden = false;
+			}
+			if (submit instanceof HTMLButtonElement) {
+				submit.disabled = true;
+				submit.setAttribute('aria-busy', 'true');
+			}
+
+			const formData = new FormData(form);
+			const payload = {
+				name: String(formData.get('name') || ''),
+				email: String(formData.get('email') || ''),
+				selected_service: String(formData.get('selectedService') || ''),
+				message: String(formData.get('message') || ''),
+				honeypot: String(formData.get('honeypot') || ''),
+			};
+
+			try {
+				const response = await fetch('/.netlify/functions/contact', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(payload),
+				});
+				const result = await response.json().catch(() => ({}));
+				const message =
+					typeof result.message === 'string'
+						? result.message
+						: response.ok
+							? 'Message sent. Thank you for reaching out.'
+							: 'The message could not be sent right now. Please try again soon.';
+
+				if (status instanceof HTMLElement) status.textContent = message;
+				if (response.ok && result.success !== false) form.reset();
+			} catch {
+				if (status instanceof HTMLElement) {
+					status.textContent = 'The message could not be sent right now. Please try again soon.';
+				}
+			} finally {
+				if (submit instanceof HTMLButtonElement) {
+					submit.disabled = false;
+					submit.removeAttribute('aria-busy');
+				}
+			}
 		});
 	});
 </script>

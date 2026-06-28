@@ -27,6 +27,7 @@ const modalId = `${id}-modal`;
 			Get new articles, production notes and project updates directly in your inbox.
 		</p>
 		<form class="blog-subscribe-form" data-subscribe-form>
+			<input type="text" name="honeypot" autocomplete="off" tabindex="-1" hidden />
 			<input
 				type="email"
 				name="email"
@@ -37,7 +38,7 @@ const modalId = `${id}-modal`;
 			<button class="button primary" type="submit" data-i18n="blog.subscribe.submit">SUBSCRIBE</button>
 		</form>
 		<p class="blog-subscribe-note" data-i18n="blog.subscribe.note">No spam. Just project updates and useful notes.</p>
-		<p class="blog-subscribe-success" data-subscribe-success data-i18n="blog.subscribe.success" hidden>
+		<p class="blog-subscribe-success" data-subscribe-status data-i18n="blog.subscribe.success" hidden>
 			Thanks. You are on the list.
 		</p>
 	</div>
@@ -52,7 +53,7 @@ const modalId = `${id}-modal`;
 
 		const closeButtons = modal.querySelectorAll('[data-subscribe-close]');
 		const form = modal.querySelector('[data-subscribe-form]');
-		const success = modal.querySelector('[data-subscribe-success]');
+		const status = modal.querySelector('[data-subscribe-status]');
 
 		const open = () => {
 			modal.hidden = false;
@@ -74,18 +75,62 @@ const modalId = `${id}-modal`;
 		});
 
 		if (form instanceof HTMLFormElement) {
-			form.addEventListener('submit', (event) => {
+			form.addEventListener('submit', async (event) => {
 				event.preventDefault();
 				const email = form.querySelector('input[type="email"]');
 				if (!(email instanceof HTMLInputElement) || !email.checkValidity()) {
 					email?.reportValidity();
 					return;
 				}
+
+				const submit = form.querySelector('button[type="submit"]');
+				if (status instanceof HTMLElement) {
+					status.textContent = 'Subscribing...';
+					status.hidden = false;
+				}
+				if (submit instanceof HTMLButtonElement) {
+					submit.disabled = true;
+					submit.setAttribute('aria-busy', 'true');
+				}
+
+				const formData = new FormData(form);
+
 				try {
-					localStorage.setItem('fhugawz-blog-subscribe-email', email.value);
-				} catch {}
-				if (success instanceof HTMLElement) success.hidden = false;
-				form.reset();
+					const response = await fetch('/.netlify/functions/subscribe', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							email: String(formData.get('email') || ''),
+							honeypot: String(formData.get('honeypot') || ''),
+						}),
+					});
+					const result = await response.json().catch(() => ({}));
+					const message =
+						typeof result.message === 'string'
+							? result.message
+							: response.ok
+								? 'Thanks. You are on the list.'
+								: 'Subscription could not be saved right now. Please try again soon.';
+
+					if (status instanceof HTMLElement) status.textContent = message;
+					if (response.ok && result.success !== false) {
+						try {
+							localStorage.setItem('fhugawz-blog-subscribe-email', email.value);
+						} catch {}
+						form.reset();
+					}
+				} catch {
+					if (status instanceof HTMLElement) {
+						status.textContent = 'Subscription could not be saved right now. Please try again soon.';
+					}
+				} finally {
+					if (submit instanceof HTMLButtonElement) {
+						submit.disabled = false;
+						submit.removeAttribute('aria-busy');
+					}
+				}
 			});
 		}
 	});

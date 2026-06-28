@@ -12,6 +12,11 @@ const { slug, initialCount = 0 } = Astro.props;
 		<span class="blog-like-heart" aria-hidden="true">♡</span>
 		<span class="blog-like-count" data-blog-like-count>{initialCount}</span>
 	</button>
+	<span
+		data-blog-like-status
+		aria-live="polite"
+		style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;"
+	></span>
 </div>
 
 <script>
@@ -22,6 +27,7 @@ const { slug, initialCount = 0 } = Astro.props;
 		const button = wrapper.querySelector('.blog-like-button');
 		const heart = wrapper.querySelector('.blog-like-heart');
 		const count = wrapper.querySelector('[data-blog-like-count]');
+		const status = wrapper.querySelector('[data-blog-like-status]');
 		if (!slug || !(button instanceof HTMLButtonElement) || !(heart instanceof HTMLElement) || !(count instanceof HTMLElement)) return;
 
 		const likedKey = `fhugawz-blog-liked:${slug}`;
@@ -53,14 +59,67 @@ const { slug, initialCount = 0 } = Astro.props;
 
 		render(readLiked(), readCount());
 
-		button.addEventListener('click', () => {
-			if (readLiked()) return;
-			const nextCount = readCount() + 1;
+		const getVisitorHash = () => {
+			const visitorKey = 'fhugawz-visitor-hash';
 			try {
-				localStorage.setItem(likedKey, 'true');
-				localStorage.setItem(countKey, String(nextCount));
-			} catch {}
-			render(true, nextCount);
+				const existingHash = localStorage.getItem(visitorKey);
+				if (existingHash) return existingHash;
+				const nextHash =
+					window.crypto && 'randomUUID' in window.crypto
+						? window.crypto.randomUUID()
+						: `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+				localStorage.setItem(visitorKey, nextHash);
+				return nextHash;
+			} catch {
+				return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+			}
+		};
+
+		const setStatus = (message) => {
+			if (status instanceof HTMLElement) status.textContent = message;
+		};
+
+		button.addEventListener('click', async () => {
+			if (readLiked()) return;
+			button.disabled = true;
+			button.setAttribute('aria-busy', 'true');
+			setStatus('Saving like...');
+
+			try {
+				const response = await fetch('/.netlify/functions/like', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						article_slug: slug,
+						visitor_hash: getVisitorHash(),
+					}),
+				});
+				const result = await response.json().catch(() => ({}));
+
+				if (!response.ok || result.success === false) {
+					setStatus(
+						typeof result.message === 'string'
+							? result.message
+							: 'The like could not be saved right now. Please try again soon.'
+					);
+					return;
+				}
+
+				const nextCount = readCount() + 1;
+				try {
+					localStorage.setItem(likedKey, 'true');
+					localStorage.setItem(countKey, String(nextCount));
+				} catch {}
+				render(true, nextCount);
+				setStatus(typeof result.message === 'string' ? result.message : 'Like saved.');
+			} catch {
+				setStatus('The like could not be saved right now. Please try again soon.');
+			} finally {
+				button.disabled = false;
+				button.removeAttribute('aria-busy');
+			}
 		});
 	});
 </script>
