@@ -6,6 +6,12 @@ const json = (statusCode, body) => ({
 	body: JSON.stringify(body),
 });
 
+const hasObviousSpam = (value) => /<\/?[a-z][\s\S]*>|https?:\/\/|www\.|\b(viagra|casino|crypto giveaway|telegram spam)\b/i.test(value);
+const isTooFast = (startedAt) => {
+	const submittedAt = Number(startedAt);
+	return Number.isFinite(submittedAt) && Date.now() - submittedAt < 700;
+};
+
 const insertLike = async (article_slug, visitor_hash) => {
 	const supabaseUrl = process.env.SUPABASE_URL;
 	const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -39,9 +45,14 @@ export const handler = async (event) => {
 		const article_slug = String(body.article_slug || '').trim();
 		const visitor_hash = String(body.visitor_hash || '').trim();
 		const honeypot = String(body.honeypot || '').trim();
+		const started_at = body.started_at;
 
 		if (honeypot) {
 			return json(200, { success: true, message: 'Like saved.' });
+		}
+
+		if (isTooFast(started_at)) {
+			return json(400, { success: false, message: 'Please take a moment before liking.' });
 		}
 
 		if (!article_slug || !visitor_hash) {
@@ -49,6 +60,14 @@ export const handler = async (event) => {
 				success: false,
 				message: 'Article and visitor information are required.',
 			});
+		}
+
+		if (
+			article_slug.length > 150 ||
+			visitor_hash.length > 200 ||
+			hasObviousSpam(`${article_slug} ${visitor_hash}`)
+		) {
+			return json(400, { success: false, message: 'The like could not be accepted.' });
 		}
 
 		const response = await insertLike(article_slug, visitor_hash);

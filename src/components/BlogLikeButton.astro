@@ -33,6 +33,7 @@ const { slug, initialCount = 0 } = Astro.props;
 		const likedKey = `fhugawz-blog-liked:${slug}`;
 		const countKey = `fhugawz-blog-like-count:${slug}`;
 		const initialCount = Number(wrapper.dataset.initialCount || '0');
+		const startedAt = Date.now();
 
 		const readCount = () => {
 			try {
@@ -94,6 +95,7 @@ const { slug, initialCount = 0 } = Astro.props;
 					body: JSON.stringify({
 						article_slug: slug,
 						visitor_hash: getVisitorHash(),
+						started_at: startedAt,
 					}),
 				});
 				const result = await response.json().catch(() => ({}));

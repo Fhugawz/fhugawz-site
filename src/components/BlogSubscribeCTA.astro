@@ -26,15 +26,17 @@ const modalId = `${id}-modal`;
 		<p data-i18n="blog.subscribe.modalDescription">
 			Get new articles, production notes and project updates directly in your inbox.
 		</p>
-		<form class="blog-subscribe-form" data-subscribe-form>
+		<form class="blog-subscribe-form" data-subscribe-form novalidate>
 			<input type="text" name="honeypot" autocomplete="off" tabindex="-1" hidden />
 			<input
 				type="email"
 				name="email"
 				placeholder="your@email.com"
 				data-i18n-placeholder="blog.subscribe.emailPlaceholder"
+				aria-describedby={`${modalId}-email-error`}
 				required
 			/>
+			<p class="field-error" id={`${modalId}-email-error`} data-subscribe-error role="alert" hidden></p>
 			<button class="button primary" type="submit" data-i18n="blog.subscribe.submit">SUBSCRIBE</button>
 		</form>
 		<p class="blog-subscribe-note" data-i18n="blog.subscribe.note">No spam. Just project updates and useful notes.</p>
@@ -54,6 +56,37 @@ const modalId = `${id}-modal`;
 		const closeButtons = modal.querySelectorAll('[data-subscribe-close]');
 		const form = modal.querySelector('[data-subscribe-form]');
 		const status = modal.querySelector('[data-subscribe-status]');
+		const startedAt = Date.now();
+		const messages = {
+			en: {
+				email: 'Please enter a valid email.',
+				loading: 'Subscribing...',
+				fallback: 'Something went wrong. Please try again.',
+			},
+			es: {
+				email: 'Escribe un correo valido.',
+				loading: 'Suscribiendo...',
+				fallback: 'Algo salio mal. Intentalo de nuevo.',
+			},
+		};
+		const getLanguage = () => (document.documentElement.dataset.language === 'es' ? 'es' : 'en');
+		const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+		const setEmailError = (message = '') => {
+			const email = form instanceof HTMLFormElement ? form.querySelector('input[type="email"]') : null;
+			const error = modal.querySelector('[data-subscribe-error]');
+			if (!(email instanceof HTMLInputElement) || !(error instanceof HTMLElement)) return;
+
+			email.setAttribute('aria-invalid', message ? 'true' : 'false');
+			error.textContent = message;
+			error.hidden = !message;
+		};
+		const validateForm = () => {
+			const email = form instanceof HTMLFormElement ? form.querySelector('input[type="email"]') : null;
+			if (!(email instanceof HTMLInputElement)) return false;
+			const message = isValidEmail(email.value.trim()) ? '' : messages[getLanguage()].email;
+			setEmailError(message);
+			return !message;
+		};
 
 		const open = () => {
 			modal.hidden = false;
@@ -75,17 +108,15 @@ const modalId = `${id}-modal`;
 		});
 
 		if (form instanceof HTMLFormElement) {
+			form.addEventListener('input', validateForm);
 			form.addEventListener('submit', async (event) => {
 				event.preventDefault();
 				const email = form.querySelector('input[type="email"]');
-				if (!(email instanceof HTMLInputElement) || !email.checkValidity()) {
-					email?.reportValidity();
-					return;
-				}
+				if (!(email instanceof HTMLInputElement) || !validateForm()) return;
 
 				const submit = form.querySelector('button[type="submit"]');
 				if (status instanceof HTMLElement) {
-					status.textContent = 'Subscribing...';
+					status.textContent = messages[getLanguage()].loading;
 					status.hidden = false;
 				}
 				if (submit instanceof HTMLButtonElement) {
@@ -104,6 +135,7 @@ const modalId = `${id}-modal`;
 						body: JSON.stringify({
 							email: String(formData.get('email') || ''),
 							honeypot: String(formData.get('honeypot') || ''),
+							started_at: startedAt,
 						}),
 					});
 					const result = await response.json().catch(() => ({}));
@@ -112,7 +144,7 @@ const modalId = `${id}-modal`;
 							? result.message
 							: response.ok
 								? 'Thanks. You are on the list.'
-								: 'Subscription could not be saved right now. Please try again soon.';
+								: messages[getLanguage()].fallback;
 
 					if (status instanceof HTMLElement) status.textContent = message;
 					if (response.ok && result.success !== false) {
@@ -123,7 +155,7 @@ const modalId = `${id}-modal`;
 					}
 				} catch {
 					if (status instanceof HTMLElement) {
-						status.textContent = 'Subscription could not be saved right now. Please try again soon.';
+						status.textContent = messages[getLanguage()].fallback;
 					}
 				} finally {
 					if (submit instanceof HTMLButtonElement) {

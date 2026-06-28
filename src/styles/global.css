@@ -1440,6 +1440,22 @@ html[data-language='es'] .article-language-es {
 	box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal-orange) 16%, transparent);
 }
 
+.field-error {
+	color: var(--signal-orange);
+	font-size: 0.82rem;
+	font-weight: 800;
+	line-height: 1.45;
+	margin: 0;
+}
+
+.blog-subscribe-form input[aria-invalid="true"],
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"] {
+	border-color: color-mix(in srgb, var(--signal-orange) 86%, transparent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal-orange) 12%, transparent);
+}
+
 .blog-subscribe-note,
 .blog-subscribe-success {
 	color: rgba(223, 211, 187, 0.68);

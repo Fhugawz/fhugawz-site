@@ -7,6 +7,11 @@ const json = (statusCode, body) => ({
 });
 
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const hasObviousSpam = (value) => /<\/?[a-z][\s\S]*>|\b(viagra|casino|crypto giveaway|telegram spam)\b/i.test(value);
+const isTooFast = (startedAt) => {
+	const submittedAt = Number(startedAt);
+	return Number.isFinite(submittedAt) && Date.now() - submittedAt < 900;
+};
 
 const insertSubscriber = async (email) => {
 	const supabaseUrl = process.env.SUPABASE_URL;
@@ -37,16 +42,21 @@ export const handler = async (event) => {
 		const body = JSON.parse(event.body || '{}');
 		const email = String(body.email || '').trim().toLowerCase();
 		const honeypot = String(body.honeypot || '').trim();
+		const started_at = body.started_at;
 
 		if (honeypot) {
 			return json(200, { success: true, message: 'Thanks. You are on the list.' });
+		}
+
+		if (isTooFast(started_at)) {
+			return json(400, { success: false, message: 'Please take a moment before subscribing.' });
 		}
 
 		if (!email) {
 			return json(400, { success: false, message: 'Please enter your email address.' });
 		}
 
-		if (!isValidEmail(email)) {
+		if (!isValidEmail(email) || email.length > 254 || hasObviousSpam(email)) {
 			return json(400, { success: false, message: 'Please enter a valid email address.' });
 		}
 

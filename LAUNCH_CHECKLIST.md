@@ -1,0 +1,21 @@
+# FHUGAWZ Launch Checklist
+
+- [ ] Domain connected
+- [ ] HTTPS active
+- [ ] Supabase tables created
+- [ ] RLS enabled
+- [ ] Environment variables configured
+- [ ] Contact tested
+- [ ] Subscribe tested
+- [ ] Like tested
+- [ ] Legal pages added
+- [ ] Footer links checked
+- [ ] Mobile tested
+- [ ] Desktop tested
+- [ ] Tablet tested
+- [ ] SEO titles checked
+- [ ] Favicon checked
+- [ ] Image alt text checked
+- [ ] Image optimization checked
+- [ ] Security headers checked
+- [ ] Final `npm run build` passed

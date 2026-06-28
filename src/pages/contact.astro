@@ -30,7 +30,7 @@ import Layout from '../layouts/Layout.astro';
 					you find the next step.
 				</p>
 			</div>
-			<form class="contact-form" data-contact-form>
+			<form class="contact-form" data-contact-form novalidate>
 				<input type="text" name="honeypot" autocomplete="off" tabindex="-1" hidden />
 				<div class="form-field">
 					<label for="contact-name" data-i18n="contact.form.nameLabel">Name</label>
@@ -40,8 +40,10 @@ import Layout from '../layouts/Layout.astro';
 						type="text"
 						placeholder="Your name"
 						data-i18n-placeholder="contact.form.namePlaceholder"
+						aria-describedby="contact-name-error"
 						required
 					/>
+					<p class="field-error" id="contact-name-error" data-field-error="name" role="alert" hidden></p>
 				</div>
 				<div class="form-field">
 					<label for="contact-email" data-i18n="contact.form.emailLabel">Email</label>
@@ -51,18 +53,27 @@ import Layout from '../layouts/Layout.astro';
 						type="email"
 						placeholder="your@email.com"
 						data-i18n-placeholder="contact.form.emailPlaceholder"
+						aria-describedby="contact-email-error"
 						required
 					/>
+					<p class="field-error" id="contact-email-error" data-field-error="email" role="alert" hidden></p>
 				</div>
 				<div class="form-field selected-service-field">
 					<label for="contact-service" data-i18n="contact.form.selectedServiceLabel">Selected service</label>
-					<select id="contact-service" name="selectedService" data-selected-service-field required>
+					<select
+						id="contact-service"
+						name="selectedService"
+						data-selected-service-field
+						aria-describedby="contact-service-error"
+						required
+					>
 						<option value="" data-i18n="contact.form.serviceDefault">Select a service</option>
 						<option value="music-production" data-i18n="contact.form.serviceMusic">Music Production</option>
 						<option value="mixing-mastering" data-i18n="contact.form.serviceMixing">Mixing & Mastering</option>
 						<option value="demo-reconstruction" data-i18n="contact.form.serviceDemo">Demo Reconstruction</option>
 						<option value="artist-world-building" data-i18n="contact.form.serviceWorld">Artist World Building</option>
 					</select>
+					<p class="field-error" id="contact-service-error" data-field-error="selectedService" role="alert" hidden></p>
 				</div>
 				<div class="form-field">
 					<label for="contact-message" data-i18n="contact.form.messageLabel">Message</label>
@@ -71,8 +82,10 @@ import Layout from '../layouts/Layout.astro';
 						name="message"
 						placeholder="Tell me what you need, where the song is now, and where you want to take it."
 						data-i18n-placeholder="contact.form.messagePlaceholder"
+						aria-describedby="contact-message-error"
 						required
 					></textarea>
+					<p class="field-error" id="contact-message-error" data-field-error="message" role="alert" hidden></p>
 				</div>
 				<button class="button primary contact-submit" type="submit" data-i18n="contact.form.button">SEND MESSAGE</button>
 				<p class="form-status" data-contact-status data-i18n="contact.form.status" hidden>
@@ -110,7 +123,54 @@ import Layout from '../layouts/Layout.astro';
 		const selectedServiceKey = params.get('service') || '';
 		const selectedServiceField = form.querySelector('[data-selected-service-field]');
 		const messageField = form.querySelector('#contact-message');
+		const startedAt = Date.now();
 		let generatedMessage = '';
+		const messages = {
+			en: {
+				name: 'Please enter your name.',
+				email: 'Please enter a valid email.',
+				selectedService: 'Please choose a service.',
+				message: 'Please write a short message.',
+				loading: 'Sending message...',
+				fallback: 'Something went wrong. Please try again.',
+			},
+			es: {
+				name: 'Escribe tu nombre.',
+				email: 'Escribe un correo valido.',
+				selectedService: 'Elige un servicio.',
+				message: 'Escribe un mensaje breve.',
+				loading: 'Enviando mensaje...',
+				fallback: 'Algo salio mal. Intentalo de nuevo.',
+			},
+		};
+		const getLanguage = () => (document.documentElement.dataset.language === 'es' ? 'es' : 'en');
+		const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+		const setFieldError = (fieldName, message = '') => {
+			const field = form.elements.namedItem(fieldName);
+			const error = form.querySelector(`[data-field-error="${fieldName}"]`);
+			if (!(field instanceof HTMLElement) || !(error instanceof HTMLElement)) return;
+
+			field.setAttribute('aria-invalid', message ? 'true' : 'false');
+			error.textContent = message;
+			error.hidden = !message;
+		};
+		const validateForm = () => {
+			const language = getLanguage();
+			const formData = new FormData(form);
+			const name = String(formData.get('name') || '').trim();
+			const email = String(formData.get('email') || '').trim();
+			const selectedService = String(formData.get('selectedService') || '').trim();
+			const message = String(formData.get('message') || '').trim();
+			const errors = {
+				name: name ? '' : messages[language].name,
+				email: isValidEmail(email) ? '' : messages[language].email,
+				selectedService: selectedService ? '' : messages[language].selectedService,
+				message: message ? '' : messages[language].message,
+			};
+
+			Object.entries(errors).forEach(([fieldName, error]) => setFieldError(fieldName, error));
+			return !Object.values(errors).some(Boolean);
+		};
 
 		const applySelectedService = () => {
 			if (
@@ -146,19 +206,20 @@ import Layout from '../layouts/Layout.astro';
 			selectedServiceField.addEventListener('change', applySelectedService);
 		}
 		window.addEventListener('fhugawz:languagechange', applySelectedService);
+		form.querySelectorAll('input, select, textarea').forEach((field) => {
+			field.addEventListener('input', () => validateForm());
+			field.addEventListener('change', () => validateForm());
+		});
 
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			const status = form.querySelector('[data-contact-status]');
 			const submit = form.querySelector('.contact-submit');
 
-			if (!form.checkValidity()) {
-				form.reportValidity();
-				return;
-			}
+			if (!validateForm()) return;
 
 			if (status instanceof HTMLElement) {
-				status.textContent = 'Sending message...';
+				status.textContent = messages[getLanguage()].loading;
 				status.hidden = false;
 			}
 			if (submit instanceof HTMLButtonElement) {
@@ -173,6 +234,7 @@ import Layout from '../layouts/Layout.astro';
 				selected_service: String(formData.get('selectedService') || ''),
 				message: String(formData.get('message') || ''),
 				honeypot: String(formData.get('honeypot') || ''),
+				started_at: startedAt,
 			};
 
 			try {
@@ -187,15 +249,15 @@ import Layout from '../layouts/Layout.astro';
 				const message =
 					typeof result.message === 'string'
 						? result.message
-						: response.ok
-							? 'Message sent. Thank you for reaching out.'
-							: 'The message could not be sent right now. Please try again soon.';
+							: response.ok
+								? 'Message sent. Thank you for reaching out.'
+								: messages[getLanguage()].fallback;
 
 				if (status instanceof HTMLElement) status.textContent = message;
 				if (response.ok && result.success !== false) form.reset();
 			} catch {
 				if (status instanceof HTMLElement) {
-					status.textContent = 'The message could not be sent right now. Please try again soon.';
+					status.textContent = messages[getLanguage()].fallback;
 				}
 			} finally {
 				if (submit instanceof HTMLButtonElement) {
