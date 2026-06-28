@@ -1,0 +1,53 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	canonical?: string;
+	keywords?: string;
+	spanishTitle?: string;
+	spanishDescription?: string;
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const site = 'https://fhugawz.com';
+const defaultTitle = 'Fhugawz — Cinematic Dark Pop Project';
+const defaultDescription =
+	'FHUGAWZ is a cinematic dark pop project and creative studio exploring memory, rupture, solitude and transformation.';
+const {
+	title = defaultTitle,
+	description = defaultDescription,
+	image = '/images/social/og-fhugawz-cinematic-dark-pop.webp',
+	canonical,
+	keywords,
+	spanishTitle,
+	spanishDescription,
+	jsonLd,
+} = Astro.props;
+
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site).toString();
+const imageUrl = new URL(image, site).toString();
+const schema = jsonLd ? JSON.stringify(jsonLd) : null;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<title>{title}</title>
+<meta name="description" content={description} />
+{keywords && <meta name="keywords" content={keywords} />}
+{spanishTitle && <meta name="title" lang="es" content={spanishTitle} />}
+{spanishDescription && <meta name="description" lang="es" content={spanishDescription} />}
+<link rel="canonical" href={canonicalUrl} />
+<link rel="icon" type="image/svg+xml" href="/images/brand/fhugawz-logo-favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="FHUGAWZ" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+{schema && <script type="application/ld+json" set:html={schema} />}

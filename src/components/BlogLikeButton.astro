@@ -1,0 +1,66 @@
+---
+interface Props {
+	slug: string;
+	initialCount?: number;
+}
+
+const { slug, initialCount = 0 } = Astro.props;
+---
+
+<div class="blog-like" data-blog-like={slug} data-initial-count={initialCount}>
+	<button class="blog-like-button" type="button" aria-label="Like this article" data-i18n-aria-label="blog.like.aria">
+		<span class="blog-like-heart" aria-hidden="true">♡</span>
+		<span class="blog-like-count" data-blog-like-count>{initialCount}</span>
+	</button>
+</div>
+
+<script>
+	document.querySelectorAll('[data-blog-like]').forEach((wrapper) => {
+		if (!(wrapper instanceof HTMLElement)) return;
+
+		const slug = wrapper.dataset.blogLike;
+		const button = wrapper.querySelector('.blog-like-button');
+		const heart = wrapper.querySelector('.blog-like-heart');
+		const count = wrapper.querySelector('[data-blog-like-count]');
+		if (!slug || !(button instanceof HTMLButtonElement) || !(heart instanceof HTMLElement) || !(count instanceof HTMLElement)) return;
+
+		const likedKey = `fhugawz-blog-liked:${slug}`;
+		const countKey = `fhugawz-blog-like-count:${slug}`;
+		const initialCount = Number(wrapper.dataset.initialCount || '0');
+
+		const readCount = () => {
+			try {
+				return Number(localStorage.getItem(countKey) || initialCount);
+			} catch {
+				return initialCount;
+			}
+		};
+
+		const readLiked = () => {
+			try {
+				return localStorage.getItem(likedKey) === 'true';
+			} catch {
+				return false;
+			}
+		};
+
+		const render = (liked, nextCount) => {
+			wrapper.classList.toggle('liked', liked);
+			button.setAttribute('aria-pressed', liked ? 'true' : 'false');
+			heart.textContent = liked ? '♥' : '♡';
+			count.textContent = String(nextCount);
+		};
+
+		render(readLiked(), readCount());
+
+		button.addEventListener('click', () => {
+			if (readLiked()) return;
+			const nextCount = readCount() + 1;
+			try {
+				localStorage.setItem(likedKey, 'true');
+				localStorage.setItem(countKey, String(nextCount));
+			} catch {}
+			render(true, nextCount);
+		});
+	});
+</script>

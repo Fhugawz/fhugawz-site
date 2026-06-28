@@ -1,0 +1,104 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = [
+	{
+		title: 'AXIOMS',
+		kicker: 'DARK POP TRAP',
+		description:
+			'Urban pressure, low light and private collapse shape a nocturnal dark pop trap record about isolation, tension and emotional reconstruction.',
+		kickerI18nKey: 'projects.axioms.kicker',
+		titleI18nKey: 'projects.axioms.title',
+		descriptionI18nKey: 'projects.axioms.description',
+		image: '/images/projects/project-axioms-dark-pop-reconstruction-card.webp',
+		alt: 'FHUGAWZ Axioms project artwork with cinematic dark pop reconstruction imagery',
+		href: '/projects/axioms',
+	},
+	{
+		title: '199X',
+		kicker: 'DARK POP FOLK',
+		description:
+			'Wooden textures, intimate strings and warm folk shadows turn memory into something fragile, nostalgic and quietly haunted.',
+		kickerI18nKey: 'projects.199x.kicker',
+		titleI18nKey: 'projects.199x.title',
+		descriptionI18nKey: 'projects.199x.description',
+		image: '/images/projects/project-199X-existential-solitude-card.webp',
+		alt: 'FHUGAWZ 199X Entropy project image about existential solitude and dark pop memory',
+		href: '/projects/199x',
+	},
+	{
+		title: 'PROTOCOL 7',
+		kicker: 'DARK POP GLITCH',
+		description:
+			'Glitch tension, cyberpunk solitude and synthetic pressure push dark pop into a colder digital space where paranoia becomes signal.',
+		kickerI18nKey: 'projects.protocol7.kicker',
+		titleI18nKey: 'projects.protocol7.title',
+		descriptionI18nKey: 'projects.protocol7.description',
+		image: '/images/projects/project-protocol-7-digital-disconnection-card.webp',
+		alt: 'FHUGAWZ Protocol 7 God project image with digital disconnection and noir atmosphere',
+		href: '/projects/protocol-7',
+	},
+	{
+		title: 'ARCHIVE OF PROJECTS',
+		kicker: 'FUTURE PROJECTS',
+		description:
+			'A living index for upcoming FHUGAWZ projects, sounds, symbols and emotional worlds still waiting to take shape.',
+		kickerI18nKey: 'projects.future.kicker',
+		titleI18nKey: 'projects.future.title',
+		descriptionI18nKey: 'projects.future.description',
+		image: '/images/projects/project-archive-future-eras-fhugawz-card.webp',
+		alt: 'FHUGAWZ archive of future eras artwork with cinematic emotional worldbuilding',
+		href: '/projects/archive',
+	},
+	{
+		title: 'AUDIO PREVIEWS',
+		kicker: 'LISTENING ROOM',
+		description:
+			'A place to hear fragments from projects in progress, early signals from the archive and sounds still finding their final form.',
+		kickerI18nKey: 'projects.audio.kicker',
+		titleI18nKey: 'projects.audio.title',
+		descriptionI18nKey: 'projects.audio.description',
+		image: '/images/projects/fhugawz-dark-pop-audio-previews-card.webp',
+		alt: 'FHUGAWZ dark pop audio previews card with cinematic listening room mood',
+		href: '/music',
+	},
+	{
+		title: 'PRODUCTION SERVICES',
+		kicker: 'STUDIO',
+		description:
+			'Production, mixing, mastering and demo recreation for songs that need a stronger and more professional world.',
+		kickerI18nKey: 'projects.production.kicker',
+		titleI18nKey: 'projects.production.title',
+		descriptionI18nKey: 'projects.production.description',
+		image: '/images/projects/fhugawz-studio-production-services-card.webp',
+		alt: 'FHUGAWZ studio production services card with cinematic music production visuals',
+		href: '/services',
+	},
+];
+---
+
+<Layout
+	title="Fhugawz — Dark Pop Album Projects"
+	description="Explore FHUGAWZ projects across cinematic dark pop, trap, folk and glitch worlds built around memory, solitude, rupture and reconstruction."
+	image="/images/social/og-axioms-fhugawz-dark-pop-era.webp"
+>
+	<section
+		class="page-hero with-image"
+		style={`--page-hero-image: url("/images/hero/fhugawz-projects-dark-pop-blog-hero.webp")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-i18n="projects.page.kicker">ALBUM WORLDS</p>
+			<h1 class="page-title" data-i18n="projects.page.title">PROJECTS</h1>
+			<p class="lede" data-i18n="projects.page.description">
+				Each FHUGAWZ project opens a different emotional environment: urban collapse, folk
+				memory, digital paranoia and the search for something human inside the dark.
+			</p>
+		</div>
+	</section>
+	<section class="section" id="projects-grid">
+		<div class="site-shell card-grid">
+			{projects.map((project) => <ProjectCard {...project} />)}
+		</div>
+	</section>
+</Layout>

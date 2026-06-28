@@ -1,0 +1,86 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TrackPreviewCard from '../../components/TrackPreviewCard.astro';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'CreativeWork',
+	name: 'Axioms',
+	creator: { '@type': 'MusicGroup', name: 'FHUGAWZ' },
+	description: 'A FHUGAWZ dark pop trap record about rupture and emotional reconstruction.',
+	image: 'https://fhugawz.com/images/hero/axioms-dark-pop-reconstruction-era-hero.webp',
+};
+---
+
+<Layout
+	title="Fhugawz — Axioms Dark Pop Trap Album"
+	description="AXIOMS is a dark pop trap record by FHUGAWZ about rupture, emotional reconstruction, solitude and the search for proof after collapse."
+	image="/images/social/og-axioms-fhugawz-dark-pop-era.webp"
+	jsonLd={jsonLd}
+>
+	<section
+		class="page-hero with-image project-detail-hero"
+		style={`--page-hero-image: url("/images/hero/axioms-dark-pop-reconstruction-era-hero.webp")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-i18n="axiomsPage.kicker">DARK POP TRAP RECORD</p>
+			<h1 class="page-title" data-i18n="axiomsPage.title">AXIOMS</h1>
+			<p class="lede" data-i18n="axiomsPage.description">
+				A nocturnal record about rupture, emotional reconstruction and the moment when the old
+				story stops working but the body still searches for proof.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="site-shell project-story-grid">
+			<blockquote class="quote-panel project-quote" data-i18n="axiomsPage.quote">
+				Some things can only be explained through a song.
+			</blockquote>
+			<div class="article">
+				<p data-i18n="axiomsPage.story">
+					AXIOMS transforms a personal rupture from 2020 into a dark pop trap record about
+					grief, distance, desire and the need to recover a sense of self. The album does not
+					explain the wound directly. It turns it into rhythm, pressure, atmosphere and
+					confession.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section paper-band">
+		<div class="site-shell project-preview-grid">
+			<div class="project-context">
+				<h2 class="project-context-title" data-i18n="axiomsPage.currents.title">CURRENTS</h2>
+				<p class="section-copy" data-i18n="axiomsPage.currents.context">
+					“Currents” belongs to the emotional center of AXIOMS. It is a song about reaching
+					the point where love stops being shelter and starts becoming damage. The character
+					does not leave quietly. He chooses a form of rebellion against a toxic bond that has
+					already entered the body, the personality and the emotional health of the person
+					carrying it.
+				</p>
+				<blockquote class="lyric-quote">
+					It’s a damn game and I know all the rules,<br />
+					You’re playing for a heart that you only fool.<br />
+					Your kisses always tasted like a warning sign,<br />
+					Now I’m taking back what was never mine.<br />
+					(I don't need it)<br />
+					No, I don’t need your love.<br />
+					(I don't need it)<br />
+					No, I don’t need your love.
+				</blockquote>
+			</div>
+			<TrackPreviewCard
+				id="axioms-currents-project"
+				title="AXIOMS — CURRENTS"
+				description="A preview from the urban side of AXIOMS: low light, heavy pressure and a pulse built for solitude in motion through the city."
+				kickerI18nKey="audio.cardKicker"
+				titleI18nKey="axiomsPage.preview.trackTitle"
+				descriptionI18nKey="axiomsPage.preview.trackDescription"
+				image="/images/tracks/axioms-currents-dark-pop-track.webp"
+				alt="FHUGAWZ Axioms Currents track artwork for cinematic dark pop reconstruction"
+				audioSrc="/audio/previews/axioms-currents-preview.mp3"
+			/>
+		</div>
+	</section>
+</Layout>

@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+	title="Fhugawz — Contact for Music Production and Artist Projects"
+	description="Contact FHUGAWZ for cinematic dark pop production, mixing, mastering, demo recreation and project inquiries."
+	image="/images/social/og-fhugawz-production-mixing-mastering.webp"
+>
+	<section
+		class="page-hero with-image"
+		style={`--page-hero-image: url("/images/hero/fhugawz-contact-dark-pop-blog-hero.webp")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-i18n="contact.page.kicker">OPEN CHANNEL</p>
+			<h1 class="page-title" data-i18n="contact.page.title">CONTACT</h1>
+			<p class="lede" data-i18n="contact.page.description">
+				For production, mixing, mastering, demo reconstruction or FHUGAWZ project inquiries,
+				send a signal and start the conversation.
+			</p>
+		</div>
+	</section>
+	<section class="section">
+		<div class="site-shell contact-panel">
+			<div class="contact-copy">
+				<p class="section-kicker" data-i18n="contact.panel.kicker">INQUIRIES</p>
+				<h2 class="section-title" data-i18n="contact.panel.title">TELL ME ABOUT YOUR PROJECT</h2>
+				<p class="section-copy" data-i18n="contact.panel.description">
+					Share the idea, the song, the reference or the world you want to build. I’ll help
+					you find the next step.
+				</p>
+			</div>
+			<form class="contact-form" data-contact-form>
+				<div class="form-field">
+					<label for="contact-name" data-i18n="contact.form.nameLabel">Name</label>
+					<input
+						id="contact-name"
+						name="name"
+						type="text"
+						placeholder="Your name"
+						data-i18n-placeholder="contact.form.namePlaceholder"
+						required
+					/>
+				</div>
+				<div class="form-field">
+					<label for="contact-email" data-i18n="contact.form.emailLabel">Email</label>
+					<input
+						id="contact-email"
+						name="email"
+						type="email"
+						placeholder="your@email.com"
+						data-i18n-placeholder="contact.form.emailPlaceholder"
+						required
+					/>
+				</div>
+				<div class="form-field selected-service-field">
+					<label for="contact-service" data-i18n="contact.form.selectedServiceLabel">Selected service</label>
+					<select id="contact-service" name="selectedService" data-selected-service-field required>
+						<option value="" data-i18n="contact.form.serviceDefault">Select a service</option>
+						<option value="music-production" data-i18n="contact.form.serviceMusic">Music Production</option>
+						<option value="mixing-mastering" data-i18n="contact.form.serviceMixing">Mixing & Mastering</option>
+						<option value="demo-reconstruction" data-i18n="contact.form.serviceDemo">Demo Reconstruction</option>
+						<option value="artist-world-building" data-i18n="contact.form.serviceWorld">Artist World Building</option>
+					</select>
+				</div>
+				<div class="form-field">
+					<label for="contact-message" data-i18n="contact.form.messageLabel">Message</label>
+					<textarea
+						id="contact-message"
+						name="message"
+						placeholder="Tell me what you need, where the song is now, and where you want to take it."
+						data-i18n-placeholder="contact.form.messagePlaceholder"
+						required
+					></textarea>
+				</div>
+				<button class="button primary contact-submit" type="submit" data-i18n="contact.form.button">SEND MESSAGE</button>
+				<p class="form-status" data-contact-status data-i18n="contact.form.status" hidden>
+					Message ready. Email connection will be added soon.
+				</p>
+			</form>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	const serviceOptions = {
+		'music-production': {
+			en: 'Music Production',
+			es: 'Producción musical',
+		},
+		'mixing-mastering': {
+			en: 'Mixing & Mastering',
+			es: 'Mezcla y master',
+		},
+		'demo-reconstruction': {
+			en: 'Demo Reconstruction',
+			es: 'Reconstrucción de demos',
+		},
+		'artist-world-building': {
+			en: 'Artist World Building',
+			es: 'Desarrollo de universo artístico',
+		},
+	};
+
+	document.querySelectorAll('[data-contact-form]').forEach((form) => {
+		if (!(form instanceof HTMLFormElement)) return;
+
+		const params = new URLSearchParams(window.location.search);
+		const selectedServiceKey = params.get('service') || '';
+		const selectedServiceField = form.querySelector('[data-selected-service-field]');
+		const messageField = form.querySelector('#contact-message');
+		let generatedMessage = '';
+
+		const applySelectedService = () => {
+			if (
+				!(selectedServiceField instanceof HTMLSelectElement) ||
+				!(messageField instanceof HTMLTextAreaElement)
+			) {
+				return;
+			}
+
+			const currentServiceKey = selectedServiceField.value;
+			const selectedService = serviceOptions[currentServiceKey];
+			if (!selectedService) return;
+
+			const language = document.documentElement.dataset.language === 'es' ? 'es' : 'en';
+			const serviceName = selectedService[language];
+			const nextMessage =
+				language === 'es'
+					? `Estoy interesado en ${serviceName}. Esto es lo que necesito:`
+					: `I'm interested in ${serviceName}. Here is what I need:`;
+
+			if (!messageField.value || messageField.value === generatedMessage) {
+				messageField.value = nextMessage;
+				generatedMessage = nextMessage;
+			}
+		};
+
+		if (selectedServiceKey in serviceOptions && selectedServiceField instanceof HTMLSelectElement) {
+			selectedServiceField.value = selectedServiceKey;
+		}
+
+		applySelectedService();
+		if (selectedServiceField instanceof HTMLSelectElement) {
+			selectedServiceField.addEventListener('change', applySelectedService);
+		}
+		window.addEventListener('fhugawz:languagechange', applySelectedService);
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const status = form.querySelector('[data-contact-status]');
+			if (status instanceof HTMLElement) status.hidden = false;
+		});
+	});
+</script>

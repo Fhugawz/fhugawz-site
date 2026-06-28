@@ -1,0 +1,133 @@
+---
+const links = [
+	{ href: '/', label: 'Home', i18nKey: 'nav.home' },
+	{ href: '/projects', label: 'Projects', i18nKey: 'nav.projects' },
+	{ href: '/music', label: 'Music', i18nKey: 'nav.music' },
+	{ href: '/services', label: 'Services', i18nKey: 'nav.services' },
+	{ href: '/blog', label: 'Blog', i18nKey: 'nav.blog' },
+	{ href: '/contact', label: 'Contact', i18nKey: 'nav.contact' },
+];
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => {
+	if (href === '/') return pathname === '/';
+	return pathname === href || pathname.startsWith(`${href}/`);
+};
+---
+
+<header class="site-header">
+	<div class="site-shell header-inner">
+		<a href="/" aria-label="FHUGAWZ home">
+			<img
+				class="brand-logo"
+				src="/images/brand/fhugawz-full-logo-transparent-light.svg"
+				alt="FHUGAWZ cinematic dark pop logo"
+				width="308"
+				height="80"
+			/>
+		</a>
+		<nav class="nav-links" aria-label="Main navigation">
+			{
+				links.map((link) => (
+					<a
+						href={link.href}
+						class:list={{ active: isActive(link.href) }}
+						aria-current={isActive(link.href) ? 'page' : undefined}
+						data-i18n={link.i18nKey}
+					>
+						{link.label}
+					</a>
+				))
+			}
+		</nav>
+		<button
+			class="language-toggle"
+			type="button"
+			data-language-toggle
+			data-active-lang="en"
+			aria-label="Switch language to Spanish"
+			aria-pressed="false"
+		>
+			<span class="language-toggle-label" data-language-toggle-label>EN</span>
+			<span class="language-toggle-knob" aria-hidden="true"></span>
+		</button>
+		<button
+			class="mobile-menu-toggle"
+			type="button"
+			aria-label="Open menu"
+			data-i18n-aria-label="nav.openMenu"
+			data-mobile-menu-open
+			aria-expanded="false"
+		>
+			<span aria-hidden="true"></span>
+			<span aria-hidden="true"></span>
+			<span aria-hidden="true"></span>
+		</button>
+	</div>
+</header>
+
+<div class="mobile-menu-overlay" data-mobile-menu-overlay hidden>
+	<div class="mobile-menu-panel">
+		<button
+			class="mobile-menu-close"
+			type="button"
+			aria-label="Close menu"
+			data-i18n-aria-label="nav.closeMenu"
+			data-mobile-menu-close
+		>
+			<span aria-hidden="true"></span>
+			<span aria-hidden="true"></span>
+		</button>
+		<nav class="mobile-menu-links" aria-label="Mobile navigation">
+			{
+				links.map((link) => (
+					<a
+						href={link.href}
+						class:list={{ active: isActive(link.href) }}
+						aria-current={isActive(link.href) ? 'page' : undefined}
+						data-i18n={link.i18nKey}
+					>
+						{link.label}
+					</a>
+				))
+			}
+		</nav>
+	</div>
+</div>
+
+<script>
+	const overlay = document.querySelector('[data-mobile-menu-overlay]');
+	const openButton = document.querySelector('[data-mobile-menu-open]');
+	const closeButton = document.querySelector('[data-mobile-menu-close]');
+	const mobileLinks = document.querySelectorAll('.mobile-menu-links a');
+
+	const closeMobileMenu = () => {
+		if (!(overlay instanceof HTMLElement)) return;
+		overlay.hidden = true;
+		document.body.classList.remove('mobile-menu-open');
+		openButton instanceof HTMLButtonElement && openButton.setAttribute('aria-expanded', 'false');
+	};
+
+	const openMobileMenu = () => {
+		if (!(overlay instanceof HTMLElement)) return;
+		overlay.hidden = false;
+		document.body.classList.add('mobile-menu-open');
+		openButton instanceof HTMLButtonElement && openButton.setAttribute('aria-expanded', 'true');
+		closeButton instanceof HTMLButtonElement && closeButton.focus();
+	};
+
+	openButton?.addEventListener('click', openMobileMenu);
+	closeButton?.addEventListener('click', closeMobileMenu);
+	overlay?.addEventListener('click', (event) => {
+		if (event.target === overlay) closeMobileMenu();
+	});
+	mobileLinks.forEach((link) => link.addEventListener('click', closeMobileMenu));
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape') closeMobileMenu();
+	});
+
+	window.addEventListener('resize', () => {
+		if (window.innerWidth > 768) closeMobileMenu();
+	});
+</script>

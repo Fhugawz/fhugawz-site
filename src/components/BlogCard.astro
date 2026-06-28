@@ -1,0 +1,38 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	image: string;
+	alt: string;
+	href: string;
+	meta?: string;
+	metaI18nKey?: string;
+	titleI18nKey?: string;
+	descriptionI18nKey?: string;
+	category?: string;
+}
+
+const {
+	title,
+	description,
+	image,
+	alt,
+	href,
+	meta = 'Production Diary',
+	metaI18nKey,
+	titleI18nKey,
+	descriptionI18nKey,
+	category,
+} = Astro.props;
+---
+
+<a class="blog-card" href={href} data-blog-card data-blog-category={category}>
+	<div class="card-image">
+		<img src={image} alt={alt} loading="lazy" decoding="async" />
+	</div>
+	<div class="card-body">
+		<p class="meta" data-i18n={metaI18nKey}>{meta}</p>
+		<h2 class="card-title" data-i18n={titleI18nKey}>{title}</h2>
+		<p class="card-copy" data-i18n={descriptionI18nKey}>{description}</p>
+	</div>
+</a>

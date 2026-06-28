@@ -1,0 +1,92 @@
+---
+interface Props {
+	id?: string;
+}
+
+const { id = 'blog-subscribe' } = Astro.props;
+const modalId = `${id}-modal`;
+---
+
+<section class="blog-subscribe-cta" aria-labelledby={`${id}-title`}>
+	<p class="section-kicker" data-i18n="blog.subscribe.kicker">STAY CLOSE</p>
+	<h2 id={`${id}-title`} class="blog-subscribe-title" data-i18n="blog.subscribe.title">GET THE NEXT NOTES</h2>
+	<p data-i18n="blog.subscribe.description">
+		Subscribe to receive new FHUGAWZ articles, production notes and project updates when they are published.
+	</p>
+	<button class="button primary" type="button" data-subscribe-open={modalId} data-i18n="blog.subscribe.button">
+		SUBSCRIBE TO THE BLOG
+	</button>
+</section>
+
+<div class="blog-subscribe-modal" id={modalId} data-subscribe-modal hidden>
+	<div class="blog-subscribe-backdrop" data-subscribe-close></div>
+	<div class="blog-subscribe-dialog" role="dialog" aria-modal="true" aria-labelledby={`${modalId}-title`}>
+		<button class="blog-subscribe-close" type="button" data-subscribe-close aria-label="Close">×</button>
+		<h2 id={`${modalId}-title`} data-i18n="blog.subscribe.modalTitle">Subscribe to the FHUGAWZ blog</h2>
+		<p data-i18n="blog.subscribe.modalDescription">
+			Get new articles, production notes and project updates directly in your inbox.
+		</p>
+		<form class="blog-subscribe-form" data-subscribe-form>
+			<input
+				type="email"
+				name="email"
+				placeholder="your@email.com"
+				data-i18n-placeholder="blog.subscribe.emailPlaceholder"
+				required
+			/>
+			<button class="button primary" type="submit" data-i18n="blog.subscribe.submit">SUBSCRIBE</button>
+		</form>
+		<p class="blog-subscribe-note" data-i18n="blog.subscribe.note">No spam. Just project updates and useful notes.</p>
+		<p class="blog-subscribe-success" data-subscribe-success data-i18n="blog.subscribe.success" hidden>
+			Thanks. You are on the list.
+		</p>
+	</div>
+</div>
+
+<script>
+	document.querySelectorAll('[data-subscribe-open]').forEach((trigger) => {
+		if (!(trigger instanceof HTMLButtonElement)) return;
+		const modalId = trigger.dataset.subscribeOpen;
+		const modal = modalId ? document.getElementById(modalId) : null;
+		if (!(modal instanceof HTMLElement)) return;
+
+		const closeButtons = modal.querySelectorAll('[data-subscribe-close]');
+		const form = modal.querySelector('[data-subscribe-form]');
+		const success = modal.querySelector('[data-subscribe-success]');
+
+		const open = () => {
+			modal.hidden = false;
+			document.body.classList.add('modal-open');
+			const email = modal.querySelector('input[type="email"]');
+			if (email instanceof HTMLInputElement) email.focus();
+		};
+
+		const close = () => {
+			modal.hidden = true;
+			document.body.classList.remove('modal-open');
+			trigger.focus();
+		};
+
+		trigger.addEventListener('click', open);
+		closeButtons.forEach((button) => button.addEventListener('click', close));
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && !modal.hidden) close();
+		});
+
+		if (form instanceof HTMLFormElement) {
+			form.addEventListener('submit', (event) => {
+				event.preventDefault();
+				const email = form.querySelector('input[type="email"]');
+				if (!(email instanceof HTMLInputElement) || !email.checkValidity()) {
+					email?.reportValidity();
+					return;
+				}
+				try {
+					localStorage.setItem('fhugawz-blog-subscribe-email', email.value);
+				} catch {}
+				if (success instanceof HTMLElement) success.hidden = false;
+				form.reset();
+			});
+		}
+	});
+</script>

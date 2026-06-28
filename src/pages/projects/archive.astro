@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const entries = [
+	{
+		title: 'LOST',
+		status: 'DARK POP COSMIC',
+		description:
+			'Existential nostalgia drifts through organic synthesizers, cosmic textures and the feeling of moving between galaxies, stars and empty inner space.',
+		statusI18nKey: 'archivePage.entryLost.status',
+		descriptionI18nKey: 'archivePage.entryLost.description',
+	},
+	{
+		title: 'FAKEMINDS',
+		status: 'DARK POP ROCK',
+		description:
+			'Rock energy sharpens the FHUGAWZ world into something more confrontational, turning personal wounds, fear, sadness and loneliness into force.',
+		statusI18nKey: 'archivePage.entryFakeminds.status',
+		descriptionI18nKey: 'archivePage.entryFakeminds.description',
+	},
+	{
+		title: '314',
+		status: 'DARK POP EXPERIMENTAL',
+		description:
+			'Built with urban textures, open structures and emotional fragments, 314 moves freely through soul, nostalgia, trauma and solitude without fixed rules.',
+		statusI18nKey: 'archivePage.entry314.status',
+		descriptionI18nKey: 'archivePage.entry314.description',
+	},
+	{
+		title: 'LAIN',
+		status: 'DARK POP R&B',
+		description:
+			'City nights, love stories and unreachable closeness shape a nocturnal R&B leaning world where nostalgia feels intimate and suspended.',
+		statusI18nKey: 'archivePage.entryLain.status',
+		descriptionI18nKey: 'archivePage.entryLain.description',
+	},
+	{
+		title: 'SELF',
+		status: 'DARK POP DANCE',
+		description:
+			'Soft movement, shadowed rhythm and emotional weight turn SELF into a darker dance space, made for dancing with sadness instead of escaping it.',
+		statusI18nKey: 'archivePage.entrySelf.status',
+		descriptionI18nKey: 'archivePage.entrySelf.description',
+	},
+	{
+		title: 'MY OTHER SELF',
+		status: 'DARK POP LOFI',
+		description:
+			'Isolated textures, depressive atmospheres and intimate emotional decay pull this lo fi world into a softer but deeply nocturnal dark pop language.',
+		statusI18nKey: 'archivePage.entryOtherSelf.status',
+		descriptionI18nKey: 'archivePage.entryOtherSelf.description',
+	},
+	{
+		title: 'IMPACT TRAUMA',
+		status: 'DARK POP SPOOKY',
+		description:
+			'Haunted tension, theatrical storytelling and cinematic darkness turn trauma into a dramatic sound world with weight, shadow and ritual.',
+		statusI18nKey: 'archivePage.entryImpact.status',
+		descriptionI18nKey: 'archivePage.entryImpact.description',
+	},
+];
+---
+
+<Layout
+	title="Fhugawz — Upcoming Dark Pop Album Projects"
+	description="A living archive of upcoming FHUGAWZ album concepts across cosmic, rock, experimental, R&B, dance, lo fi and spooky dark pop worlds."
+	image="/images/projects/project-archive-future-eras-fhugawz-card.webp"
+>
+	<section
+		class="page-hero with-image project-detail-hero"
+		style={`--page-hero-image: url("/images/projects/project-archive-future-eras-fhugawz-card.webp")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-i18n="archivePage.kicker">UPCOMING ALBUMS</p>
+			<h1 class="page-title" data-i18n="archivePage.title">FUTURE PROJECTS</h1>
+			<p class="lede" data-i18n="archivePage.description">
+				A living archive of FHUGAWZ albums in development: sounds, symbols, concepts and
+				emotional worlds waiting for their final form.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="site-shell archive-timeline" aria-label="Archive of future projects">
+			{entries.map((entry) => (
+				<article class="timeline-entry">
+					<p class="eyebrow" data-i18n={entry.statusI18nKey}>{entry.status}</p>
+					<h2 class="card-title">{entry.title}</h2>
+					<p class="card-copy" data-i18n={entry.descriptionI18nKey}>{entry.description}</p>
+				</article>
+			))}
+		</div>
+	</section>
+</Layout>

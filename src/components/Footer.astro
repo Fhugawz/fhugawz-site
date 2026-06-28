@@ -1,0 +1,65 @@
+---
+import SocialLinks from './SocialLinks.astro';
+---
+
+<footer class="site-footer">
+	<div class="site-shell footer-grid">
+		<div class="footer-main">
+			<img
+				class="footer-logo"
+				src="/images/brand/fhugawz-full-logo-transparent-light.svg"
+				alt="FHUGAWZ cinematic dark pop studio logo"
+				width="308"
+				height="80"
+			/>
+			<p class="footer-label" data-i18n="footer.label">FHUGAWZ STUDIO</p>
+			<p class="footer-description" data-i18n="footer.description">
+				Dark pop, original production and artist world building for songs that need more than a
+				release plan.
+			</p>
+			<p class="footer-support" data-i18n="footer.support">
+				Listen to the music, read the diary or start building a project with a clear sonic and
+				visual direction.
+			</p>
+			<p class="fine-print">Copyright 2026 FHUGAWZ. All rights reserved.</p>
+			<nav class="footer-legal-links" aria-label="Legal links">
+				<a
+					href="/privacy-policy"
+					data-i18n="footer.legal.privacy"
+					data-i18n-tooltip="footer.legal.privacyTooltip"
+					data-tooltip="How personal data and contact information are handled."
+				>
+					Privacy Policy
+				</a>
+				<a
+					href="/terms-of-service"
+					data-i18n="footer.legal.terms"
+					data-i18n-tooltip="footer.legal.termsTooltip"
+					data-tooltip="Basic conditions for using the site and requesting services."
+				>
+					Terms of Service
+				</a>
+				<a
+					href="/cookie-policy"
+					data-i18n="footer.legal.cookies"
+					data-i18n-tooltip="footer.legal.cookiesTooltip"
+					data-tooltip="Information about cookies and basic site tracking."
+				>
+					Cookie Policy
+				</a>
+				<a
+					href="/copyright-notice"
+					data-i18n="footer.legal.copyright"
+					data-i18n-tooltip="footer.legal.copyrightTooltip"
+					data-tooltip="Ownership and usage rules for FHUGAWZ content."
+				>
+					Copyright Notice
+				</a>
+			</nav>
+		</div>
+		<div class="footer-social-column">
+			<p class="footer-label" data-i18n="footer.socialLabel">LISTEN / FOLLOW</p>
+			<SocialLinks />
+		</div>
+	</div>
+</footer>

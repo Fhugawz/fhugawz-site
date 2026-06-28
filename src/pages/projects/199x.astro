@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TrackPreviewCard from '../../components/TrackPreviewCard.astro';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'CreativeWork',
+	name: '199X',
+	creator: { '@type': 'MusicGroup', name: 'FHUGAWZ' },
+	description:
+		'199X is a dark pop folk project by FHUGAWZ built around nostalgia, acoustic textures, childhood memory and intimate solitude.',
+	image: 'https://fhugawz.com/images/projects/project-199X-existential-solitude-card.webp',
+};
+---
+
+<Layout
+	title="Fhugawz — 199X Dark Pop Folk Album"
+	description="199X is a dark pop folk project by FHUGAWZ built around nostalgia, acoustic textures, childhood memory and intimate solitude."
+	image="/images/projects/project-199X-existential-solitude-card.webp"
+	jsonLd={jsonLd}
+>
+	<section
+		class="page-hero with-image project-detail-hero"
+		style={`--page-hero-image: url("/images/projects/project-199X-existential-solitude-card.webp")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-i18n="project199x.kicker">DARK POP FOLK RECORD</p>
+			<h1 class="page-title" data-i18n="project199x.title">199X</h1>
+			<p class="lede" data-i18n="project199x.description">
+				A nostalgic dark pop folk project shaped by wooden textures, intimate strings,
+				childhood memory and the quiet loneliness of a place that still feels alive.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="site-shell project-story-grid">
+			<blockquote class="quote-panel project-quote" data-i18n="project199x.quote">
+				Memory keeps playing after the room goes quiet.
+			</blockquote>
+			<div class="article">
+				<p data-i18n="project199x.story">
+					199X moves through a warmer kind of solitude. Acoustic colors, fragile strings and
+					folk shadows turn memory into a room, a cabin, a photograph and a voice trying to
+					understand what was left behind.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section paper-band">
+		<div class="site-shell project-preview-grid">
+			<div class="project-context">
+				<h2 class="project-context-title" data-i18n="project199x.entropy.title">ENTROPY</h2>
+				<p class="section-copy" data-i18n="project199x.entropy.context">
+					“Entropy” is a song about loneliness becoming routine. The character is not only
+					remembering the past. He is trapped inside the feeling that nothing changes, even
+					while everything keeps falling apart.
+				</p>
+				<blockquote class="lyric-quote">
+					And I’m falling asleep while I forget my own name<br />
+					Listening to the drowning wail of my past while I stay exactly the same<br />
+					(Now I don’t want to go back)<br />
+					Extreme loneliness is a goddamn cage<br />
+					Turning every single day into a descent into entropy<br />
+					<br />
+					Loneliness belongs to me
+				</blockquote>
+			</div>
+			<TrackPreviewCard
+				id="199x-entropy-project"
+				title="199X — ENTROPY"
+				description="A warmer fragment shaped by wooden textures, nostalgic strings and the quiet loneliness of a dark folk memory."
+				kickerI18nKey="audio.cardKicker"
+				titleI18nKey="project199x.preview.trackTitle"
+				descriptionI18nKey="project199x.preview.trackDescription"
+				image="/images/tracks/199x-entropy-dark-pop-track.webp"
+				alt="FHUGAWZ 199X Entropy track preview image about solitude and dark pop memory"
+				audioSrc="/audio/previews/199x-entropy-preview.mp3"
+			/>
+		</div>
+	</section>
+</Layout>

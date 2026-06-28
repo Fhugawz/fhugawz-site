@@ -1,0 +1,287 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import BlogCard from '../components/BlogCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import TrackPreviewCard from '../components/TrackPreviewCard.astro';
+
+const projects = [
+	{
+		title: 'AXIOMS',
+		kicker: 'DARK POP TRAP',
+		description:
+			'Urban pressure, low light and private collapse shape a nocturnal dark pop trap record about isolation, tension and emotional reconstruction.',
+		kickerI18nKey: 'projects.axioms.kicker',
+		titleI18nKey: 'projects.axioms.title',
+		descriptionI18nKey: 'projects.axioms.description',
+		image: '/images/projects/project-axioms-dark-pop-reconstruction-card.webp',
+		alt: 'FHUGAWZ Axioms artwork with cinematic dark pop atmosphere and emotional reconstruction imagery',
+		href: '/projects/axioms',
+	},
+	{
+		title: '199X',
+		kicker: 'DARK POP FOLK',
+		description:
+			'Wooden textures, intimate strings and warm folk shadows turn memory into something fragile, nostalgic and quietly haunted.',
+		kickerI18nKey: 'projects.199x.kicker',
+		titleI18nKey: 'projects.199x.title',
+		descriptionI18nKey: 'projects.199x.description',
+		image: '/images/projects/project-199X-existential-solitude-card.webp',
+		alt: 'FHUGAWZ 199X Entropy artwork evoking solitude, memory and cinematic dark pop tension',
+		href: '/music',
+	},
+	{
+		title: 'PROTOCOL 7',
+		kicker: 'DARK POP GLITCH',
+		description:
+			'Glitch tension, cyberpunk solitude and synthetic pressure push dark pop into a colder digital space where paranoia becomes signal.',
+		kickerI18nKey: 'projects.protocol7.kicker',
+		titleI18nKey: 'projects.protocol7.title',
+		descriptionI18nKey: 'projects.protocol7.description',
+		image: '/images/projects/project-protocol-7-digital-disconnection-card.webp',
+		alt: 'FHUGAWZ Protocol 7 God artwork with digital disconnection and dark pop noir mood',
+		href: '/music',
+	},
+];
+
+const tracks = [
+	{
+		id: 'axioms-currents',
+		title: 'AXIOMS \u2014 CURRENTS',
+		description:
+			'A preview from the urban side of AXIOMS: low light, heavy pressure and a pulse built for solitude in motion through the city.',
+		kickerI18nKey: 'audio.cardKicker',
+		titleI18nKey: 'audio.axioms.title',
+		descriptionI18nKey: 'audio.axioms.description',
+		image: '/images/tracks/axioms-currents-dark-pop-track.webp',
+		alt: 'FHUGAWZ Axioms Currents track image for a cinematic dark pop preview',
+		audioSrc: '/audio/previews/axioms-currents-preview.mp3',
+	},
+	{
+		id: '199x-entropy',
+		title: '199X \u2014 ENTROPY',
+		description:
+			'A warmer fragment shaped by wooden textures, nostalgic strings and the quiet loneliness of a dark folk memory.',
+		kickerI18nKey: 'audio.cardKicker',
+		titleI18nKey: 'audio.199x.title',
+		descriptionI18nKey: 'audio.199x.description',
+		image: '/images/tracks/199x-entropy-dark-pop-track.webp',
+		alt: 'FHUGAWZ 199X Entropy track image with dark pop solitude and archival tension',
+		audioSrc: '/audio/previews/199x-entropy-preview.mp3',
+	},
+	{
+		id: 'protocol-7-god',
+		title: 'PROTOCOL 7 \u2014 GOD',
+		description:
+			'A colder signal from the digital edge: glitch tension, synthetic sadness and the feeling of becoming human inside the machine.',
+		kickerI18nKey: 'audio.cardKicker',
+		titleI18nKey: 'audio.protocol7.title',
+		descriptionI18nKey: 'audio.protocol7.description',
+		image: '/images/tracks/protocol-7-god-dark-pop-track.webp',
+		alt: 'FHUGAWZ Protocol 7 God track image with digital rupture and cinematic dark pop energy',
+		audioSrc: '/audio/previews/protocol-7-god-preview.mp3',
+	},
+];
+
+const services = [
+	{
+		kicker: 'SERVICE',
+		title: 'MUSIC PRODUCTION',
+		description:
+			'Bring a voice memo, rough demo or unfinished idea. We shape the arrangement, sound palette and production until the song feels complete.',
+		kickerI18nKey: 'services.kicker',
+		titleI18nKey: 'services.production.title',
+		descriptionI18nKey: 'services.production.description',
+		image: '/images/services/service-dark-pop-music-production.webp',
+		alt: 'FHUGAWZ dark pop music production scene with cinematic studio texture',
+	},
+	{
+		kicker: 'SERVICE',
+		title: 'MIXING & MASTERING',
+		description:
+			'Finished songs are refined with depth, clarity, impact and a professional final sound that translates across platforms.',
+		kickerI18nKey: 'services.kicker',
+		titleI18nKey: 'services.mixing.title',
+		descriptionI18nKey: 'services.mixing.description',
+		image: '/images/services/service-alternative-pop-mixing-engineer.webp',
+		alt: 'FHUGAWZ alternative pop mixing engineer image with warm noir studio atmosphere',
+	},
+	{
+		kicker: 'SERVICE',
+		title: 'DEMO RECONSTRUCTION',
+		description:
+			'AI generated demos or rough references are rebuilt into original human productions with cleaner sound, stronger identity and release ready direction.',
+		kickerI18nKey: 'services.kicker',
+		titleI18nKey: 'services.demo.title',
+		descriptionI18nKey: 'services.demo.description',
+		image: '/images/services/service-cinematic-music-mastering.webp',
+		alt: 'FHUGAWZ demo reconstruction service image with cinematic music production atmosphere',
+	},
+	{
+		kicker: 'PREMIUM SERVICE',
+		title: 'ARTIST WORLD BUILDING',
+		description:
+			'A complete creative system for artists who need concept, sonic identity, visual direction, release strategy, web presence and content templates.',
+		kickerI18nKey: 'services.premiumKicker',
+		titleI18nKey: 'services.world.title',
+		descriptionI18nKey: 'services.world.description',
+		image: '/images/services/service-demo-recreation-original-production.webp',
+		alt: 'FHUGAWZ artist world building service image showing original production and emotional reconstruction',
+	},
+];
+
+const posts = [
+	{
+		title: 'BUILDING AXIOMS',
+		description:
+			'A first note on building a dark pop project from fracture, memory and proof, and on how a difficult experience can become songs, visuals and artistic direction.',
+		metaI18nKey: 'diary.cardKicker',
+		titleI18nKey: 'diary.building.title',
+		descriptionI18nKey: 'diary.building.description',
+		image: '/images/blog/building-axioms/building-axioms-dark-pop-origin-hero.webp.webp',
+		alt: 'FHUGAWZ blog image for Building Axioms with cinematic dark pop project visuals',
+		href: '/blog/building-axioms',
+	},
+	{
+		title: 'WHY FHUGAWZ EXISTS',
+		description:
+			'A personal note on music, design, recovery and the long process of turning scattered influences into a dark pop world.',
+		metaI18nKey: 'diary.cardKicker',
+		titleI18nKey: 'diary.exists.title',
+		descriptionI18nKey: 'diary.exists.description',
+		image: '/images/blog/why-fhugawz-exists/why-fhugawz-exists-music-origin-hero.webp.webp',
+		alt: 'Early musical origin and dark pop identity behind FHUGAWZ',
+		href: '/blog/why-fhugawz-exists',
+	},
+	{
+		title: 'THE SOUND OF RECONSTRUCTION',
+		description:
+			'Where AI sketches the outline, real production gives the song its body, its flaws and the emotional tension that makes dark pop feel human.',
+		metaI18nKey: 'diary.cardKicker',
+		titleI18nKey: 'diary.sound.title',
+		descriptionI18nKey: 'diary.sound.description',
+		image: '/images/blog/sound-of-reconstruction/sound-of-reconstruction-demo-recreation-hero.webp.webp',
+		alt: 'AI demo recreation and emotional dark pop production process',
+		href: '/blog/sound-of-reconstruction',
+	},
+	{
+		title: 'BUILDING AN INDEPENDENT ARTIST WORLD',
+		description:
+			'A practical note on turning songs, visuals, story and release strategy into a coherent artistic world that people can recognize, follow and remember.',
+		meta: 'ARTIST WORLD BUILDING',
+		metaI18nKey: 'diary.world.kicker',
+		titleI18nKey: 'diary.world.title',
+		descriptionI18nKey: 'diary.world.description',
+		image:
+			'/images/blog/building-an-independent-artist-world/building-independent-artist-world-hero.webp.webp',
+		alt: 'Independent artist world building through music, branding and visual identity.',
+		href: '/blog/every-album-is-an-era',
+	},
+];
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'MusicGroup',
+	name: 'FHUGAWZ',
+	url: 'https://fhugawz.com',
+	description: 'Cinematic dark pop project and creative studio.',
+	image: 'https://fhugawz.com/images/social/og-fhugawz-cinematic-dark-pop.webp',
+};
+---
+
+<Layout
+	title="Fhugawz — Cinematic Dark Pop Project"
+	description="FHUGAWZ is a cinematic dark pop project and creative studio built around memory, rupture, reconstruction, music production and artist world building."
+	image="/images/social/og-fhugawz-cinematic-dark-pop.webp"
+	jsonLd={jsonLd}
+>
+	<Hero
+		kicker="CINEMATIC DARK POP"
+		title="FHUGAWZ"
+		subtitle="Songs for those who survive the collapse"
+		description="A dark pop project shaped around memory, rupture and reconstruction, where each release becomes a world of sound, image and emotional evidence."
+		image="/images/hero/fhugawz-cinematic-dark-pop-hero.webp"
+		alt="Cinematic dark pop night scene with amber light representing the FHUGAWZ universe."
+		secondaryActionLabel="VIEW PROJECTS"
+		kickerI18nKey="hero.kicker"
+		subtitleI18nKey="hero.subtitle"
+		descriptionI18nKey="hero.description"
+		primaryActionI18nKey="hero.primaryAction"
+		secondaryActionI18nKey="hero.secondaryAction"
+	/>
+
+	<section class="section home-question">
+		<div class="site-shell home-question-grid">
+			<div class="home-question-heading">
+				<p class="section-kicker" data-i18n="axioms.kicker">NEW PROJECT</p>
+				<h2 class="home-question-title" data-i18n="axioms.title">AXIOMS</h2>
+				<a class="button primary" href="/projects/axioms" data-i18n="axioms.action">EXPLORE THE ALBUM</a>
+			</div>
+			<div class="home-question-copy">
+				<p data-i18n="axioms.description">
+					The recent FHUGAWZ project turns fracture into rhythm, city lights into
+					confession and solitude into something that still moves.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section tight home-projects">
+		<div class="site-shell">
+			<div class="section-header">
+				<p class="section-kicker" data-i18n="projects.kicker">ALBUM WORLDS</p>
+				<h2 class="section-title" data-i18n="projects.title">PROJECTS</h2>
+			</div>
+			<div class="card-grid">
+				{projects.map((project) => <ProjectCard {...project} />)}
+			</div>
+		</div>
+	</section>
+
+	<section class="section audio-fragments">
+		<div class="site-shell">
+			<div class="section-header">
+				<p class="section-kicker" data-i18n="audio.kicker">SELECTED SIGNALS</p>
+				<h2 class="section-title" data-i18n="audio.title" data-i18n-mobile-linebreaks>AUDIO FRAGMENTS</h2>
+			</div>
+			<div class="card-grid">
+				{tracks.map((track) => <TrackPreviewCard {...track} />)}
+			</div>
+		</div>
+	</section>
+
+	<section class="section paper-band home-studio">
+		<div class="site-shell home-studio-grid">
+			<div class="home-studio-copy">
+				<p class="section-kicker" data-i18n="studio.kicker">STUDIO</p>
+				<h2 class="section-title" data-i18n="studio.title" data-i18n-mobile-linebreaks>BUILD THE SONG WORLD</h2>
+				<p class="section-copy" data-i18n="studio.description">
+					For artists with a strong idea but no finished world yet, FHUGAWZ Studio turns
+					fragments, demos and references into complete productions with sound, image and
+					direction.
+				</p>
+				<a class="button primary home-studio-cta" href="/services" data-i18n="studio.action">MORE INFORMATION</a>
+			</div>
+			<div class="home-service-grid">
+				{services.map((service) => <ServiceCard {...service} />)}
+			</div>
+		</div>
+	</section>
+
+	<section class="section tight production-diary">
+		<div class="site-shell">
+			<div class="section-header">
+				<p class="section-kicker" data-i18n="diary.kicker">FIELD NOTES</p>
+				<h2 class="section-title" data-i18n="diary.title">PRODUCTION DIARY</h2>
+				<p class="section-copy" data-i18n="diary.description">
+					Notes on music, production, tools and the process of building an independent artistic
+					world in public, step by step, from the inside.
+				</p>
+			</div>
+			<div class="card-grid two">
+				{posts.map((post) => <BlogCard {...post} />)}
+			</div>
+		</div>
+	</section>
+</Layout>

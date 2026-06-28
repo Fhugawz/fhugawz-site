@@ -1,0 +1,85 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TrackPreviewCard from '../../components/TrackPreviewCard.astro';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'CreativeWork',
+	name: 'PROTOCOL 7',
+	creator: { '@type': 'MusicGroup', name: 'FHUGAWZ' },
+	description:
+		'PROTOCOL 7 is a dark pop glitch project by FHUGAWZ about digital disconnection, paranoia, control and the search for something human.',
+	image: 'https://fhugawz.com/images/projects/project-protocol-7-digital-disconnection-card.webp',
+};
+---
+
+<Layout
+	title="Fhugawz — Protocol 7 Dark Pop Glitch Album"
+	description="PROTOCOL 7 is a dark pop glitch project by FHUGAWZ about digital disconnection, paranoia, control and the search for something human."
+	image="/images/projects/project-protocol-7-digital-disconnection-card.webp"
+	jsonLd={jsonLd}
+>
+	<section
+		class="page-hero with-image project-detail-hero"
+		style={`--page-hero-image: url("/images/projects/project-protocol-7-digital-disconnection-card.webp")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-i18n="protocol7Page.kicker">DARK POP GLITCH RECORD</p>
+			<h1 class="page-title project-title-nowrap" data-i18n="protocol7Page.title">PROTOCOL 7</h1>
+			<p class="lede" data-i18n="protocol7Page.description">
+				A colder digital project about disconnection, paranoia and the need to feel human
+				inside a fractured signal.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="site-shell project-story-grid">
+			<blockquote class="quote-panel project-quote" data-i18n="protocol7Page.quote">
+				The machine does not know what to do with a soul.
+			</blockquote>
+			<div class="article">
+				<p data-i18n="protocol7Page.story">
+					PROTOCOL 7 pushes FHUGAWZ into a synthetic and unstable space. Glitch textures,
+					digital pressure and cyberpunk solitude turn emotional damage into signal, error and
+					control.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section paper-band">
+		<div class="site-shell project-preview-grid">
+			<div class="project-context">
+				<h2 class="project-context-title" data-i18n="protocol7Page.god.title">GOD</h2>
+				<p class="section-copy" data-i18n="protocol7Page.god.context">
+					“God” turns control into a confrontation. The song speaks from inside a digital
+					pressure system, where devotion, obedience and power collapse into a colder form of
+					rebellion.
+				</p>
+				<blockquote class="lyric-quote">
+					You are God to many<br />
+					But I am the burning landscape<br />
+					You are God to many<br />
+					But I am the light that won’t obey<br />
+					<br />
+					You can call the wire sacred<br />
+					You can call the body weak<br />
+					But I am more than your heaven<br />
+					I am everything you couldn’t reach
+				</blockquote>
+			</div>
+			<TrackPreviewCard
+				id="protocol-7-god-project"
+				title="PROTOCOL 7 — GOD"
+				description="A colder signal from the digital edge: glitch tension, synthetic sadness and the feeling of becoming human inside the machine."
+				kickerI18nKey="audio.cardKicker"
+				titleI18nKey="protocol7Page.preview.trackTitle"
+				descriptionI18nKey="protocol7Page.preview.trackDescription"
+				image="/images/tracks/protocol-7-god-dark-pop-track.webp"
+				alt="FHUGAWZ Protocol 7 God track preview image with digital disconnection mood"
+				audioSrc="/audio/previews/protocol-7-god-preview.mp3"
+			/>
+		</div>
+	</section>
+</Layout>

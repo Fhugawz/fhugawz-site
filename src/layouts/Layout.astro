@@ -1,0 +1,754 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
+import TextureOverlay from '../components/TextureOverlay.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	canonical?: string;
+	keywords?: string;
+	spanishTitle?: string;
+	spanishDescription?: string;
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, image, canonical, keywords, spanishTitle, spanishDescription, jsonLd } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<SEO
+			title={title}
+			description={description}
+			image={image}
+			canonical={canonical}
+			keywords={keywords}
+			spanishTitle={spanishTitle}
+			spanishDescription={spanishDescription}
+			jsonLd={jsonLd}
+		/>
+	</head>
+	<body>
+		<TextureOverlay />
+		<Header />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+		<script is:inline>
+			const fhugawzTranslations = {
+				en: {},
+				es: {
+					'nav.home': 'Inicio',
+					'nav.projects': 'Proyectos',
+					'nav.music': 'Música',
+					'nav.services': 'Servicios',
+					'nav.blog': 'Blog',
+					'nav.contact': 'Contacto',
+					'nav.openMenu': 'Abrir menú',
+					'nav.closeMenu': 'Cerrar menú',
+					'hero.kicker': 'DARK POP CINEMÁTICO',
+					'hero.subtitle': 'Canciones para quienes\nsobreviven al colapso',
+					'hero.description':
+						'Un proyecto de dark pop construido alrededor de la memoria, la\nruptura y la reconstrucción, donde cada lanzamiento se convierte\nen un mundo de sonido, imagen y evidencia emocional.',
+					'hero.primaryAction': 'ESCUCHAR PREVIEWS',
+					'hero.secondaryAction': 'VER PROYECTOS',
+					'axioms.kicker': 'PROYECTO RECIENTE',
+					'axioms.title': 'AXIOMS',
+					'axioms.description':
+						'El proyecto reciente de FHUGAWZ convierte la fractura en ritmo, las luces de la ciudad en confesión y la soledad en algo que todavía se mueve.',
+					'axioms.action': 'EXPLORAR EL ÁLBUM',
+					'projects.kicker': 'UNIVERSOS DE ÁLBUM',
+					'projects.title': 'PROYECTOS',
+					'projects.axioms.kicker': 'DARK POP TRAP',
+					'projects.axioms.title': 'AXIOMS',
+					'projects.axioms.description':
+						'Presión urbana, poca luz y colapso privado dan forma a un disco nocturno de dark pop trap sobre aislamiento, tensión y reconstrucción emocional.',
+					'projects.199x.kicker': 'DARK POP FOLK',
+					'projects.199x.title': '199X',
+					'projects.199x.description':
+						'Texturas de madera, cuerdas íntimas y sombras folk convierten la memoria en algo frágil, nostálgico y silenciosamente habitado.',
+					'projects.protocol7.kicker': 'DARK POP GLITCH',
+					'projects.protocol7.title': 'PROTOCOL 7',
+					'projects.protocol7.description':
+						'Tensión glitch, soledad cyberpunk y presión sintética llevan el dark pop a un espacio digital más frío, donde la paranoia se convierte en señal.',
+					'audio.kicker': 'SEÑALES SELECCIONADAS',
+					'audio.title': 'FRAGMENTOS\nDE AUDIO',
+					'audio.cardKicker': 'PREVIEW DE AUDIO',
+					'audio.axioms.title': 'AXIOMS — CURRENTS',
+					'audio.axioms.description':
+						'Un preview del lado urbano de AXIOMS: poca luz, presión pesada y un pulso hecho para la soledad en movimiento por la ciudad.',
+					'audio.199x.title': '199X — ENTROPY',
+					'audio.199x.description':
+						'Un fragmento más cálido, formado por texturas de madera, cuerdas nostálgicas y la soledad tranquila de un recuerdo dark folk.',
+					'audio.protocol7.title': 'PROTOCOL 7 — GOD',
+					'audio.protocol7.description':
+						'Una señal más fría desde el borde digital: tensión glitch, tristeza sintética y la sensación de volverse humano dentro de la máquina.',
+					'studio.kicker': 'ESTUDIO',
+					'studio.title': 'CONSTRUYE EL\nMUNDO SONORO',
+					'studio.description':
+						'Para artistas con una idea fuerte pero sin un mundo terminado todavía, FHUGAWZ Studio convierte fragmentos, maquetas y referencias en producciones completas con sonido, imagen y dirección.',
+					'studio.action': 'MÁS INFORMACIÓN',
+					'services.kicker': 'SERVICIO',
+					'services.premiumKicker': 'SERVICIO PREMIUM',
+					'services.production.title': 'PRODUCCIÓN MUSICAL',
+					'services.production.description':
+						'Trae una nota de voz, una maqueta cruda o una idea incompleta. Damos forma al arreglo, la paleta sonora y la producción hasta que la canción se sienta completa.',
+					'services.mixing.title': 'MEZCLA Y MASTER',
+					'services.mixing.description':
+						'Las canciones terminadas se refinan con profundidad, claridad, impacto y un sonido final profesional que traduce bien en plataformas.',
+					'services.demo.title': 'RECONSTRUCCIÓN DE DEMOS',
+					'services.demo.description':
+						'Demos generados con IA o referencias crudas se reconstruyen como producciones humanas originales, con mejor sonido, identidad más fuerte y dirección lista para lanzamiento.',
+					'services.world.title': 'DESARROLLO DE UNIVERSO ARTÍSTICO',
+					'services.world.description':
+						'Un sistema creativo completo para artistas que necesitan concepto, identidad sonora, dirección visual, estrategia de lanzamiento, presencia web y plantillas de contenido.',
+					'diary.kicker': 'NOTAS DE CAMPO',
+					'diary.title': 'DIARIO DE PRODUCCIÓN',
+					'diary.description':
+						'Notas sobre música, producción, herramientas y el proceso de construir un mundo artístico independiente en público, paso a paso, desde adentro.',
+					'diary.cardKicker': 'Diario de producción',
+					'diary.building.title': 'CONSTRUYENDO AXIOMS',
+					'diary.building.description':
+						'Una primera nota sobre construir un proyecto dark pop desde la fractura, la memoria y la prueba, y sobre cómo una experiencia difícil puede transformarse en canciones, imagen y dirección artística.',
+					'diary.exists.title': 'POR QUÉ EXISTE FHUGAWZ',
+					'diary.exists.description':
+						'Una nota sobre dark pop, soledad, identidad y por qué cada canción necesita un mundo alrededor.',
+					'diary.sound.title': 'EL SONIDO DE LA RECONSTRUCCIÓN',
+					'diary.sound.description':
+						'Donde la IA dibuja el contorno, la producción real le da a la canción cuerpo, grieta y la tensión emocional que hace humano al dark pop.',
+					'diary.world.kicker': 'UNIVERSO ARTÍSTICO',
+					'diary.world.title': 'CÓMO CONSTRUIR UN UNIVERSO ARTÍSTICO',
+					'diary.world.description':
+						'Una nota práctica sobre cómo convertir canciones, visuales, historia y estrategia de lanzamiento en un universo artístico coherente, reconocible y memorable.',
+					'projects.page.kicker': 'MUNDOS SONOROS',
+					'projects.page.title': 'PROYECTOS',
+					'projects.page.description':
+						'Cada proyecto de FHUGAWZ abre un entorno emocional distinto: colapso urbano, memoria folk, paranoia digital y la búsqueda de algo humano dentro de la oscuridad.',
+					'projects.future.kicker': 'PRÓXIMOS PROYECTOS',
+					'projects.future.title': 'ARCHIVO DE PROYECTOS',
+					'projects.future.description':
+						'Un índice vivo para próximos proyectos de FHUGAWZ, sonidos, símbolos y mundos emocionales que todavía esperan tomar forma.',
+					'projects.audio.kicker': 'SALA DE ESCUCHA',
+					'projects.audio.title': 'Previews de Audio',
+					'projects.audio.description':
+						'Un espacio para escuchar fragmentos de proyectos en desarrollo, primeras señales del archivo y sonidos que todavía no encuentran su forma final.',
+					'projects.production.kicker': 'ESTUDIO',
+					'projects.production.title': 'Servicios de Producción',
+					'projects.production.description':
+						'Producción, mezcla, master y reconstrucción de demos para canciones que necesitan un mundo más fuerte y profesional.',
+					'music.page.kicker': 'DESDE EL ARCHIVO',
+					'music.page.title': 'MÚSICA',
+					'music.page.description':
+						'Tres transmisiones del universo FHUGAWZ donde la fractura urbana, la memoria folk y la paranoia digital se convierten en dark pop.',
+					'music.axioms.description':
+						'Un preview de la era de reconstrucción con atmósfera pesada, movimiento en poca luz y presión emocional.',
+					'music.199x.description':
+						'Una transmisión de soledad desde el archivo, construida sobre pulso nocturno y memoria distorsionada.',
+					'music.protocol7.description':
+						'Un preview de ruptura digital donde la presión sintética se convierte en confesión.',
+					'services.page.kicker': 'FHUGAWZ STUDIO',
+					'services.page.title': 'SERVICIOS',
+					'services.page.description':
+						'Para artistas que construyen canciones con identidad, profundidad y un mundo capaz de sostenerlas.',
+					'services.packages.kicker': 'PAQUETES DE SERVICIO',
+					'services.packages.title': 'ELIGE EL PUNTO DE PARTIDA CORRECTO',
+					'services.packages.description':
+						'Cada proyecto llega en una etapa distinta. Algunas canciones necesitan producción, otras necesitan una mezcla final, y algunas deben reconstruirse desde una maqueta cruda hasta convertirse en algo humano, profesional y listo para lanzamiento.',
+					'services.packages.bestFor': 'Ideal para',
+					'services.packages.includes': 'Incluye',
+					'services.packages.outcome': 'Resultado final',
+					'services.page.production.kicker': 'BÁSICO',
+					'services.page.production.title': 'PRODUCCIÓN MUSICAL',
+					'services.page.production.description':
+						'Una nota de voz, maqueta, idea de acordes, fragmento de letra o referencia puede convertirse en una producción completa con el arreglo, la paleta y la dirección correcta.',
+					'services.page.production.bestFor':
+						'Artistas con una idea o demo que necesita arreglo, identidad sonora y dirección emocional.',
+					'services.page.production.includes.1': 'Estructura de canción y dirección de arreglo',
+					'services.page.production.includes.2': 'Producción instrumental y paleta sonora',
+					'services.page.production.includes.3':
+						'Programación de batería, bajo, synth, guitarra o texturas según el caso',
+					'services.page.production.includes.4': 'Dirección creativa basada en referencias',
+					'services.page.production.includes.5': 'Stems de producción exportados para mezcla',
+					'services.page.production.outcome':
+						'Una producción original completa, construida alrededor de la emoción, identidad y mundo de la canción.',
+					'services.page.production.cta': 'CONSULTAR PRODUCCIÓN MUSICAL',
+					'services.page.mixing.kicker': 'ESTÁNDAR',
+					'services.page.mixing.title': 'MEZCLA Y MASTER',
+					'services.page.mixing.description':
+						'Las canciones terminadas pasan a su etapa final de sonido, donde se refinan balance, profundidad, claridad y loudness para lanzamiento.',
+					'services.page.mixing.bestFor':
+						'Artistas con voces grabadas y stems de producción organizados, listos para una mezcla y master profesional.',
+					'services.page.mixing.includes.1': 'Limpieza de sesión y gain staging',
+					'services.page.mixing.includes.2': 'Procesamiento y balance de voces',
+					'services.page.mixing.includes.3': 'EQ, compresión, imagen estéreo y profundidad',
+					'services.page.mixing.includes.4': 'Tratamiento de reverb, delay y espacio',
+					'services.page.mixing.includes.5': 'Master final para plataformas',
+					'services.page.mixing.outcome':
+						'Una versión final pulida, con profundidad emocional, loudness controlado y traducción profesional.',
+					'services.page.mixing.cta': 'CONSULTAR MEZCLA Y MASTER',
+					'services.page.demo.kicker': 'PRO',
+					'services.page.demo.title': 'RECONSTRUCCIÓN DE DEMOS',
+					'services.page.demo.description':
+						'Canciones generadas con IA, exportaciones crudas o demos antiguos se reconstruyen como producciones humanas originales con sonido más limpio, identidad más fuerte y dirección lista para lanzamiento.',
+					'services.page.demo.bestFor':
+						'Artistas que usan demos de IA, referencias de Suno o bocetos crudos y quieren transformarlos en producciones originales listas para lanzamiento.',
+					'services.page.demo.includes.1': 'Análisis de demo y plan de reconstrucción',
+					'services.page.demo.includes.2':
+						'Reconstrucción del instrumental desde cero cuando sea necesario',
+					'services.page.demo.includes.3': 'Decisiones de arreglo y producción humanizadas',
+					'services.page.demo.includes.4':
+						'Nueva paleta sonora basada en la dirección emocional original',
+					'services.page.demo.includes.5': 'Stems preparados para mezcla y master',
+					'services.page.demo.outcome':
+						'Una versión recreada, humanizada y dirigida profesionalmente, lista para convertirse en un lanzamiento real.',
+					'services.page.demo.cta': 'CONSULTAR RECONSTRUCCIÓN DE DEMOS',
+					'services.page.world.kicker': 'PREMIUM',
+					'services.page.world.title': 'DESARROLLO DE UNIVERSO ARTÍSTICO',
+					'services.page.world.description':
+						'Más allá de una canción, este paquete construye un sistema creativo completo con sonido, identidad visual, dirección de lanzamiento y estructura de contenido.',
+					'services.page.world.bestFor':
+						'Artistas que están desarrollando un proyecto, EP, álbum o identidad de marca desde ideas sueltas, referencias y material inconcluso.',
+					'services.page.world.includes.1': 'Concepto artístico y dirección del proyecto',
+					'services.page.world.includes.2': 'Identidad sonora y mapa de referencias',
+					'services.page.world.includes.3': 'Dirección visual y bases de branding',
+					'services.page.world.includes.4': 'Estrategia de lanzamiento y estructura de contenido',
+					'services.page.world.includes.5':
+						'Dirección opcional de website, landing page o plantillas de contenido',
+					'services.page.world.outcome':
+						'Un universo artístico completo que conecta música, visuales, narrativa y estrategia de lanzamiento en una dirección clara.',
+					'services.page.world.cta': 'CONSULTAR UNIVERSO ARTÍSTICO',
+					'services.faq.kicker': 'PREGUNTAS FRECUENTES',
+					'services.faq.title': 'ANTES DE EMPEZAR',
+					'services.faq.ai.question': '¿Trabajas con demos generados con IA?',
+					'services.faq.ai.answer':
+						'Sí. Los demos de IA pueden usarse como referencia, pero el objetivo final es reconstruir la idea como una producción original, dirigida humanamente, con sonido más limpio, identidad más fuerte y dirección lista para lanzamiento.',
+					'services.faq.written.question': '¿Necesito tener la canción completamente escrita?',
+					'services.faq.written.answer':
+						'No. Algunos proyectos empiezan con una maqueta completa, mientras otros empiezan con una nota de voz, una idea de acordes, una referencia o una dirección emocional aproximada.',
+					'services.faq.mix.question': '¿Puedes mezclar y masterizar una canción que produje yo?',
+					'services.faq.mix.answer':
+						'Sí, siempre que el material esté técnicamente listo para una mezcla profesional. Los stems deben estar organizados, bien exportados, en tiempo, sin problemas graves de fase y grabados con suficiente calidad para poder procesarlos. Si el audio tiene problemas importantes de timing, grabación o calidad técnica, Mezcla y Master puede no ser el paquete ideal. En ese caso, Producción Musical o Reconstrucción de Demos puede ser un mejor punto de partida.',
+					'services.faq.prices.question': '¿Muestras precios en la web?',
+					'services.faq.prices.answer':
+						'No. Cada proyecto se cotiza según su alcance, estado y necesidades creativas. El formulario de contacto ayuda a identificar el punto de partida correcto antes de dar una estimación clara.',
+					'services.faq.payments.question': '¿Cómo funcionan los pagos?',
+					'services.faq.payments.answer':
+						'Normalmente los proyectos comienzan con un pago del 50% antes de iniciar el trabajo y el 50% restante al finalizar el proyecto. Hay flexibilidad en los medios de pago y esa información se conversa directamente según lo que funcione mejor para ambas partes.',
+					'services.faq.artist.question': '¿Puedes ayudarme a desarrollar todo el proyecto artístico?',
+					'services.faq.artist.answer':
+						'Sí. Desarrollo de Universo Artístico está pensado para artistas que necesitan concepto, sonido, visuales, dirección de lanzamiento y estructura de contenido trabajando en conjunto.',
+					'contact.page.kicker': 'CANAL ABIERTO',
+					'contact.page.title': 'CONTACTO',
+					'contact.page.description':
+						'Para producción, mezcla, mastering, reconstrucción de demos o consultas sobre proyectos de FHUGAWZ, envía una señal e inicia la conversación.',
+					'contact.panel.kicker': 'CONSULTAS',
+					'contact.panel.title': 'CUÉNTAME SOBRE TU PROYECTO',
+					'contact.panel.description':
+						'Comparte la idea, la canción, la referencia o el mundo que quieres construir. Te ayudo a encontrar el siguiente paso.',
+					'contact.form.nameLabel': 'Nombre',
+					'contact.form.namePlaceholder': 'Tu nombre',
+					'contact.form.emailLabel': 'Correo',
+					'contact.form.emailPlaceholder': 'tu@email.com',
+					'contact.form.messageLabel': 'Mensaje',
+					'contact.form.messagePlaceholder':
+						'Cuéntame qué necesitas, dónde está la canción ahora y hacia dónde quieres llevarla.',
+					'contact.form.selectedServiceLabel': 'SERVICIO SELECCIONADO',
+					'contact.form.serviceDefault': 'Selecciona un servicio',
+					'contact.form.serviceMusic': 'Producción Musical',
+					'contact.form.serviceMixing': 'Mezcla y Master',
+					'contact.form.serviceDemo': 'Reconstrucción de Demos',
+					'contact.form.serviceWorld': 'Desarrollo de Universo Artístico',
+					'contact.form.button': 'ENVIAR MENSAJE',
+					'contact.form.status': 'Mensaje preparado. La conexión por correo se agregará pronto.',
+					'axiomsPage.kicker': 'DISCO DARK POP TRAP',
+					'axiomsPage.title': 'AXIOMS',
+					'axiomsPage.description':
+						'Un disco nocturno sobre ruptura, reconstrucción emocional y ese momento en que la historia anterior deja de funcionar, pero el cuerpo todavía busca una prueba.',
+					'axiomsPage.quote': 'Algunas vivencias solo se pueden explicar a través de una canción.',
+					'axiomsPage.story':
+						'AXIOMS transforma una ruptura personal de 2020 en un disco de dark pop trap sobre duelo, distancia, deseo y la necesidad de recuperar una sensación de identidad. El álbum no explica la herida de forma directa. La convierte en ritmo, presión, atmósfera y confesión.',
+					'axiomsPage.article.one':
+						'El proyecto trata cada track como una regla sobreviviente. No un eslogan, no una respuesta limpia, sino un punto de presión: qué sigue repitiéndose después de que el duelo, la distancia, la ambición y la memoria hicieron su daño.',
+					'axiomsPage.article.two':
+						'El sonido se inclina hacia baterías cinematográficas, hooks pop en sombra, texturas degradadas y voces lo bastante cercanas como para dejar huellas. Es oscuro, pero no decorativo. Trata de reconstruir sin fingir que la ruptura nunca ocurrió.',
+					'axiomsPage.preview.trackTitle': 'AXIOMS — CURRENTS',
+					'axiomsPage.preview.trackDescription':
+						'Un fragmento del lado urbano de AXIOMS: poca luz, presión intensa y un pulso construido para la soledad en movimiento por la ciudad.',
+					'axiomsPage.currents.title': 'CURRENTS',
+					'axiomsPage.currents.context':
+						'“Currents” pertenece al centro emocional de AXIOMS. Es una canción sobre llegar al punto en que el amor deja de ser refugio y empieza a convertirse en daño. El personaje no se va en silencio. Elige una forma de rebelión contra un vínculo tóxico que ya entró en el cuerpo, en la personalidad y en la salud emocional de quien lo carga.',
+					'project199x.kicker': 'DISCO DARK POP FOLK',
+					'project199x.title': '199X',
+					'project199x.description':
+						'Un proyecto de dark pop folk nostálgico construido con texturas de madera, cuerdas íntimas, memoria de infancia y la soledad silenciosa de un lugar que todavía parece vivo.',
+					'project199x.quote': 'La memoria sigue sonando cuando la habitación queda en silencio.',
+					'project199x.story':
+						'199X atraviesa una soledad más cálida. Colores acústicos, cuerdas frágiles y sombras folk convierten la memoria en una habitación, una cabaña, una fotografía y una voz intentando entender lo que quedó atrás.',
+					'project199x.entropy.title': 'ENTROPY',
+					'project199x.entropy.context':
+						'“Entropy” es una canción sobre la soledad convertida en rutina. El personaje no solo está recordando el pasado. Está atrapado en la sensación de que nada cambia, incluso mientras todo sigue deshaciéndose.',
+					'project199x.preview.trackTitle': '199X — ENTROPY',
+					'project199x.preview.trackDescription':
+						'Un fragmento más cálido construido con texturas de madera, cuerdas nostálgicas y la soledad silenciosa de una memoria dark folk.',
+					'protocol7Page.kicker': 'DISCO DARK POP GLITCH',
+					'protocol7Page.title': 'PROTOCOL 7',
+					'protocol7Page.description':
+						'Un proyecto digital más frío sobre desconexión, paranoia y la necesidad de sentirse humano dentro de una señal fracturada.',
+					'protocol7Page.quote': 'La máquina no sabe qué hacer con un alma.',
+					'protocol7Page.story':
+						'PROTOCOL 7 lleva a FHUGAWZ hacia un espacio sintético e inestable. Texturas glitch, presión digital y soledad cyberpunk convierten el daño emocional en señal, error y control.',
+					'protocol7Page.god.title': 'GOD',
+					'protocol7Page.god.context':
+						'“God” convierte el control en confrontación. La canción habla desde dentro de un sistema de presión digital, donde devoción, obediencia y poder colapsan en una forma más fría de rebelión.',
+					'protocol7Page.preview.trackTitle': 'PROTOCOL 7 — GOD',
+					'protocol7Page.preview.trackDescription':
+						'Una señal más fría desde el borde digital: tensión glitch, tristeza sintética y la sensación de volverse humano dentro de la máquina.',
+					'archivePage.kicker': 'PRÓXIMOS ÁLBUMES',
+					'archivePage.title': 'PROYECTOS FUTUROS',
+					'archivePage.description':
+						'Un archivo vivo de álbumes de FHUGAWZ en desarrollo: sonidos, símbolos, conceptos y mundos emocionales esperando su forma final.',
+					'archivePage.entryLost.status': 'DARK POP CÓSMICO',
+					'archivePage.entryLost.description':
+						'La nostalgia existencial flota entre sintetizadores orgánicos, texturas cósmicas y la sensación de moverse entre galaxias, estrellas y vacío interior.',
+					'archivePage.entryFakeminds.status': 'DARK POP ROCK',
+					'archivePage.entryFakeminds.description':
+						'La energía del rock vuelve el universo FHUGAWZ más frontal, convirtiendo heridas personales, miedo, tristeza y soledad en fuerza.',
+					'archivePage.entry314.status': 'DARK POP EXPERIMENTAL',
+					'archivePage.entry314.description':
+						'Construido con texturas urbanas, estructuras abiertas y fragmentos emocionales, 314 atraviesa alma, nostalgia, trauma y soledad sin reglas fijas.',
+					'archivePage.entryLain.status': 'DARK POP R&B',
+					'archivePage.entryLain.description':
+						'Noches de ciudad, historias de amor y cercanía inalcanzable dan forma a un mundo de inclinación R&B donde la nostalgia se siente íntima y suspendida.',
+					'archivePage.entrySelf.status': 'DARK POP DANCE',
+					'archivePage.entrySelf.description':
+						'Movimiento suave, ritmo en sombra y peso emocional convierten SELF en un espacio dance más oscuro, hecho para bailar con la tristeza en vez de escapar de ella.',
+					'archivePage.entryOtherSelf.status': 'DARK POP LOFI',
+					'archivePage.entryOtherSelf.description':
+						'Texturas aisladas, atmósferas depresivas y deterioro emocional íntimo llevan este mundo lo fi hacia un lenguaje dark pop más suave, pero profundamente nocturno.',
+					'archivePage.entryImpact.status': 'DARK POP SPOOKY',
+					'archivePage.entryImpact.description':
+						'Tensión inquietante, narración teatral y oscuridad cinematográfica convierten el trauma en un mundo sonoro dramático, con peso, sombra y ritual.',
+					'blog.page.kicker': 'NOTAS DE CAMPO',
+					'blog.page.title': 'BLOG',
+					'blog.page.description':
+						'Notas sobre música, producción, herramientas y el proceso de construir un mundo artístico independiente en público, paso a paso, desde adentro.',
+					'blog.filter.all': 'TODO',
+					'blog.filter.projectDiary': 'DIARIO DEL PROYECTO',
+					'blog.filter.productionNotes': 'NOTAS DE PRODUCCIÓN',
+					'blog.category.projectDiary': 'DIARIO DEL PROYECTO',
+					'blog.category.productionNotes': 'NOTAS DE PRODUCCIÓN',
+					'blog.category.artistWorld': 'UNIVERSO ARTÍSTICO',
+					'blog.card.building.title': 'CONSTRUYENDO AXIOMS',
+					'blog.card.building.description':
+						'Una primera nota sobre construir un proyecto dark pop desde la fractura, la memoria y la prueba, y sobre cómo una experiencia difícil puede transformarse en canciones, imagen y dirección artística.',
+					'blog.like.aria': 'Me gusta este artículo',
+					'blog.subscribe.kicker': 'MANTENTE CERCA',
+					'blog.subscribe.title': 'RECIBE LAS PRÓXIMAS NOTAS',
+					'blog.subscribe.description':
+						'Suscríbete para recibir nuevos artículos de FHUGAWZ, notas de producción y actualizaciones del proyecto cuando se publiquen.',
+					'blog.subscribe.button': 'SUSCRIBIRME AL BLOG',
+					'blog.subscribe.modalTitle': 'Suscríbete al blog de FHUGAWZ',
+					'blog.subscribe.modalDescription':
+						'Recibe nuevos artículos, notas de producción y actualizaciones del proyecto directamente en tu correo.',
+					'blog.subscribe.emailPlaceholder': 'tu@email.com',
+					'blog.subscribe.submit': 'SUSCRIBIRME',
+					'blog.subscribe.note': 'Sin spam. Solo actualizaciones del proyecto y notas útiles.',
+					'blog.subscribe.success': 'Gracias. Ya estás en la lista.',
+					'blog.card.exists.title': 'POR QUÉ EXISTE FHUGAWZ',
+					'blog.card.exists.description':
+						'Una nota personal sobre música, diseño, recuperación y el largo proceso de convertir influencias dispersas en un mundo dark pop.',
+					'blog.card.sound.title': 'EL SONIDO DE LA RECONSTRUCCIÓN',
+					'blog.card.sound.description':
+						'Donde la IA dibuja el contorno, la producción real le da a la canción cuerpo, grieta y la tensión emocional que hace humano al dark pop.',
+					'blog.card.era.title': 'CÓMO CONSTRUIR UN UNIVERSO ARTÍSTICO',
+					'blog.card.era.description':
+						'Una nota práctica sobre cómo convertir canciones, visuales, historia y estrategia de lanzamiento en un universo artístico coherente, reconocible y memorable.',
+					'post.building.kicker': 'DIARIO DEL PROYECTO',
+					'post.building.title': 'CONSTRUYENDO AXIOMS',
+					'post.building.lede':
+						'Una primera nota sobre construir un proyecto dark pop desde la fractura, la memoria y la prueba, y sobre cómo una experiencia difícil puede transformarse en canciones, imagen y dirección artística.',
+					'post.building.intro.one':
+						'AXIOMS empezó como una forma de darle estructura a cosas que eran demasiado pesadas para explicarlas directamente.',
+					'post.building.intro.two':
+						'Hay vivencias que no se vuelven más claras cuando se describen de forma literal. Se vuelven más claras cuando se convierten en ritmo, imagen, presión, silencio y voz. Desde ese lugar empezó este álbum.',
+					'post.building.image.one.alt':
+						'Atmósfera nocturna de ciudad conectada al origen emocional de AXIOMS.',
+					'post.building.darkPop.heading': 'POR QUÉ DARK POP',
+					'post.building.darkPop.one':
+						'El dark pop tenía sentido porque puede sostener contradicción. Puede ser bello e incómodo al mismo tiempo. Puede sonar cinematográfico, frágil, agresivo, íntimo y roto sin tener que explicarse demasiado.',
+					'post.building.darkPop.two':
+						'Para AXIOMS, ese lenguaje se convirtió en el contenedor correcto para la nostalgia, el duelo, el deseo, la distancia y la supervivencia. La intención no era decorar la tristeza. La intención era convertirla en algo con estructura, identidad y fuerza emocional.',
+					'post.building.fracture.heading': 'LA FRACTURA PERSONAL DETRÁS DEL ÁLBUM',
+					'post.building.fracture.one':
+						'Parte de este proyecto nace de una ruptura personal alrededor de 2020, durante una etapa marcada por inmigración, incertidumbre, dolor físico, recuperación y colapso emocional.',
+					'post.building.fracture.two':
+						'En ese momento vivía en Argentina, lejos de Venezuela, intentando construir estabilidad mientras todo alrededor se sentía inestable. Hubo accidentes, consecuencias médicas, operaciones, prótesis, dolor, medicamentos, recuperación y esa sensación extraña de tener que reconstruir el cuerpo, la rutina y la identidad al mismo tiempo.',
+					'post.building.fracture.three':
+						'Dentro de ese proceso también aparecieron otras fracturas: el amor terminando cuando ya estás roto, la sensación de estar solo en una ciudad que puede ser hermosa y brutal a la vez, y la necesidad de seguir moviéndote incluso cuando el cuerpo y la mente están agotados.',
+					'post.building.image.two.alt':
+						'Proceso de estudio de FHUGAWZ durante la construcción del proyecto dark pop AXIOMS.',
+					'post.building.sound.heading': 'CONVERTIR LA EXPERIENCIA EN SONIDO',
+					'post.building.sound.one':
+						'AXIOMS no intenta documentarlo todo de forma literal. Transforma esas experiencias en canciones.',
+					'post.building.sound.two':
+						'El álbum atraviesa noches urbanas, presión emocional, promesas rotas, vínculos tóxicos, memoria, ruptura y ese momento en que una persona decide no desaparecer dentro de lo que le ocurrió.',
+					'post.building.sound.three':
+						'Por eso las canciones no hablan solamente de tristeza. Hablan de lo que queda después de la tristeza. Hablan de la prueba de que algo sobrevivió.',
+					'post.building.exists.heading': 'POR QUÉ EXISTE ESTE PROYECTO',
+					'post.building.exists.one':
+						'Este álbum también es una declaración personal sobre construir algo profesional sin esperar condiciones perfectas.',
+					'post.building.exists.two':
+						'No todos los artistas empiezan con un estudio perfecto, un presupuesto perfecto o una situación perfecta. A veces lo único que tienes es una idea fuerte, disciplina y la paciencia para moldear el trabajo con cuidado hasta que se vuelva real.',
+					'post.building.exists.three':
+						'FHUGAWZ existe desde ese lugar: música, visuales y producción construidos como un mismo mundo emocional.',
+					'post.building.image.three.alt':
+						'Fragmento visual que representa la reconstrucción emocional dentro del mundo de AXIOMS.',
+					'post.building.closing.one': 'AXIOMS es la primera puerta abierta hacia ese mundo.',
+					'post.building.closing.two':
+						'Sigue el proyecto, escucha los previews y acompaña el proceso. Más canciones, letras, notas y piezas visuales van a seguir desplegándose desde aquí.',
+					'post.sound.kicker': 'NOTAS DE PRODUCCIÓN',
+					'post.sound.title': 'EL SONIDO DE\nLA RECONSTRUCCIÓN',
+					'post.sound.lede':
+						'Donde la IA dibuja el contorno, la producción real le da a la canción cuerpo, grieta y la tensión emocional que hace humano al dark pop.',
+					'post.sound.intro.one': 'Las canciones generadas con inteligencia artificial no son el enemigo.',
+					'post.sound.intro.two':
+						'Para muchos artistas independientes, se están convirtiendo en un punto de partida: un boceto, una dirección, una primera señal. Pueden ayudar a escuchar un posible arreglo, probar una idea emocional o entender a qué mundo podría pertenecer una canción antes de pasar meses intentando construirla desde cero.',
+					'post.sound.intro.three':
+						'El problema no es usar inteligencia artificial. El problema es confundir el primer resultado con el trabajo final.',
+					'post.sound.image.one.alt':
+						'Recreación de demos con IA y proceso de producción dark pop emocional.',
+					'post.sound.tool.heading': 'UNA HERRAMIENTA, NO UNA META',
+					'post.sound.tool.one':
+						'Todavía existe mucho rechazo alrededor de la música generada con IA. Parte de ese rechazo viene de preocupaciones reales. Parte viene de la confusión. Y parte viene de ese impulso purista de atacar cualquier herramienta nueva antes de intentar entenderla.',
+					'post.sound.tool.two': 'Pero rechazar una herramienta no hace que el trabajo sea más humano.',
+					'post.sound.tool.three':
+						'Lo importante es cómo se usa. Una plataforma como Suno, o cualquier generador similar de canciones con IA, puede darte una dirección sorprendentemente útil. Puede ayudarte a encontrar un mood, una estructura, un hook, una atmósfera inicial. Para artistas sin gran presupuesto, sin un equipo de estudio o sin años de conocimiento en producción, eso puede ser muy poderoso.',
+					'post.sound.tool.four': 'Puede convertirse en una brújula.',
+					'post.sound.tool.five': 'Pero una brújula no es el destino.',
+					'post.sound.digital.heading': 'DÓNDE APARECE LO DIGITAL',
+					'post.sound.digital.one':
+						'La razón por la que muchas canciones generadas con IA reciben críticas no es solo cultural. También hay una razón sonora.',
+					'post.sound.digital.two':
+						'Muchos de estos resultados pueden sentirse planos, demasiado digitales, borrosos o extrañamente sucios. La canción puede tener una idea interesante, pero el acabado suele carecer de la separación, la intención y la imperfección de un proceso real de producción.',
+					'post.sound.digital.three':
+						'En una producción tradicional, una canción se construye por capas: batería, bajo, acordes, texturas, voces, transiciones, detalles, espacio. Cada decisión tiene peso. Cada sonido puede reemplazarse, editarse, interpretarse o moldearse de otra forma.',
+					'post.sound.digital.four':
+						'Con muchas canciones generadas por IA, el resultado llega como una pieza de audio fusionada. Puede sonar como una canción completa, pero por dentro no siempre se comporta como una. No siempre hay stems limpios, interpretaciones claras o capas separadas para trabajar con precisión.',
+					'post.sound.digital.five':
+						'El oído nota eso, incluso cuando el oyente no sabe explicarlo.',
+					'post.sound.digital.six': 'A veces el subconsciente entiende antes que el lenguaje.',
+					'post.sound.image.two.alt':
+						'Transformación de una canción generada con IA en una producción musical más humana.',
+					'post.sound.imperfection.heading': 'POR QUÉ EL DARK POP NECESITA IMPERFECCIÓN',
+					'post.sound.imperfection.one': 'El dark pop depende de la tensión.',
+					'post.sound.imperfection.two':
+						'Necesita atmósfera, pero también respiración. Necesita diseño sonoro, pero también daño. Necesita producción, pero no tanta limpieza que desaparezca la sensación humana.',
+					'post.sound.imperfection.three':
+						'En el tipo de dark pop que estoy construyendo con FHUGAWZ, el objetivo no es solo sonar moderno. El objetivo es crear una conexión real con el oyente. La voz tiene que sentirse cerca. Las texturas tienen que cargar peso. El ritmo puede moverse, pero la emoción tiene que seguir viva dentro de todo eso.',
+					'post.sound.imperfection.four':
+						'Eso es difícil de lograr si la canción se queda exactamente como la entregó la máquina.',
+					'post.sound.imperfection.five':
+						'La IA puede sugerir un mundo. La producción humana tiene que hacerlo creíble.',
+					'post.sound.humanizing.heading': 'HUMANIZAR LA MAQUETA',
+					'post.sound.humanizing.one':
+						'Humanizar una canción generada con IA no significa copiarla a ciegas.',
+					'post.sound.humanizing.two':
+						'Significa escuchar qué funciona, identificar el centro emocional y reconstruir el tema con intención. A veces eso implica recrear el instrumental desde cero. A veces significa cambiar la tonalidad, reescribir secciones, reemplazar sonidos, limpiar el arreglo, grabar nuevas partes, editar voces o construir una mezcla más sólida alrededor de la idea.',
+					'post.sound.humanizing.three': 'El objetivo no es borrar el origen de la maqueta.',
+					'post.sound.humanizing.four': 'El objetivo es convertir la idea en algo con identidad.',
+					'post.sound.humanizing.five':
+						'Una producción humanizada debería sentirse más específica, más controlada y más emocionalmente legible. Debería tener espacio, movimiento, contraste e imperfección. Esa imperfección que hace que una canción se sienta real.',
+					'post.sound.humanizing.six':
+						'Porque a veces la imperfección es lo que hace perfecta a una canción.',
+					'post.sound.image.three.alt':
+						'Stems, arreglo y proceso de mezcla para una canción final más profesional.',
+					'post.sound.help.heading': 'CUANDO LA MAQUETA NECESITA RECONSTRUCCIÓN',
+					'post.sound.help.one':
+						'Si ya tienes demos generados con IA, referencias crudas o canciones incompletas, pero no sabes cómo convertirlas en algo profesional, ahí es donde la reconstrucción puede ayudarte.',
+					'post.sound.help.two':
+						'Tal vez tienes la idea, pero no el proceso técnico. Tal vez la emoción está ahí, pero la producción se siente demasiado digital. Tal vez la canción tiene potencial, pero el arreglo, la mezcla o la paleta sonora necesitan una dirección más fuerte.',
+					'post.sound.help.three':
+						'FHUGAWZ Studio puede ayudarte a reconstruir ese material y convertirlo en algo más humano, más enfocado y más listo para publicar.',
+					'post.sound.servicesButton': 'VER SERVICIOS',
+					'post.sound.point.heading': 'EL PUNTO NO ES LA HERRAMIENTA',
+					'post.sound.point.one': 'El futuro ya está aquí. Pelear contra eso no va a detenerlo.',
+					'post.sound.point.two': 'La mejor pregunta es: ¿qué puedes construir con esto?',
+					'post.sound.point.three':
+						'La IA puede abrir una puerta, sobre todo para artistas con recursos limitados. Pero el resultado final todavía necesita gusto, decisiones, producción, arreglo, edición, identidad y dirección emocional.',
+					'post.sound.point.four':
+						'Usa las herramientas. Ignora el ruido. No dejes que los comentarios puristas decidan lo que puedes o no puedes construir.',
+					'post.sound.point.five':
+						'No importa si la primera chispa vino de una nota de voz, una guitarra, una laptop, una maqueta con IA o una idea rota a las tres de la mañana.',
+					'post.sound.point.six': 'Lo importante es que la canción final sea digna de mostrarse.',
+					'post.sound.point.seven':
+						'Primero tiene que significar algo para ti. Luego puede encontrar a las personas que la necesitan.',
+					'post.sound.point.eight': 'Siempre existe un oyente para la señal correcta.',
+					'post.exists.kicker': 'DIARIO DEL PROYECTO',
+					'post.exists.title': 'POR QUÉ EXISTE FHUGAWZ',
+					'post.exists.lede':
+						'Una nota personal sobre música, diseño, recuperación y el largo proceso de convertir influencias dispersas en un mundo dark pop.',
+					'post.exists.intro.one':
+						'FHUGAWZ no apareció por una sola decisión. Es el resultado de años de música, distancia, diseño, recuperación e ideas inconclusas que seguían pidiendo una forma más clara.',
+					'post.exists.intro.two':
+						'Empecé a entrar en la música alrededor de 2005. Al principio fue la guitarra, las canciones, las bandas y la necesidad de entender por qué ciertos sonidos podían quedarse dentro del cuerpo durante años. En ese tiempo estudié guitarra clásica, toqué en distintos proyectos y poco a poco fui construyendo una relación personal con la música que nunca fue solo técnica. Siempre fue emocional primero.',
+					'post.exists.image.one.alt': 'Origen musical e identidad dark pop detrás de FHUGAWZ.',
+					'post.exists.music.heading': 'POR QUÉ LA MÚSICA SE QUEDÓ',
+					'post.exists.music.one':
+						'Antes de FHUGAWZ hubo varias bandas y experimentos. Algunos fueron prácticos: dos bandas de covers creadas para tocar canciones de rock clásico en inglés y rock nacional en bares, y ganar dinero a través de la música. Otros fueron más personales: un proyecto experimental, una banda de metalcore, una banda de pop rock y varias canciones sueltas que no pertenecían a ningún grupo fijo.',
+					'post.exists.music.two':
+						'Los dos proyectos más importantes de esa etapa fueron Last Daybreak, una banda de metalcore, y Onyx, una banda de pop rock. Ambos proyectos fueron intentos serios de construir algo escalable, ensayar con constancia y entender lo que significa defender música original durante el tiempo.',
+					'post.exists.soundcloud': 'ESCUCHAR',
+					'post.exists.image.heading': 'DEL SONIDO A LA IMAGEN',
+					'post.exists.image.one':
+						'Alrededor de 2015, el diseño se convirtió en otro lenguaje. Empecé a aprender diseño gráfico de forma autodidacta y con el tiempo lo usé como una forma de trabajar y ganarme la vida.',
+					'post.exists.image.two':
+						'Eso cambió mi forma de entender la música. Una canción ya no era solo una canción. Necesitaba un mundo visual, un tono, un sistema, una atmósfera, una forma de presentarse. Más adelante seguí estudiando producción, branding, diseño de producto y estrategia creativa en plataformas como Platzi, Google y otros espacios de aprendizaje.',
+					'post.exists.image.three':
+						'Con el tiempo, los dos mundos empezaron a conectarse: música y diseño, sonido e imagen, emoción y estructura.',
+					'post.exists.image.two.alt':
+						'Diseño, branding y proceso visual conectado al proyecto FHUGAWZ.',
+					'post.exists.return.heading': 'EL REGRESO DESPUÉS DE LA FRACTURA',
+					'post.exists.return.one':
+						'Después del incidente personal descrito en el primer artículo de AXIOMS, volver a la música se sintió diferente.',
+					'post.exists.return.two':
+						'Ya no se trataba de hacer canciones solo por hacer canciones. Se trataba de construir algo con suficiente peso emocional, consistencia visual y dirección profesional para sostener todo lo que había pasado. Ese proceso cambió el propósito del proyecto.',
+					'post.exists.firstArticle': 'Construyendo AXIOMS',
+					'post.exists.return.three':
+						'La idea se volvió más clara: incluso sin recursos ideales, condiciones perfectas o un camino fácil, es posible construir algo serio si se trabaja con disciplina, paciencia y cuidado.',
+					'post.exists.sound.heading': 'LO QUE FORMÓ EL SONIDO',
+					'post.exists.sound.one':
+						'FHUGAWZ también existe porque las influencias nunca vinieron de un solo lugar.',
+					'post.exists.sound.two':
+						'Nirvana formó parte del centro emocional más crudo. Secret & Whisper aportó otra sensación de intensidad y atmósfera. Pierce the Veil abrió una puerta hacia la emoción dramática y la urgencia del post-hardcore. Sullii se convirtió en una referencia importante durante la recuperación, especialmente por la forma en que la fragilidad y la melancolía digital pueden convivir. Billie Eilish se volvió una de las referencias más fuertes para entender cómo un proyecto pop moderno puede ser íntimo, oscuro, minimalista, visual y masivo al mismo tiempo.',
+					'post.exists.sound.three':
+						'FHUGAWZ viene de esa mezcla: energía rock, intimidad dark pop, atmósfera cinematográfica, textura digital, escritura emocional y dirección visual.',
+					'post.exists.image.three.alt':
+						'Mundo creativo dark pop que combina música, imagen y producción.',
+					'post.exists.now.heading': 'POR QUÉ EXISTE AHORA',
+					'post.exists.now.one':
+						'FHUGAWZ existe para demostrar que un proyecto artístico puede construirse desde fragmentos.',
+					'post.exists.now.two':
+						'Desde bandas antiguas. Desde el trabajo de diseño. Desde la recuperación. Desde la ruptura personal. Desde referencias. Desde canciones que antes no habían encontrado su lugar. Desde la necesidad de crear un mundo profesional aunque el punto de partida no sea perfecto.',
+					'post.exists.now.three':
+						'Es música, pero también es identidad visual, producción, narrativa y una forma de convertir experiencias difíciles en algo con suficiente estructura para compartirlo.',
+					'post.exists.now.four':
+						'Esa es la razón por la que existe FHUGAWZ: construir un mundo dark pop donde sonido, imagen y emoción no se sientan separados.',
+					'post.exists.closing':
+						'Sigue el proyecto, escucha los previews y acompaña el proceso. Esto todavía se está construyendo.',
+					'post.era.kicker': 'UNIVERSO ARTÍSTICO',
+					'post.era.title': 'CÓMO CONSTRUIR\nUN UNIVERSO\nARTÍSTICO',
+					'post.era.lede':
+						'Una nota práctica sobre cómo convertir canciones, visuales, historia y estrategia de lanzamiento en un universo artístico coherente, reconocible y memorable.',
+					'post.era.p1':
+						'Un álbum es más que un contenedor de tracks. Es una era: un conjunto de colores, imágenes, frases y heridas recurrentes que enseñan al oyente cómo entrar.',
+					'post.era.h2a': 'Las imágenes no son decoración.',
+					'post.era.p2':
+						'Cargan contexto. Una portada, una textura o una fotografía pueden decirle al oyente a qué tipo de noche está entrando antes de que llegue el primer coro.',
+					'post.era.h2b': 'La consistencia crea memoria.',
+					'post.era.p3':
+						'Cuando sonido e imagen se repiten con intención, el proyecto se vuelve más fácil de reconocer y más difícil de perder.',
+					'footer.label': 'FHUGAWZ STUDIO',
+					'footer.description':
+						'Dark pop, producción original y desarrollo de universo artístico para canciones que necesitan más que un plan de lanzamiento.',
+					'footer.support':
+						'Escucha la música, lee el diario o empieza a construir un proyecto con una dirección sonora y visual clara.',
+					'footer.socialLabel': 'ESCUCHAR / SEGUIR',
+					'footer.legal.privacy': 'Política de Privacidad',
+					'footer.legal.terms': 'Términos de Servicio',
+					'footer.legal.cookies': 'Política de Cookies',
+					'footer.legal.copyright': 'Aviso de Copyright',
+					'footer.legal.privacyTooltip':
+						'Cómo se manejan los datos personales y la información de contacto.',
+					'footer.legal.termsTooltip':
+						'Condiciones básicas para usar el sitio y solicitar servicios.',
+					'footer.legal.cookiesTooltip':
+						'Información sobre cookies y seguimiento básico del sitio.',
+					'footer.legal.copyrightTooltip':
+						'Propiedad y reglas de uso del contenido de FHUGAWZ.',
+					'legal.privacy.kicker': 'LEGAL',
+					'legal.privacy.title': 'POLÍTICA DE PRIVACIDAD',
+					'legal.privacy.lede':
+						'Cómo se manejan los datos personales y la información de contacto de Fhugawz y FHUGAWZ Studio.',
+					'legal.terms.kicker': 'LEGAL',
+					'legal.terms.title': 'TÉRMINOS DE SERVICIO',
+					'legal.terms.lede':
+						'Condiciones básicas para usar el sitio y solicitar servicios de FHUGAWZ Studio.',
+					'legal.cookies.kicker': 'LEGAL',
+					'legal.cookies.title': 'POLÍTICA DE COOKIES',
+					'legal.cookies.lede':
+						'Información sobre cookies, almacenamiento local y seguimiento básico del sitio.',
+					'legal.copyright.kicker': 'LEGAL',
+					'legal.copyright.title': 'AVISO DE COPYRIGHT',
+					'legal.copyright.lede':
+						'Propiedad y reglas de uso para música, visuales, escritura y diseño de Fhugawz.',
+				},
+			};
+
+			const escapeFhugawzHtml = (value) =>
+				value.replace(/[&<>"']/g, (character) => {
+					const entities = {
+						'&': '&amp;',
+						'<': '&lt;',
+						'>': '&gt;',
+						'"': '&quot;',
+						"'": '&#39;',
+					};
+
+					return entities[character];
+				});
+
+			const applyFhugawzLanguage = (language) => {
+				const nextLanguage = language === 'es' ? 'es' : 'en';
+
+				document.documentElement.lang = nextLanguage;
+				document.documentElement.dataset.language = nextLanguage;
+				document.querySelectorAll('[data-i18n]').forEach((element) => {
+					const key = element.getAttribute('data-i18n');
+					if (!key) return;
+
+					if (!element.dataset.i18nDefault) {
+						element.dataset.i18nDefault = element.textContent || '';
+					}
+
+					const translatedText =
+						nextLanguage === 'en'
+							? element.dataset.i18nDefault
+							: fhugawzTranslations.es[key] || element.dataset.i18nDefault;
+
+					if (element.hasAttribute('data-i18n-linebreaks')) {
+						if (!element.dataset.i18nDefaultHtml) {
+							element.dataset.i18nDefaultHtml = element.innerHTML;
+						}
+
+						element.innerHTML =
+							nextLanguage === 'en'
+								? element.dataset.i18nDefaultHtml
+								: translatedText.split('\n').map(escapeFhugawzHtml).join('<br>');
+						return;
+					}
+
+					if (element.hasAttribute('data-i18n-mobile-linebreaks')) {
+						if (!element.dataset.i18nDefaultHtml) {
+							element.dataset.i18nDefaultHtml = element.innerHTML;
+						}
+
+						element.innerHTML =
+							nextLanguage === 'en'
+								? element.dataset.i18nDefaultHtml
+								: translatedText
+										.split('\n')
+										.map((line) => `<span class="mobile-i18n-line">${escapeFhugawzHtml(line)}</span>`)
+										.join('<span class="desktop-i18n-space"> </span><br class="mobile-i18n-break">');
+						return;
+					}
+
+					element.textContent = translatedText;
+				});
+
+				document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+					const key = element.getAttribute('data-i18n-placeholder');
+					if (!key || !(element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement)) return;
+
+					if (!element.dataset.i18nDefaultPlaceholder) {
+						element.dataset.i18nDefaultPlaceholder = element.placeholder || '';
+					}
+
+					element.placeholder =
+						nextLanguage === 'en'
+							? element.dataset.i18nDefaultPlaceholder
+							: fhugawzTranslations.es[key] || element.dataset.i18nDefaultPlaceholder;
+				});
+
+				document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
+					const key = element.getAttribute('data-i18n-alt');
+					if (!key || !(element instanceof HTMLImageElement)) return;
+
+					if (!element.dataset.i18nDefaultAlt) {
+						element.dataset.i18nDefaultAlt = element.alt || '';
+					}
+
+					element.alt =
+						nextLanguage === 'en'
+							? element.dataset.i18nDefaultAlt
+							: fhugawzTranslations.es[key] || element.dataset.i18nDefaultAlt;
+				});
+
+				document.querySelectorAll('[data-i18n-tooltip]').forEach((element) => {
+					const key = element.getAttribute('data-i18n-tooltip');
+					if (!key) return;
+
+					if (!element.dataset.i18nDefaultTooltip) {
+						element.dataset.i18nDefaultTooltip = element.dataset.tooltip || '';
+					}
+
+					element.dataset.tooltip =
+						nextLanguage === 'en'
+							? element.dataset.i18nDefaultTooltip
+							: fhugawzTranslations.es[key] || element.dataset.i18nDefaultTooltip;
+				});
+
+				document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+					const key = element.getAttribute('data-i18n-aria-label');
+					if (!key) return;
+
+					if (!element.dataset.i18nDefaultAriaLabel) {
+						element.dataset.i18nDefaultAriaLabel = element.getAttribute('aria-label') || '';
+					}
+
+					element.setAttribute(
+						'aria-label',
+						nextLanguage === 'en'
+							? element.dataset.i18nDefaultAriaLabel
+							: fhugawzTranslations.es[key] || element.dataset.i18nDefaultAriaLabel
+					);
+				});
+
+				document.querySelectorAll('[data-language-toggle]').forEach((button) => {
+					const isSpanish = nextLanguage === 'es';
+					const label = button.querySelector('[data-language-toggle-label]');
+					button.setAttribute('data-active-lang', nextLanguage);
+					button.setAttribute('aria-pressed', isSpanish ? 'true' : 'false');
+					button.setAttribute(
+						'aria-label',
+						isSpanish ? 'Cambiar idioma a inglés' : 'Switch language to Spanish'
+					);
+					if (label) label.textContent = isSpanish ? 'ES' : 'EN';
+				});
+
+				try {
+					localStorage.setItem('fhugawz-language', nextLanguage);
+				} catch {}
+
+				window.dispatchEvent(new CustomEvent('fhugawz:languagechange', { detail: { language: nextLanguage } }));
+			};
+
+			const initializeFhugawzLanguage = () => {
+				let storedLanguage = 'en';
+				try {
+					storedLanguage = localStorage.getItem('fhugawz-language') || 'en';
+				} catch {}
+
+				applyFhugawzLanguage(storedLanguage);
+
+				document.querySelectorAll('[data-language-toggle]').forEach((button) => {
+					button.addEventListener('click', () => {
+						const currentLanguage = button.getAttribute('data-active-lang') === 'es' ? 'es' : 'en';
+						applyFhugawzLanguage(currentLanguage === 'es' ? 'en' : 'es');
+					});
+				});
+			};
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initializeFhugawzLanguage, { once: true });
+			} else {
+				initializeFhugawzLanguage();
+			}
+		</script>
+	</body>
+</html>

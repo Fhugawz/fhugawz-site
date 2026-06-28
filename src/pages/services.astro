@@ -1,0 +1,254 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const packages = [
+	{
+		kicker: 'BASIC',
+		title: 'MUSIC PRODUCTION',
+		description:
+			'A voice memo, rough demo, chord idea, lyric fragment or reference can become a complete production with the right arrangement, palette and direction.',
+		bestFor:
+			'Artists with an idea or demo that needs arrangement, sound identity and emotional direction.',
+		includes: [
+			'Song structure and arrangement direction',
+			'Instrumental production and sound palette',
+			'Drum, bass, synth, guitar or texture programming as needed',
+			'Reference based creative direction',
+			'Exported production stems for mixing',
+		],
+		outcome:
+			'A complete original production shaped around the emotion, identity and world of the song.',
+		cta: 'REQUEST MUSIC PRODUCTION',
+		href: '/contact?service=music-production',
+		key: 'production',
+	},
+	{
+		kicker: 'STANDARD',
+		title: 'MIXING & MASTERING',
+		description:
+			'Finished songs are taken into their final sound stage, where balance, depth, clarity and loudness are refined for release.',
+		bestFor:
+			'Artists with recorded vocals and organized production stems ready for a professional final mix and master.',
+		includes: [
+			'Session cleanup and gain staging',
+			'Vocal processing and balance',
+			'EQ, compression, stereo image and depth',
+			'Reverb, delay and spatial treatment',
+			'Final master for release platforms',
+		],
+		outcome:
+			'A polished final version with emotional depth, controlled loudness and professional translation.',
+		cta: 'REQUEST MIXING & MASTERING',
+		href: '/contact?service=mixing-mastering',
+		key: 'mixing',
+	},
+	{
+		kicker: 'PRO',
+		title: 'DEMO RECONSTRUCTION',
+		description:
+			'AI generated songs, rough exports or old demos are rebuilt as original human productions with cleaner sound, stronger identity and release ready direction.',
+		bestFor:
+			'Artists using AI demos, Suno references or rough sketches who want to transform them into original release ready productions.',
+		includes: [
+			'Demo analysis and reconstruction plan',
+			'Rebuilding the instrumental from scratch where needed',
+			'Humanized arrangement and production decisions',
+			'New sound palette based on the original emotional direction',
+			'Stems prepared for mixing and mastering',
+		],
+		outcome:
+			'A recreated, human shaped and professionally directed version of the demo, ready to become a real release.',
+		cta: 'REQUEST DEMO RECONSTRUCTION',
+		href: '/contact?service=demo-reconstruction',
+		key: 'demo',
+	},
+	{
+		kicker: 'PREMIUM',
+		title: 'ARTIST WORLD BUILDING',
+		description:
+			'Beyond one song, this package builds a complete creative system with sound, visual identity, release direction and content structure.',
+		bestFor:
+			'Artists developing a project, EP, album or brand identity from scattered ideas, references and unfinished material.',
+		includes: [
+			'Artistic concept and project direction',
+			'Sonic identity and reference map',
+			'Visual direction and branding foundations',
+			'Release strategy and content structure',
+			'Optional website, landing page or content template direction',
+		],
+		outcome:
+			'A complete artistic world that connects the music, visuals, story and release strategy into one clear direction.',
+		cta: 'REQUEST ARTIST WORLD BUILDING',
+		href: '/contact?service=artist-world-building',
+		key: 'world',
+	},
+];
+
+const faqs = [
+	{
+		question: 'Do you work with AI generated demos?',
+		answer:
+			'Yes. AI demos can be used as references, but the final goal is to rebuild the idea into an original, human directed production with cleaner sound, stronger identity and release ready direction.',
+		key: 'ai',
+	},
+	{
+		question: 'Do I need to have the song fully written?',
+		answer:
+			'No. Some projects begin with a complete demo, while others begin with a voice memo, a chord idea, a reference track or a rough emotional direction.',
+		key: 'written',
+	},
+	{
+		question: 'Can you mix and master a song I produced myself?',
+		answer:
+			'Yes, as long as the material is technically ready for a professional mix. Stems should be organized, properly exported, in time, without major phase problems and recorded with enough quality to be processed. If the audio has serious timing, recording or technical issues, Mixing & Mastering may not be the right package. In that case, Music Production or Demo Reconstruction may be a better starting point.',
+		key: 'mix',
+	},
+	{
+		question: 'Do you show prices on the website?',
+		answer:
+			'No. Each project is quoted according to its scope, condition and creative needs. The contact form helps identify the right starting point before giving a clear estimate.',
+		key: 'prices',
+	},
+	{
+		question: 'How do payments work?',
+		answer:
+			'Projects usually start with a 50% payment before work begins and the remaining 50% when the project is completed. Payment options are flexible and can be discussed during the conversation, depending on what works best for both sides.',
+		key: 'payments',
+	},
+	{
+		question: 'Can you help me develop the whole artist project?',
+		answer:
+			'Yes. Artist World Building is designed for artists who need concept, sound, visuals, release direction and content structure working together.',
+		key: 'artist',
+	},
+];
+---
+
+<Layout
+	title="Fhugawz — Music Production, Mixing and Artist World Building"
+	description="Music production, mixing, mastering, demo reconstruction and artist world building for songs and projects that need identity, depth and professional direction."
+	image="/images/social/og-fhugawz-production-mixing-mastering.webp"
+>
+	<section
+		class="page-hero with-image"
+		style={`--page-hero-image: url("/images/hero/fhugawz-music-production-mixing-mastering-studio-hero.webp")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-i18n="services.page.kicker">FHUGAWZ STUDIO</p>
+			<h1 class="page-title" data-i18n="services.page.title">SERVICES</h1>
+			<p class="lede" data-i18n="services.page.description">
+				For artists building songs that need identity, depth and a world strong enough to carry
+				them.
+			</p>
+		</div>
+	</section>
+
+	<section class="section paper-band">
+		<div class="site-shell">
+			<div class="section-header service-package-header">
+				<div class="service-package-intro-copy">
+					<p class="section-kicker" data-i18n="services.packages.kicker">SERVICE PACKAGES</p>
+					<h2 class="section-title service-package-title" data-i18n="services.packages.title">
+						CHOOSE THE RIGHT STARTING POINT
+					</h2>
+					<p class="section-copy" data-i18n="services.packages.description">
+						Every project enters at a different stage. Some songs need production, others need a
+						final mix, and some need to be rebuilt from a rough demo into something human,
+						professional and release ready.
+					</p>
+				</div>
+				<div class="service-package-intro-image">
+					<img
+						src="/images/services/service-dark-pop-music-production.webp"
+						alt="Music production setup for Fhugawz Studio service packages"
+						loading="lazy"
+						decoding="async"
+					/>
+				</div>
+			</div>
+			<div class="service-package-grid">
+				{packages.map((service) => (
+					<article class="service-package">
+						<p class="eyebrow" data-i18n={`services.page.${service.key}.kicker`}>
+							{service.kicker}
+						</p>
+						<h3 class="card-title" data-i18n={`services.page.${service.key}.title`}>
+							{service.title}
+						</h3>
+						<p class="card-copy" data-i18n={`services.page.${service.key}.description`}>
+							{service.description}
+						</p>
+						<div class="service-package-detail">
+							<p class="service-package-label" data-i18n="services.packages.bestFor">Best for</p>
+							<p data-i18n={`services.page.${service.key}.bestFor`}>{service.bestFor}</p>
+						</div>
+						<div class="service-package-detail">
+							<p class="service-package-label" data-i18n="services.packages.includes">Includes</p>
+							<ul class="service-include-list">
+								{service.includes.map((item, index) => (
+									<li data-i18n={`services.page.${service.key}.includes.${index + 1}`}>{item}</li>
+								))}
+							</ul>
+						</div>
+						<div class="service-package-detail">
+							<p class="service-package-label" data-i18n="services.packages.outcome">
+								Final outcome
+							</p>
+							<p data-i18n={`services.page.${service.key}.outcome`}>{service.outcome}</p>
+						</div>
+						<a class="button primary service-package-cta" href={service.href} data-i18n={`services.page.${service.key}.cta`}>
+							{service.cta}
+						</a>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="site-shell">
+			<div class="section-header service-faq-header">
+				<p class="section-kicker" data-i18n="services.faq.kicker">FAQ</p>
+				<h2 class="section-title" data-i18n="services.faq.title">BEFORE WE START</h2>
+			</div>
+			<div class="service-faq-list">
+				{faqs.map((faq, index) => (
+					<article class="service-faq-item">
+						<h3>
+							<button
+								class="service-faq-button"
+								type="button"
+								aria-expanded="false"
+								aria-controls={`service-faq-panel-${index}`}
+								data-faq-toggle
+							>
+								<span data-i18n={`services.faq.${faq.key}.question`}>{faq.question}</span>
+								<span class="service-faq-icon" aria-hidden="true">+</span>
+							</button>
+						</h3>
+						<div class="service-faq-panel" id={`service-faq-panel-${index}`} hidden>
+							<p data-i18n={`services.faq.${faq.key}.answer`}>{faq.answer}</p>
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	document.querySelectorAll('[data-faq-toggle]').forEach((button) => {
+		if (!(button instanceof HTMLButtonElement)) return;
+
+		button.addEventListener('click', () => {
+			const panelId = button.getAttribute('aria-controls');
+			const panel = panelId ? document.getElementById(panelId) : null;
+			const icon = button.querySelector('.service-faq-icon');
+			const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+			button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+			if (panel instanceof HTMLElement) panel.hidden = isExpanded;
+			if (icon instanceof HTMLElement) icon.textContent = isExpanded ? '+' : '−';
+		});
+	});
+</script>

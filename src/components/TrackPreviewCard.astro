@@ -1,0 +1,29 @@
+---
+import DotWavePlayer from './DotWavePlayer.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	image: string;
+	alt: string;
+	audioSrc: string;
+	id: string;
+	kickerI18nKey?: string;
+	titleI18nKey?: string;
+	descriptionI18nKey?: string;
+}
+
+const { title, description, image, alt, audioSrc, id, kickerI18nKey, titleI18nKey, descriptionI18nKey } = Astro.props;
+---
+
+<article class="track-card">
+	<div class="card-image">
+		<img src={image} alt={alt} loading="lazy" decoding="async" />
+	</div>
+	<div class="card-body">
+		<p class="eyebrow" data-i18n={kickerI18nKey}>Audio Preview</p>
+		<h2 class="card-title" data-i18n={titleI18nKey}>{title}</h2>
+		<p class="card-copy" data-i18n={descriptionI18nKey}>{description}</p>
+		<DotWavePlayer id={id} title={title} audioSrc={audioSrc} />
+	</div>
+</article>

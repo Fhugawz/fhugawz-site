@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TrackPreviewCard from '../components/TrackPreviewCard.astro';
+
+const tracks = [
+	{
+		id: 'axioms-currents-music',
+		title: 'AXIOMS — CURRENTS',
+		description: 'A reconstruction era preview with heavy atmosphere, low lit movement and emotional pressure.',
+		kickerI18nKey: 'audio.cardKicker',
+		titleI18nKey: 'audio.axioms.title',
+		descriptionI18nKey: 'music.axioms.description',
+		image: '/images/tracks/axioms-currents-dark-pop-track.webp',
+		alt: 'FHUGAWZ Axioms Currents track preview image with cinematic dark pop atmosphere',
+		audioSrc: '/audio/previews/axioms-currents-preview.mp3',
+	},
+	{
+		id: '199x-entropy-music',
+		title: '199X — ENTROPY',
+		description: 'A solitude transmission from the archive, built on nocturnal pulse and distorted memory.',
+		kickerI18nKey: 'audio.cardKicker',
+		titleI18nKey: 'audio.199x.title',
+		descriptionI18nKey: 'music.199x.description',
+		image: '/images/tracks/199x-entropy-dark-pop-track.webp',
+		alt: 'FHUGAWZ 199X Entropy track preview image about solitude and dark pop memory',
+		audioSrc: '/audio/previews/199x-entropy-preview.mp3',
+	},
+	{
+		id: 'protocol-7-god-music',
+		title: 'PROTOCOL 7 — GOD',
+		description: 'A digital rupture preview where synthetic pressure turns into confession.',
+		kickerI18nKey: 'audio.cardKicker',
+		titleI18nKey: 'audio.protocol7.title',
+		descriptionI18nKey: 'music.protocol7.description',
+		image: '/images/tracks/protocol-7-god-dark-pop-track.webp',
+		alt: 'FHUGAWZ Protocol 7 God track preview image with digital disconnection mood',
+		audioSrc: '/audio/previews/protocol-7-god-preview.mp3',
+	},
+];
+---
+
+<Layout
+	title="Fhugawz — Dark Pop Audio Previews"
+	description="Listen to FHUGAWZ cinematic dark pop previews with animated dot wave audio players."
+	image="/images/social/og-fhugawz-cinematic-dark-pop.webp"
+>
+	<section
+		class="page-hero with-image"
+		style={`--page-hero-image: url("/images/hero/fhugawz-music-dark-pop-blog-hero.webp")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-i18n="music.page.kicker">FROM THE ARCHIVE</p>
+			<h1 class="page-title" data-i18n="music.page.title">MUSIC</h1>
+			<p class="lede" data-i18n="music.page.description">
+				Three transmissions from the FHUGAWZ world where urban fracture, folk memory and
+				digital paranoia become dark pop.
+			</p>
+		</div>
+	</section>
+	<section class="section">
+		<div class="site-shell card-grid">
+			{tracks.map((track) => <TrackPreviewCard {...track} />)}
+		</div>
+	</section>
+</Layout>

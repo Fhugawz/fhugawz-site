@@ -1,0 +1,26 @@
+---
+interface Props {
+	title: string;
+	kicker: string;
+	description: string;
+	image: string;
+	alt: string;
+	href: string;
+	kickerI18nKey?: string;
+	titleI18nKey?: string;
+	descriptionI18nKey?: string;
+}
+
+const { title, kicker, description, image, alt, href, kickerI18nKey, titleI18nKey, descriptionI18nKey } = Astro.props;
+---
+
+<a class="project-card" href={href}>
+	<div class="card-image">
+		<img src={image} alt={alt} loading="lazy" decoding="async" />
+	</div>
+	<div class="card-body">
+		<p class="eyebrow" data-i18n={kickerI18nKey}>{kicker}</p>
+		<h2 class="card-title" data-i18n={titleI18nKey}>{title}</h2>
+		<p class="card-copy" data-i18n={descriptionI18nKey}>{description}</p>
+	</div>
+</a>

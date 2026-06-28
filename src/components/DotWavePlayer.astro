@@ -1,0 +1,189 @@
+---
+interface Props {
+	id: string;
+	title: string;
+	audioSrc: string;
+}
+
+const { id, title, audioSrc } = Astro.props;
+---
+
+<div class="dot-player" data-player-id={id} data-audio-src={audioSrc}>
+	<button class="player-button" type="button" aria-label="Play preview" data-play-button>
+		<span class="player-icon player-icon-play" aria-hidden="true"></span>
+	</button>
+	<canvas class="dot-wave" width="560" height="96" aria-label={`Animated dot wave audio visualizer for ${title}`}></canvas>
+</div>
+
+<script>
+	const players = document.querySelectorAll('.dot-player');
+	const stopEvent = 'fhugawz:pause-players';
+	const playIcon = '<span class="player-icon player-icon-play" aria-hidden="true"></span>';
+	const pauseIcon = '<span class="player-icon player-icon-pause" aria-hidden="true"></span>';
+
+	players.forEach((player) => {
+		const canvas = player.querySelector('canvas');
+		const button = player.querySelector('[data-play-button]');
+		const audioSrc = player.getAttribute('data-audio-src');
+		const playerId = player.getAttribute('data-player-id');
+		if (!(canvas instanceof HTMLCanvasElement) || !(button instanceof HTMLButtonElement) || !audioSrc) return;
+
+		const context = canvas.getContext('2d');
+		if (!context) return;
+
+		let audio;
+		let audioContext;
+		let analyser;
+		let source;
+		let dataArray;
+		let animationId;
+		let isPlaying = false;
+		let cssWidth = 560;
+		let cssHeight = 72;
+		const signalOrange = getComputedStyle(document.documentElement).getPropertyValue('--signal-orange').trim() || '#FF5A1F';
+		const signalOrangeRgb = signalOrange
+			.replace('#', '')
+			.match(/.{1,2}/g)
+			?.map((value) => parseInt(value, 16))
+			.join(', ') || '255, 90, 31';
+		const signalOrangeAlpha = (alpha) => `rgba(${signalOrangeRgb}, ${alpha})`;
+
+		const stopAnimation = () => {
+			if (animationId) {
+				cancelAnimationFrame(animationId);
+				animationId = undefined;
+			}
+		};
+
+		const drawIdle = () => {
+			context.clearRect(0, 0, cssWidth, cssHeight);
+			const dots = 36;
+			const centerY = cssHeight / 2;
+			const usableWidth = Math.max(1, cssWidth - 8);
+
+			for (let i = 0; i < dots; i += 1) {
+				const progress = i / (dots - 1);
+				const x = 4 + progress * usableWidth;
+				const y = centerY + Math.sin(i * 0.62) * 9;
+				context.beginPath();
+				context.fillStyle = i % 3 === 0 ? signalOrangeAlpha(0.76) : 'rgba(223, 211, 187, 0.5)';
+				context.arc(x, y, 2.6, 0, Math.PI * 2);
+				context.fill();
+			}
+		};
+
+		const resizeCanvas = () => {
+			const rect = canvas.getBoundingClientRect();
+			const ratio = window.devicePixelRatio || 1;
+			cssWidth = Math.max(320, Math.floor(rect.width));
+			cssHeight = 72;
+			canvas.width = Math.floor(cssWidth * ratio);
+			canvas.height = Math.floor(cssHeight * ratio);
+			context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+			if (isPlaying) {
+				stopAnimation();
+				render();
+			} else {
+				drawIdle();
+			}
+		};
+
+		const resetToIdle = (resetTime = false) => {
+			isPlaying = false;
+			stopAnimation();
+			if (audio) {
+				if (!audio.paused) audio.pause();
+				if (resetTime) audio.currentTime = 0;
+			}
+			button.innerHTML = playIcon;
+			button.setAttribute('aria-label', 'Play preview');
+			drawIdle();
+		};
+
+		const setupAudio = async () => {
+			if (audio) return true;
+
+			audio = new Audio(audioSrc);
+			audio.crossOrigin = 'anonymous';
+			audio.preload = 'none';
+			audio.addEventListener('error', () => {
+				resetToIdle(true);
+			});
+			audio.addEventListener('ended', () => {
+				resetToIdle(true);
+			});
+
+			audioContext = new AudioContext();
+			analyser = audioContext.createAnalyser();
+			analyser.fftSize = 256;
+			analyser.smoothingTimeConstant = 0.78;
+			source = audioContext.createMediaElementSource(audio);
+			source.connect(analyser);
+			analyser.connect(audioContext.destination);
+			dataArray = new Uint8Array(analyser.frequencyBinCount);
+			return true;
+		};
+
+		function render() {
+			if (!isPlaying || !audio || audio.paused || audio.ended || !analyser || !dataArray) return;
+
+			analyser.getByteFrequencyData(dataArray);
+			context.clearRect(0, 0, cssWidth, cssHeight);
+
+			const dotCount = 64;
+			const centerY = cssHeight / 2;
+			const usableWidth = Math.max(1, cssWidth - 8);
+			const now = performance.now();
+			const averageAmp =
+				dataArray.reduce((total, value) => total + value, 0) / Math.max(1, dataArray.length) / 255;
+
+			for (let i = 0; i < dotCount; i += 1) {
+				const progress = i / (dotCount - 1);
+				const dataIndex = Math.floor(progress * (dataArray.length - 1));
+				const rawAmp = (dataArray[dataIndex] || 0) / 255;
+				const amp = Math.max(rawAmp, averageAmp * 0.55);
+				const x = 4 + progress * usableWidth;
+				const y = centerY + Math.sin(now / 210 + i * 0.48) * (5 + amp * 22);
+				const radius = 2.3 + amp * 5.4;
+
+				context.beginPath();
+				context.fillStyle = signalOrangeAlpha(0.48 + amp * 0.48);
+				context.arc(x, y, radius, 0, Math.PI * 2);
+				context.fill();
+			}
+
+			animationId = requestAnimationFrame(render);
+		}
+
+		window.addEventListener(stopEvent, (event) => {
+			if (event.detail !== playerId) resetToIdle(true);
+		});
+
+		button.addEventListener('click', async () => {
+			await setupAudio();
+			if (!audio || !audioContext) return;
+
+			if (audioContext.state === 'suspended') await audioContext.resume();
+
+			if (audio.paused) {
+				window.dispatchEvent(new CustomEvent(stopEvent, { detail: playerId }));
+				try {
+					await audio.play();
+					isPlaying = true;
+					button.innerHTML = pauseIcon;
+					button.setAttribute('aria-label', 'Pause preview');
+					stopAnimation();
+					render();
+				} catch {
+					resetToIdle(true);
+				}
+			} else {
+				resetToIdle();
+			}
+		});
+
+		window.addEventListener('resize', resizeCanvas);
+		resizeCanvas();
+	});
+</script>

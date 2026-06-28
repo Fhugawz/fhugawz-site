@@ -1,0 +1,80 @@
+---
+interface Props {
+	kicker?: string;
+	title: string;
+	subtitle: string;
+	description: string;
+	image: string;
+	alt: string;
+	secondaryActionLabel?: string;
+	kickerI18nKey?: string;
+	subtitleI18nKey?: string;
+	descriptionI18nKey?: string;
+	primaryActionI18nKey?: string;
+	secondaryActionI18nKey?: string;
+}
+
+const {
+	kicker = 'FHUGAWZ',
+	title,
+	subtitle,
+	description,
+	image,
+	alt,
+	secondaryActionLabel = 'VIEW PROJECTS',
+	kickerI18nKey,
+	subtitleI18nKey,
+	descriptionI18nKey,
+	primaryActionI18nKey,
+	secondaryActionI18nKey,
+} = Astro.props;
+const titleLetters = title === 'FHUGAWZ' ? ['F', 'H', 'U', 'G', 'A', 'W', 'Z'] : null;
+const hasMobileSubtitleBreak = subtitle === 'Songs for those who survive the collapse';
+const hasMobileDescriptionBreaks = descriptionI18nKey === 'hero.description';
+---
+
+<section class="hero">
+	<div class="hero-media" aria-hidden="false">
+		<img src={image} alt={alt} loading="eager" decoding="async" fetchpriority="high" />
+	</div>
+	<div class="site-shell hero-content">
+		<p class="section-kicker" data-i18n={kickerI18nKey}>{kicker}</p>
+		<h1 class="hero-title">
+			{
+				titleLetters
+					? titleLetters.map((letter) => (
+							<span class:list={['hero-title-letter', { 'hero-title-letter-outline': ['H', 'W'].includes(letter) }]}>
+								{letter}
+							</span>
+						))
+					: title
+			}
+		</h1>
+		<p class="hero-subtitle" data-i18n={subtitleI18nKey} data-i18n-mobile-linebreaks={hasMobileSubtitleBreak ? true : undefined}>
+			{
+				hasMobileSubtitleBreak ? (
+					<>
+						Songs for those who survive<span class="mobile-hero-break"><br /></span><span class="desktop-space"> </span>the collapse
+					</>
+				) : (
+					subtitle
+				)
+			}
+		</p>
+		<p class="lede" data-i18n={descriptionI18nKey} data-i18n-mobile-linebreaks={hasMobileDescriptionBreaks ? true : undefined}>
+			{
+				hasMobileDescriptionBreaks ? (
+					<>
+						A dark pop project shaped around memory, rupture and<span class="desktop-space"> </span><br class="mobile-hero-description-break" />reconstruction, where each release becomes a world of<span class="desktop-space"> </span><br class="mobile-hero-description-break" />sound, image and emotional evidence.
+					</>
+				) : (
+					description
+				)
+			}
+		</p>
+		<div class="hero-actions">
+			<a class="button primary" href="/music" data-i18n={primaryActionI18nKey}>HEAR PREVIEWS</a>
+			<a class="button" href="/projects" data-i18n={secondaryActionI18nKey}>{secondaryActionLabel}</a>
+		</div>
+	</div>
+</section>
