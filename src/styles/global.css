@@ -1526,6 +1526,20 @@ html[data-language='es'] .article-language-es {
 	padding: 9px 13px;
 }
 
+.cookie-consent-actions .button.secondary {
+	border-color: color-mix(in srgb, var(--bone) 72%, transparent);
+	background: var(--bone);
+	color: var(--ink);
+}
+
+.cookie-consent-actions .button.secondary:hover,
+.cookie-consent-actions .button.secondary:focus-visible {
+	border-color: var(--paper);
+	background: var(--paper);
+	color: var(--ink);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal-orange) 24%, transparent);
+}
+
 .cookie-choice {
 	display: flex;
 	gap: 12px;
