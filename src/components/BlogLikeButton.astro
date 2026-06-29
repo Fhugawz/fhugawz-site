@@ -115,6 +115,10 @@ const { slug, initialCount = 0 } = Astro.props;
 					localStorage.setItem(countKey, String(nextCount));
 				} catch {}
 				render(true, nextCount);
+				window.fhugawzTrackEvent?.('blog_like_click', {
+					event_category: 'engagement',
+					event_label: slug,
+				});
 				setStatus(typeof result.message === 'string' ? result.message : 'Like saved.');
 			} catch {
 				setStatus('The like could not be saved right now. Please try again soon.');

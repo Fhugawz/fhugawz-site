@@ -2,12 +2,25 @@
 
 - [ ] Domain connected
 - [ ] HTTPS active
+- [ ] DNS/SSL verified
 - [ ] Supabase tables created
 - [ ] RLS enabled
+- [ ] Supabase tables and RLS verified
+- [ ] Resend domain verified
 - [ ] Environment variables configured
 - [ ] Contact tested
 - [ ] Subscribe tested
 - [ ] Like tested
+- [ ] Contact/subscribe/like tested
+- [ ] Cookie banner ready
+- [ ] Cookie banner production behavior checked
+- [ ] Consent mode ready
+- [ ] Consent mode production behavior checked
+- [ ] Venezuela legal context added
+- [ ] WhatsApp Business URL pending
+- [ ] GA4 pending ID
+- [ ] GA4 account/Measurement ID pending
+- [ ] Search Console pending verification
 - [ ] Legal pages added
 - [ ] Footer links checked
 - [ ] Mobile tested
@@ -19,3 +32,5 @@
 - [ ] Image optimization checked
 - [ ] Security headers checked
 - [ ] Final `npm run build` passed
+- [ ] Final production tests pending
+- [ ] Final deploy pending

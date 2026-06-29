@@ -28,6 +28,9 @@ const {
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site).toString();
 const imageUrl = new URL(image, site).toString();
 const schema = jsonLd ? JSON.stringify(jsonLd) : null;
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+// TODO: Set PUBLIC_GOOGLE_SITE_VERIFICATION after Google Search Console provides the real token.
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 ---
 
 <meta charset="UTF-8" />
@@ -36,6 +39,7 @@ const schema = jsonLd ? JSON.stringify(jsonLd) : null;
 <title>{title}</title>
 <meta name="description" content={description} />
 {keywords && <meta name="keywords" content={keywords} />}
+{googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
 {spanishTitle && <meta name="title" lang="es" content={spanishTitle} />}
 {spanishDescription && <meta name="description" lang="es" content={spanishDescription} />}
 <link rel="canonical" href={canonicalUrl} />
@@ -51,3 +55,39 @@ const schema = jsonLd ? JSON.stringify(jsonLd) : null;
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl} />
 {schema && <script type="application/ld+json" set:html={schema} />}
+{
+	gaMeasurementId && (
+		<script
+			is:inline
+			set:html={`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = window.gtag || gtag;
+gtag('consent', 'default', {
+	analytics_storage: 'denied',
+	ad_storage: 'denied',
+	ad_user_data: 'denied',
+	ad_personalization: 'denied'
+});
+window.fhugawzAnalyticsId = '${gaMeasurementId}';
+window.fhugawzLoadAnalytics = function () {
+	if (!window.fhugawzAnalyticsId || window.fhugawzAnalyticsLoaded) return;
+	window.fhugawzAnalyticsLoaded = true;
+	gtag('consent', 'update', { analytics_storage: 'granted' });
+	var script = document.createElement('script');
+	script.async = true;
+	script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(window.fhugawzAnalyticsId);
+	document.head.appendChild(script);
+	gtag('js', new Date());
+	gtag('config', window.fhugawzAnalyticsId, { anonymize_ip: true });
+};
+window.fhugawzDenyAnalytics = function () {
+	gtag('consent', 'update', { analytics_storage: 'denied' });
+};
+try {
+	var consent = JSON.parse(localStorage.getItem('fhugawz-cookie-consent') || 'null');
+	if (consent && consent.analytics === true) window.fhugawzLoadAnalytics();
+	if (consent && consent.analytics === false) window.fhugawzDenyAnalytics();
+} catch {}`}
+		/>
+	)
+}

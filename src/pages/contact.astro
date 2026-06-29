@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import WhatsAppLead from '../components/WhatsAppLead.astro';
 ---
 
 <Layout
@@ -94,6 +95,9 @@ import Layout from '../layouts/Layout.astro';
 			</form>
 		</div>
 	</section>
+	<div class="site-shell">
+		<WhatsAppLead context="contact" />
+	</div>
 </Layout>
 
 <script>
@@ -254,7 +258,13 @@ import Layout from '../layouts/Layout.astro';
 								: messages[getLanguage()].fallback;
 
 				if (status instanceof HTMLElement) status.textContent = message;
-				if (response.ok && result.success !== false) form.reset();
+				if (response.ok && result.success !== false) {
+					window.fhugawzTrackEvent?.('contact_submit_success', {
+						event_category: 'lead',
+						event_label: payload.selected_service || 'contact',
+					});
+					form.reset();
+				}
 			} catch {
 				if (status instanceof HTMLElement) {
 					status.textContent = messages[getLanguage()].fallback;

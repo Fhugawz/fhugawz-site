@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
 import TextureOverlay from '../components/TextureOverlay.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 
 interface Props {
 	title?: string;
@@ -40,6 +41,26 @@ const { title, description, image, canonical, keywords, spanishTitle, spanishDes
 			<slot />
 		</main>
 		<Footer />
+		<CookieConsent />
+		<script is:inline>
+			window.fhugawzTrackEvent = (eventName, params = {}) => {
+				try {
+					if (typeof window.gtag === 'function') {
+						window.gtag('event', eventName, params);
+					}
+				} catch {}
+			};
+
+			document.addEventListener('click', (event) => {
+				const target = event.target instanceof Element ? event.target.closest('[data-analytics-event]') : null;
+				if (!(target instanceof HTMLElement)) return;
+
+				window.fhugawzTrackEvent(target.dataset.analyticsEvent || 'site_interaction', {
+					event_category: target.dataset.analyticsCategory || 'engagement',
+					event_label: target.dataset.analyticsLabel || target.textContent?.trim() || undefined,
+				});
+			});
+		</script>
 		<script is:inline>
 			const fhugawzTranslations = {
 				en: {},

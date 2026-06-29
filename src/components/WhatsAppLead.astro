@@ -1,0 +1,50 @@
+---
+interface Props {
+	context?: 'home' | 'services' | 'contact';
+}
+
+const { context = 'contact' } = Astro.props;
+// TODO: Set PUBLIC_WHATSAPP_URL to a full wa.me link when the FHUGAWZ WhatsApp number is ready.
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL;
+const copy =
+	context === 'home'
+		? {
+				kicker: 'DIRECT CHANNEL',
+				title: 'Talk about a project',
+				text: 'If you already have a song, demo or artist world in mind, WhatsApp can be a simple first step.',
+			}
+		: context === 'services'
+		? {
+				kicker: 'DIRECT CHANNEL',
+				title: 'Prefer WhatsApp?',
+				text: 'Start the conversation there if you already know what kind of project you want to build.',
+			}
+		: {
+				kicker: 'DIRECT CHANNEL',
+				title: 'WhatsApp contact',
+				text: 'Use WhatsApp if you prefer a faster first message before sending full project details.',
+			};
+---
+
+{
+	whatsappUrl && (
+		<section class="whatsapp-lead" aria-label="WhatsApp contact">
+			<div>
+				<p class="section-kicker">{copy.kicker}</p>
+				<h2>{copy.title}</h2>
+				<p>{copy.text}</p>
+			</div>
+			<a
+				class="button secondary"
+				href={whatsappUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				data-analytics-event="whatsapp_click"
+				data-analytics-category="lead"
+				data-analytics-label={context}
+			>
+				OPEN WHATSAPP
+			</a>
+		</section>
+	)
+}

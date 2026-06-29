@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import WhatsAppLead from '../components/WhatsAppLead.astro';
 
 const packages = [
 	{
@@ -145,6 +146,7 @@ const faqs = [
 
 	<section class="section paper-band">
 		<div class="site-shell">
+			<WhatsAppLead context="services" />
 			<div class="section-header service-package-header">
 				<div class="service-package-intro-copy">
 					<p class="section-kicker" data-i18n="services.packages.kicker">SERVICE PACKAGES</p>
@@ -196,7 +198,14 @@ const faqs = [
 							</p>
 							<p data-i18n={`services.page.${service.key}.outcome`}>{service.outcome}</p>
 						</div>
-						<a class="button primary service-package-cta" href={service.href} data-i18n={`services.page.${service.key}.cta`}>
+						<a
+							class="button primary service-package-cta"
+							href={service.href}
+							data-i18n={`services.page.${service.key}.cta`}
+							data-analytics-event="service_cta_click"
+							data-analytics-category="lead"
+							data-analytics-label={service.key}
+						>
 							{service.cta}
 						</a>
 					</article>

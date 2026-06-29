@@ -1448,6 +1448,106 @@ html[data-language='es'] .article-language-es {
 	margin: 0;
 }
 
+.whatsapp-lead {
+	display: flex;
+	gap: 22px;
+	align-items: center;
+	justify-content: space-between;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: rgba(13, 16, 13, 0.72);
+	margin: 0 0 clamp(26px, 4vw, 44px);
+	padding: clamp(18px, 3vw, 28px);
+}
+
+.whatsapp-lead h2 {
+	color: var(--paper);
+	font-size: clamp(1.45rem, 2.4vw, 2.2rem);
+	line-height: 0.95;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.whatsapp-lead p:not(.section-kicker) {
+	color: rgba(223, 211, 187, 0.72);
+	line-height: 1.6;
+	margin: 10px 0 0;
+	max-width: 560px;
+}
+
+.cookie-consent {
+	position: fixed;
+	right: clamp(14px, 3vw, 28px);
+	bottom: clamp(14px, 3vw, 28px);
+	z-index: 40;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 18px;
+	width: min(720px, calc(100vw - 28px));
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: rgba(11, 15, 11, 0.96);
+	box-shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
+	padding: clamp(18px, 3vw, 26px);
+}
+
+.cookie-consent[hidden],
+.cookie-consent-manage[hidden],
+.cookie-consent-actions [hidden] {
+	display: none;
+}
+
+.cookie-consent h2 {
+	color: var(--paper);
+	font-size: clamp(1.35rem, 2vw, 2rem);
+	line-height: 0.96;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.cookie-consent p:not(.section-kicker) {
+	color: rgba(223, 211, 187, 0.72);
+	line-height: 1.55;
+	margin: 10px 0 0;
+}
+
+.cookie-consent-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: flex-end;
+	min-width: 220px;
+}
+
+.cookie-choice {
+	display: flex;
+	gap: 12px;
+	align-items: flex-start;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: rgba(223, 211, 187, 0.04);
+	margin-top: 12px;
+	padding: 12px;
+}
+
+.cookie-choice input {
+	accent-color: var(--signal-orange);
+	margin-top: 4px;
+}
+
+.cookie-choice strong {
+	display: block;
+	color: var(--paper);
+	font-size: 0.88rem;
+	text-transform: uppercase;
+}
+
+.cookie-choice small {
+	display: block;
+	color: rgba(223, 211, 187, 0.66);
+	margin-top: 4px;
+}
+
 .blog-subscribe-form input[aria-invalid="true"],
 .form-field input[aria-invalid="true"],
 .form-field select[aria-invalid="true"],
@@ -1589,6 +1689,20 @@ body.modal-open {
 @media (max-width: 1040px) {
 	.contact-panel {
 		grid-template-columns: 1fr;
+	}
+
+	.whatsapp-lead {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.cookie-consent {
+		grid-template-columns: 1fr;
+	}
+
+	.cookie-consent-actions {
+		justify-content: flex-start;
+		min-width: 0;
 	}
 }
 

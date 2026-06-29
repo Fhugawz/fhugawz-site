@@ -148,6 +148,10 @@ const modalId = `${id}-modal`;
 
 					if (status instanceof HTMLElement) status.textContent = message;
 					if (response.ok && result.success !== false) {
+						window.fhugawzTrackEvent?.('subscribe_success', {
+							event_category: 'lead',
+							event_label: 'blog',
+						});
 						try {
 							localStorage.setItem('fhugawz-blog-subscribe-email', email.value);
 						} catch {}

@@ -1,0 +1,127 @@
+<div class="cookie-consent" data-cookie-consent hidden>
+	<div class="cookie-consent-copy">
+		<p class="section-kicker" data-cookie-i18n="kicker">PRIVACY</p>
+		<h2 data-cookie-i18n="title">Cookie preferences</h2>
+		<p data-cookie-i18n="description">
+			We use essential cookies to keep the site working and optional analytics cookies to understand how FHUGAWZ is discovered and improve the experience.
+		</p>
+		<div class="cookie-consent-manage" data-cookie-manage hidden>
+			<label class="cookie-choice required">
+				<input type="checkbox" checked disabled />
+				<span>
+					<strong data-cookie-i18n="essentialTitle">Essential cookies</strong>
+					<small data-cookie-i18n="essentialDescription">Always active/required.</small>
+				</span>
+			</label>
+			<label class="cookie-choice">
+				<input type="checkbox" data-cookie-analytics />
+				<span>
+					<strong data-cookie-i18n="analyticsTitle">Analytics cookies</strong>
+					<small data-cookie-i18n="analyticsDescription">Optional.</small>
+				</span>
+			</label>
+		</div>
+	</div>
+	<div class="cookie-consent-actions">
+		<button class="button primary" type="button" data-cookie-accept data-cookie-i18n="accept">
+			Accept analytics
+		</button>
+		<button class="button secondary" type="button" data-cookie-reject data-cookie-i18n="reject">Reject</button>
+		<button class="button secondary" type="button" data-cookie-toggle data-cookie-i18n="manage">Manage</button>
+		<button class="button primary" type="button" data-cookie-save data-cookie-i18n="save" hidden>
+			Save preferences
+		</button>
+	</div>
+</div>
+
+<script>
+	(() => {
+		const storageKey = 'fhugawz-cookie-consent';
+		const banner = document.querySelector('[data-cookie-consent]');
+		if (!(banner instanceof HTMLElement)) return;
+
+		const translations = {
+			en: {
+				kicker: 'PRIVACY',
+				title: 'Cookie preferences',
+				description:
+					'We use essential cookies to keep the site working and optional analytics cookies to understand how FHUGAWZ is discovered and improve the experience.',
+				accept: 'Accept analytics',
+				reject: 'Reject',
+				manage: 'Manage',
+				save: 'Save preferences',
+				essentialTitle: 'Essential cookies',
+				essentialDescription: 'Always active/required.',
+				analyticsTitle: 'Analytics cookies',
+				analyticsDescription: 'Optional.',
+			},
+			es: {
+				kicker: 'PRIVACIDAD',
+				title: 'Preferencias de cookies',
+				description:
+					'Usamos cookies esenciales para mantener el sitio funcionando y cookies analiticas opcionales para entender como se descubre FHUGAWZ y mejorar la experiencia.',
+				accept: 'Aceptar analiticas',
+				reject: 'Rechazar',
+				manage: 'Gestionar',
+				save: 'Guardar preferencias',
+				essentialTitle: 'Cookies esenciales',
+				essentialDescription: 'Siempre activas/requeridas.',
+				analyticsTitle: 'Cookies analiticas',
+				analyticsDescription: 'Opcionales.',
+			},
+		};
+
+		const getLanguage = () => (document.documentElement.dataset.language === 'es' ? 'es' : 'en');
+		const applyLanguage = () => {
+			const copy = translations[getLanguage()];
+			banner.querySelectorAll('[data-cookie-i18n]').forEach((element) => {
+				const key = element.getAttribute('data-cookie-i18n');
+				if (key && key in copy) element.textContent = copy[key];
+			});
+		};
+
+		const saveChoice = (analytics) => {
+			try {
+				localStorage.setItem(
+					storageKey,
+					JSON.stringify({
+						essential: true,
+						analytics,
+						updatedAt: new Date().toISOString(),
+					})
+				);
+			} catch {}
+
+			if (analytics) {
+				window.fhugawzLoadAnalytics?.();
+			} else {
+				window.fhugawzDenyAnalytics?.();
+			}
+			banner.hidden = true;
+		};
+
+		try {
+			if (localStorage.getItem(storageKey)) return;
+		} catch {}
+
+		const managePanel = banner.querySelector('[data-cookie-manage]');
+		const analyticsInput = banner.querySelector('[data-cookie-analytics]');
+		const saveButton = banner.querySelector('[data-cookie-save]');
+		const manageButton = banner.querySelector('[data-cookie-toggle]');
+
+		banner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => saveChoice(true));
+		banner.querySelector('[data-cookie-reject]')?.addEventListener('click', () => saveChoice(false));
+		manageButton?.addEventListener('click', () => {
+			if (managePanel instanceof HTMLElement) managePanel.hidden = false;
+			if (saveButton instanceof HTMLButtonElement) saveButton.hidden = false;
+			if (manageButton instanceof HTMLButtonElement) manageButton.hidden = true;
+		});
+		saveButton?.addEventListener('click', () => {
+			saveChoice(analyticsInput instanceof HTMLInputElement ? analyticsInput.checked : false);
+		});
+
+		applyLanguage();
+		window.addEventListener('fhugawz:languagechange', applyLanguage);
+		banner.hidden = false;
+	})();
+</script>
