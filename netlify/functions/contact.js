@@ -58,7 +58,7 @@ const sendContactNotification = async ({ name, email, selected_service, message,
 	const preheader =
 		'A new project message was received and saved in Supabase. Review the details from FHUGAWZ Studio.';
 	const logoUrl = 'https://fhugawz.com/images/brand/fhugawz-full-logo-transparent-light.svg';
-	const headerImageUrl = 'https://fhugawz.com/images/hero/fhugawz-contact-dark-pop-blog-hero.webp';
+	const headerImageUrl = 'https://fhugawz.com/images/hero/fhugawz-cinematic-dark-pop-hero.webp';
 	const text = [
 		subject,
 		'FHUGAWZ STUDIO',
@@ -84,7 +84,7 @@ const sendContactNotification = async ({ name, email, selected_service, message,
 						<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;max-width:640px;width:100%;background:#10160F;border:1px solid rgba(239,228,204,0.18);border-radius:10px;overflow:hidden;">
 							<tr>
 								<td style="padding:0;background:#0B0F0B;">
-									<img src="${headerImageUrl}" alt="Dark FHUGAWZ contact atmosphere with cinematic amber light" width="640" height="220" style="display:block;width:100%;max-width:640px;height:auto;border:0;line-height:100%;outline:none;text-decoration:none;" />
+									<img src="${headerImageUrl}" alt="FHUGAWZ cinematic dark pop homepage hero" width="640" height="220" style="display:block;width:100%;max-width:640px;height:auto;border:0;line-height:100%;outline:none;text-decoration:none;" />
 								</td>
 							</tr>
 							<tr>
