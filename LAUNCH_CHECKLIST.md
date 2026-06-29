@@ -17,10 +17,14 @@
 - [ ] Consent mode ready
 - [ ] Consent mode production behavior checked
 - [ ] Venezuela legal context added
+- [ ] WhatsApp component prepared
 - [ ] WhatsApp Business URL pending
+- [ ] Add `PUBLIC_WHATSAPP_URL` later when ready
+- [ ] WhatsApp button intentionally hidden until `PUBLIC_WHATSAPP_URL` exists
 - [ ] GA4 pending ID
 - [ ] GA4 account/Measurement ID pending
 - [ ] Search Console pending verification
+- [ ] For Search Console HTML tag verification, paste only the content token into `PUBLIC_GOOGLE_SITE_VERIFICATION`, not the full meta tag. If using www redirects, prefer verifying `https://fhugawz.com` or using Domain DNS verification.
 - [ ] Legal pages added
 - [ ] Footer links checked
 - [ ] Mobile tested

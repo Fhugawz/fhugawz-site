@@ -57,7 +57,8 @@ const sendContactNotification = async ({ name, email, selected_service, message,
 	const subject = selectedService ? `New FHUGAWZ inquiry — ${selectedService}` : 'New FHUGAWZ inquiry';
 	const preheader =
 		'A new project message was received and saved in Supabase. Review the details from FHUGAWZ Studio.';
-	const headerImageUrl = 'https://fhugawz.com/images/hero/fhugawz-cinematic-dark-pop-hero.webp';
+	const logoUrl = 'https://fhugawz.com/images/brand/fhugawz-full-logo-transparent-light.svg';
+	const headerImageUrl = 'https://fhugawz.com/images/hero/fhugawz-contact-dark-pop-blog-hero.webp';
 	const text = [
 		subject,
 		'FHUGAWZ STUDIO',
@@ -83,11 +84,12 @@ const sendContactNotification = async ({ name, email, selected_service, message,
 						<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;max-width:640px;width:100%;background:#10160F;border:1px solid rgba(239,228,204,0.18);border-radius:10px;overflow:hidden;">
 							<tr>
 								<td style="padding:0;background:#0B0F0B;">
-									<img src="${headerImageUrl}" alt="FHUGAWZ cinematic dark pop atmosphere" width="640" style="display:block;width:100%;max-width:640px;height:auto;border:0;line-height:100%;outline:none;text-decoration:none;" />
+									<img src="${headerImageUrl}" alt="Dark FHUGAWZ contact atmosphere with cinematic amber light" width="640" height="220" style="display:block;width:100%;max-width:640px;height:auto;border:0;line-height:100%;outline:none;text-decoration:none;" />
 								</td>
 							</tr>
 							<tr>
 								<td style="padding:30px 26px 20px 26px;border-bottom:1px solid rgba(239,228,204,0.14);">
+									<img src="${logoUrl}" alt="FHUGAWZ Studio logo" width="156" style="display:block;width:156px;max-width:48%;height:auto;margin:0 0 18px 0;border:0;line-height:100%;outline:none;text-decoration:none;" />
 									<p style="margin:0 0 8px 0;color:#FF5A1F;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">FHUGAWZ STUDIO</p>
 									<h1 style="margin:0;color:#EFE4CC;font-size:28px;line-height:1.2;font-weight:800;">New inquiry received</h1>
 									<p style="margin:12px 0 0 0;color:#B9AA93;font-size:14px;line-height:1.6;">A new contact form message was saved in Supabase.</p>

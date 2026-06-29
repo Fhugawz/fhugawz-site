@@ -5,7 +5,16 @@ interface Props {
 
 const { context = 'contact' } = Astro.props;
 // TODO: Set PUBLIC_WHATSAPP_URL to a full wa.me link when the FHUGAWZ WhatsApp number is ready.
-const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL;
+const configuredWhatsappUrl = String(import.meta.env.PUBLIC_WHATSAPP_URL || '').trim();
+const isValidWhatsappUrl = (value: string) => {
+	try {
+		const url = new URL(value);
+		return url.protocol === 'https:' && ['wa.me', 'api.whatsapp.com'].includes(url.hostname);
+	} catch {
+		return false;
+	}
+};
+const whatsappUrl = isValidWhatsappUrl(configuredWhatsappUrl) ? configuredWhatsappUrl : '';
 const copy =
 	context === 'home'
 		? {
