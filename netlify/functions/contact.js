@@ -35,6 +35,11 @@ const escapeHtml = (value) =>
 		return entities[character];
 	});
 
+const formatSender = (email) => {
+	const emailAddress = String(email || '').match(/<([^>]+)>/)?.[1] || String(email || '').trim();
+	return `FHUGAWZ Studio <${emailAddress}>`;
+};
+
 const sendContactNotification = async ({ name, email, selected_service, message, created_at }) => {
 	const apiKey = process.env.RESEND_API_KEY;
 	if (!apiKey) return;
@@ -46,30 +51,45 @@ const sendContactNotification = async ({ name, email, selected_service, message,
 		return;
 	}
 
-	const selectedService = selected_service || 'Not selected';
+	const selectedService = selected_service || '';
+	const selectedServiceLabel = selectedService || 'Not selected';
 	const createdAt = created_at || new Date().toISOString();
-	const subject = `New FHUGAWZ inquiry — ${selectedService}`;
+	const subject = selectedService ? `New FHUGAWZ inquiry — ${selectedService}` : 'New FHUGAWZ inquiry';
+	const preheader =
+		'A new project message was received and saved in Supabase. Review the details from FHUGAWZ Studio.';
+	const headerImageUrl = 'https://fhugawz.com/images/hero/fhugawz-cinematic-dark-pop-hero.webp';
 	const text = [
-		'New FHUGAWZ inquiry',
+		subject,
+		'FHUGAWZ STUDIO',
+		'New inquiry received',
+		'A new contact form message was saved in Supabase.',
 		'',
 		`Name: ${name}`,
 		`Email: ${email}`,
-		`Selected service: ${selectedService}`,
+		`Selected service: ${selectedServiceLabel}`,
 		`Created at: ${createdAt}`,
 		'',
 		'Message:',
 		message,
 	].join('\n');
 	const html = `
-		<div style="margin:0;padding:0;background:#0B0F0B;color:#F1E8D8;font-family:Arial,Helvetica,sans-serif;">
+		<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;line-height:1px;font-size:1px;mso-hide:all;">
+			${escapeHtml(preheader)}
+		</div>
+		<div style="margin:0;padding:0;background:#0B0F0B;color:#EFE4CC;font-family:Arial,Helvetica,sans-serif;">
 			<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#0B0F0B;margin:0;padding:0;width:100%;">
 				<tr>
 					<td align="center" style="padding:28px 14px;">
-						<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;max-width:620px;width:100%;background:#111710;border:1px solid #3A2B1E;border-radius:10px;">
+						<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;max-width:640px;width:100%;background:#10160F;border:1px solid rgba(239,228,204,0.18);border-radius:10px;overflow:hidden;">
 							<tr>
-								<td style="padding:28px 26px 18px 26px;border-bottom:1px solid #2A2118;">
-									<p style="margin:0 0 8px 0;color:#E06F2A;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">FHUGAWZ Studio</p>
-									<h1 style="margin:0;color:#F1E8D8;font-size:26px;line-height:1.2;font-weight:800;">New inquiry received</h1>
+								<td style="padding:0;background:#0B0F0B;">
+									<img src="${headerImageUrl}" alt="FHUGAWZ cinematic dark pop atmosphere" width="640" style="display:block;width:100%;max-width:640px;height:auto;border:0;line-height:100%;outline:none;text-decoration:none;" />
+								</td>
+							</tr>
+							<tr>
+								<td style="padding:30px 26px 20px 26px;border-bottom:1px solid rgba(239,228,204,0.14);">
+									<p style="margin:0 0 8px 0;color:#FF5A1F;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">FHUGAWZ STUDIO</p>
+									<h1 style="margin:0;color:#EFE4CC;font-size:28px;line-height:1.2;font-weight:800;">New inquiry received</h1>
 									<p style="margin:12px 0 0 0;color:#B9AA93;font-size:14px;line-height:1.6;">A new contact form message was saved in Supabase.</p>
 								</td>
 							</tr>
@@ -78,40 +98,40 @@ const sendContactNotification = async ({ name, email, selected_service, message,
 									<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;">
 										<tr>
 											<td style="padding:0 0 14px 0;">
-												<p style="margin:0 0 5px 0;color:#E06F2A;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Name</p>
-												<p style="margin:0;color:#F1E8D8;font-size:16px;line-height:1.5;">${escapeHtml(name)}</p>
+												<p style="margin:0 0 5px 0;color:#FF5A1F;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Name</p>
+												<p style="margin:0;color:#EFE4CC;font-size:16px;line-height:1.5;">${escapeHtml(name)}</p>
 											</td>
 										</tr>
 										<tr>
 											<td style="padding:0 0 14px 0;">
-												<p style="margin:0 0 5px 0;color:#E06F2A;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Email</p>
-												<p style="margin:0;color:#F1E8D8;font-size:16px;line-height:1.5;"><a href="mailto:${escapeHtml(email)}" style="color:#F1E8D8;text-decoration:underline;">${escapeHtml(email)}</a></p>
+												<p style="margin:0 0 5px 0;color:#FF5A1F;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Email</p>
+												<p style="margin:0;color:#EFE4CC;font-size:16px;line-height:1.5;"><a href="mailto:${escapeHtml(email)}" style="color:#EFE4CC;text-decoration:underline;">${escapeHtml(email)}</a></p>
 											</td>
 										</tr>
 										<tr>
 											<td style="padding:0 0 14px 0;">
-												<p style="margin:0 0 5px 0;color:#E06F2A;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Selected service</p>
-												<p style="margin:0;color:#F1E8D8;font-size:16px;line-height:1.5;">${escapeHtml(selectedService)}</p>
+												<p style="margin:0 0 5px 0;color:#FF5A1F;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Selected service</p>
+												<p style="margin:0;color:#EFE4CC;font-size:16px;line-height:1.5;">${escapeHtml(selectedServiceLabel)}</p>
 											</td>
 										</tr>
 										<tr>
 											<td style="padding:0 0 14px 0;">
-												<p style="margin:0 0 5px 0;color:#E06F2A;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Created at</p>
-												<p style="margin:0;color:#F1E8D8;font-size:16px;line-height:1.5;">${escapeHtml(createdAt)}</p>
+												<p style="margin:0 0 5px 0;color:#FF5A1F;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Created at</p>
+												<p style="margin:0;color:#EFE4CC;font-size:16px;line-height:1.5;">${escapeHtml(createdAt)}</p>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding:18px 18px;background:#0B0F0B;border:1px solid #2A2118;border-radius:8px;">
-												<p style="margin:0 0 8px 0;color:#E06F2A;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Message</p>
-												<p style="margin:0;color:#F1E8D8;font-size:16px;line-height:1.7;white-space:pre-wrap;">${escapeHtml(message)}</p>
+											<td style="padding:18px 18px;background:#0B0F0B;border:1px solid rgba(239,228,204,0.18);border-radius:8px;">
+												<p style="margin:0 0 8px 0;color:#FF5A1F;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Message</p>
+												<p style="margin:0;color:#EFE4CC;font-size:16px;line-height:1.7;white-space:pre-wrap;">${escapeHtml(message)}</p>
 											</td>
 										</tr>
 									</table>
 								</td>
 							</tr>
 							<tr>
-								<td style="padding:18px 26px 26px 26px;border-top:1px solid #2A2118;">
-									<p style="margin:0;color:#877A66;font-size:12px;line-height:1.5;">This notification was generated by the FHUGAWZ Netlify contact function.</p>
+								<td style="padding:18px 26px 26px 26px;border-top:1px solid rgba(239,228,204,0.14);">
+									<p style="margin:0;color:#B9AA93;font-size:12px;line-height:1.5;">This notification was generated by the FHUGAWZ Netlify contact function.</p>
 								</td>
 							</tr>
 						</table>
@@ -128,7 +148,7 @@ const sendContactNotification = async ({ name, email, selected_service, message,
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			from,
+			from: formatSender(from),
 			to,
 			subject,
 			text,
