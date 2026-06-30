@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BriefForm from '../../components/briefs/BriefForm.astro';
+import { briefForms } from '../../components/briefs/briefForms';
+
+const brief = briefForms.mixingMastering;
+const headerImage = 'headerImage' in brief && brief.headerImage ? brief.headerImage : '/images/hero/fhugawz-music-production-mixing-mastering-studio-hero.webp';
+---
+
+<Layout
+	title="Fhugawz - Mixing / Mastering Brief"
+	description="Send a mixing and mastering brief to FHUGAWZ Studio for final sound, depth, clarity, loudness and translation."
+	image="/images/social/og-fhugawz-production-mixing-mastering.webp"
+>
+	<section
+		class="page-hero with-image brief-page-hero"
+		style={`--page-hero-image: url("${headerImage}")`}
+	>
+		<div class="site-shell">
+			<p class="section-kicker" data-brief-i18n data-en={brief.pageKicker} data-es={brief.pageKickerEs}>{brief.pageKicker}</p>
+			<h1 class="page-title" data-brief-i18n data-en={brief.pageTitle} data-es={brief.pageTitleEs}>{brief.pageTitle}</h1>
+			<p class="lede" data-brief-i18n data-en={brief.pageDescription} data-es={brief.pageDescriptionEs}>{brief.pageDescription}</p>
+		</div>
+	</section>
+	<BriefForm {...brief} />
+</Layout>

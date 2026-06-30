@@ -1,0 +1,309 @@
+---
+interface FieldOption {
+	value: string;
+	label: string;
+	labelEs?: string;
+}
+
+interface BriefField {
+	name: string;
+	label: string;
+	labelEs?: string;
+	type?: 'text' | 'email' | 'url' | 'textarea' | 'select' | 'checkbox' | 'checkbox-group';
+	placeholder?: string;
+	placeholderEs?: string;
+	note?: string;
+	noteEs?: string;
+	required?: boolean;
+	options?: FieldOption[];
+	rows?: number;
+}
+
+interface Props {
+	serviceType: string;
+	kicker: string;
+	kickerEs?: string;
+	title: string;
+	titleEs?: string;
+	description: string;
+	descriptionEs?: string;
+	fields: BriefField[];
+}
+
+const { serviceType, kicker, kickerEs, title, titleEs, description, descriptionEs, fields } = Astro.props;
+const requiredFields = fields.filter((field) => field.required).map((field) => field.name);
+const fieldIds = new Map(fields.map((field) => [field.name, `brief-${serviceType}-${field.name}`]));
+---
+
+<section class="section">
+	<div class="site-shell contact-panel brief-panel">
+		<div class="contact-copy brief-copy">
+			<p class="section-kicker" data-brief-i18n data-en={kicker} data-es={kickerEs || kicker}>{kicker}</p>
+			<h2 class="section-title brief-title" data-brief-i18n data-en={title} data-es={titleEs || title}>{title}</h2>
+			<p class="section-copy" data-brief-i18n data-en={description} data-es={descriptionEs || description}>{description}</p>
+		</div>
+		<form
+			class="contact-form brief-form"
+			data-brief-form
+			data-service-type={serviceType}
+			data-required-fields={JSON.stringify(requiredFields)}
+			novalidate
+		>
+			<input type="text" name="honeypot" autocomplete="off" tabindex="-1" hidden />
+			{fields.map((field) => {
+				const fieldId = fieldIds.get(field.name);
+				const errorId = `${fieldId}-error`;
+				const fieldType = field.type || 'text';
+
+				return (
+					<div class:list={['form-field', fieldType === 'checkbox' && 'brief-checkbox-field']}>
+						{fieldType === 'checkbox' ? (
+							<>
+								<label class="brief-checkbox-label" for={fieldId}>
+									<input id={fieldId} name={field.name} type="checkbox" value="true" />
+									<span data-brief-i18n data-en={field.label} data-es={field.labelEs || field.label}>{field.label}</span>
+								</label>
+								{field.note && (
+									<p
+										class="brief-field-note"
+										data-brief-i18n
+										data-en={field.note}
+										data-es={field.noteEs || field.note}
+									>
+										{field.note}
+									</p>
+								)}
+							</>
+						) : (
+							<>
+								{fieldType === 'checkbox-group' ? (
+									<p class="brief-field-label" id={`${fieldId}-label`} data-brief-i18n data-en={field.label} data-es={field.labelEs || field.label}>{field.label}</p>
+								) : (
+									<label for={fieldId} data-brief-i18n data-en={field.label} data-es={field.labelEs || field.label}>{field.label}</label>
+								)}
+								{fieldType === 'textarea' ? (
+									<textarea
+										id={fieldId}
+										name={field.name}
+										placeholder={field.placeholder}
+										data-brief-placeholder
+										data-placeholder-en={field.placeholder || ''}
+										data-placeholder-es={field.placeholderEs || field.placeholder || ''}
+										aria-describedby={errorId}
+										required={field.required}
+										rows={field.rows || 5}
+									></textarea>
+								) : fieldType === 'select' ? (
+									<select id={fieldId} name={field.name} aria-describedby={errorId} required={field.required}>
+										<option value="" data-brief-i18n data-en="Select one" data-es="Selecciona una opcion">Select one</option>
+										{field.options?.map((option) => (
+											<option value={option.value} data-brief-i18n data-en={option.label} data-es={option.labelEs || option.label}>{option.label}</option>
+										))}
+									</select>
+								) : fieldType === 'checkbox-group' ? (
+									<div class="brief-choice-grid" role="group" aria-labelledby={`${fieldId}-label`} aria-describedby={errorId}>
+										{field.options?.map((option) => (
+											<label class="brief-choice">
+												<input name={field.name} type="checkbox" value={option.value} />
+												<span data-brief-i18n data-en={option.label} data-es={option.labelEs || option.label}>{option.label}</span>
+											</label>
+										))}
+									</div>
+								) : (
+									<input
+										id={fieldId}
+										name={field.name}
+										type={fieldType}
+										placeholder={field.placeholder}
+										data-brief-placeholder
+										data-placeholder-en={field.placeholder || ''}
+										data-placeholder-es={field.placeholderEs || field.placeholder || ''}
+										aria-describedby={errorId}
+										required={field.required}
+									/>
+								)}
+							</>
+						)}
+						<p class="field-error" id={errorId} data-field-error={field.name} role="alert" hidden></p>
+					</div>
+				);
+			})}
+			<button class="button primary contact-submit" type="submit" data-brief-i18n data-en="SEND BRIEF" data-es="ENVIAR BRIEF">SEND BRIEF</button>
+			<p class="form-status" data-brief-status hidden>Brief ready.</p>
+		</form>
+	</div>
+</section>
+
+<script>
+	document.querySelectorAll('[data-brief-form]').forEach((form) => {
+		if (!(form instanceof HTMLFormElement)) return;
+
+		const serviceType = form.dataset.serviceType || '';
+		const requiredFields = JSON.parse(form.dataset.requiredFields || '[]');
+		const startedAt = Date.now();
+		const messages = {
+			en: {
+				required: 'Please complete this field.',
+				email: 'Please enter a valid email.',
+				loading: 'Sending brief...',
+				fallback: 'The brief could not be sent right now. Please try again soon.',
+				success: 'Brief sent. Thank you for sharing the project.',
+			},
+			es: {
+				required: 'Completa este campo.',
+				email: 'Escribe un correo valido.',
+				loading: 'Enviando brief...',
+				fallback: 'El brief no pudo enviarse ahora. Intentalo de nuevo pronto.',
+				success: 'Brief enviado. Gracias por compartir el proyecto.',
+			},
+		};
+		const getLanguage = () => (document.documentElement.dataset.language === 'es' ? 'es' : 'en');
+		const getMessage = (key) => messages[getLanguage()][key] || messages.en[key];
+		const applyBriefLanguage = () => {
+			const language = getLanguage();
+
+			document.querySelectorAll('[data-brief-i18n]').forEach((element) => {
+				if (!(element instanceof HTMLElement)) return;
+				element.textContent = language === 'es' ? element.dataset.es || element.dataset.en || '' : element.dataset.en || '';
+			});
+
+			document.querySelectorAll('[data-brief-placeholder]').forEach((element) => {
+				if (!(element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement)) return;
+				element.placeholder =
+					language === 'es'
+						? element.dataset.placeholderEs || element.dataset.placeholderEn || ''
+						: element.dataset.placeholderEn || '';
+			});
+		};
+		const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+		const setFieldError = (fieldName, message = '') => {
+			const error = form.querySelector(`[data-field-error="${fieldName}"]`);
+			const fields = Array.from(form.querySelectorAll(`[name="${CSS.escape(fieldName)}"]`));
+			fields.forEach((field) => {
+				if (field instanceof HTMLElement) {
+					field.setAttribute('aria-invalid', message ? 'true' : 'false');
+				}
+			});
+			if (error instanceof HTMLElement) {
+				error.textContent = message;
+				error.hidden = !message;
+			}
+		};
+		const getValues = (fieldName) => {
+			const fields = Array.from(form.querySelectorAll(`[name="${CSS.escape(fieldName)}"]`));
+			const checkboxes = fields.filter((field) => field instanceof HTMLInputElement && field.type === 'checkbox');
+			if (checkboxes.length > 1) {
+				return checkboxes.filter((field) => field.checked).map((field) => field.value);
+			}
+			if (checkboxes.length === 1) {
+				return checkboxes[0].checked;
+			}
+			const formData = new FormData(form);
+			return String(formData.get(fieldName) || '').trim();
+		};
+		const validateForm = () => {
+			let isValid = true;
+
+			requiredFields.forEach((fieldName) => {
+				const value = getValues(fieldName);
+				const hasValue = Array.isArray(value) ? value.length > 0 : Boolean(value);
+				setFieldError(fieldName, hasValue ? '' : getMessage('required'));
+				if (!hasValue) isValid = false;
+			});
+
+			const email = String(getValues('email') || '');
+			if (!isValidEmail(email)) {
+				setFieldError('email', getMessage('email'));
+				isValid = false;
+			}
+
+			return isValid;
+		};
+		const buildPayload = () => {
+			const formData = new FormData(form);
+			const payload = {
+				service_type: serviceType,
+				honeypot: String(formData.get('honeypot') || ''),
+				started_at: startedAt,
+				brief_data: {},
+			};
+
+			Array.from(new Set(Array.from(formData.keys()))).forEach((key) => {
+				if (key === 'honeypot') return;
+				const values = formData.getAll(key).map((value) => String(value).trim()).filter(Boolean);
+				payload.brief_data[key] = values.length > 1 ? values : values[0] || '';
+			});
+
+			form.querySelectorAll('input[type="checkbox"]').forEach((field) => {
+				if (!(field instanceof HTMLInputElement) || !field.name) return;
+				if (!(field.name in payload.brief_data)) payload.brief_data[field.name] = false;
+				if (field.checked && field.value === 'true') payload.brief_data[field.name] = true;
+			});
+
+			return {
+				...payload.brief_data,
+				...payload,
+			};
+		};
+
+		form.querySelectorAll('input, select, textarea').forEach((field) => {
+			field.addEventListener('input', validateForm);
+			field.addEventListener('change', validateForm);
+		});
+		applyBriefLanguage();
+		window.addEventListener('fhugawz:languagechange', applyBriefLanguage);
+		document.addEventListener('DOMContentLoaded', applyBriefLanguage, { once: true });
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			const status = form.querySelector('[data-brief-status]');
+			const submit = form.querySelector('button[type="submit"]');
+
+			if (!validateForm()) return;
+
+			if (status instanceof HTMLElement) {
+				status.textContent = getMessage('loading');
+				status.hidden = false;
+			}
+			if (submit instanceof HTMLButtonElement) {
+				submit.disabled = true;
+				submit.setAttribute('aria-busy', 'true');
+			}
+
+			const payload = buildPayload();
+
+			try {
+				const response = await fetch('/.netlify/functions/brief', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(payload),
+				});
+				const result = await response.json().catch(() => ({}));
+				const resultMessage =
+					typeof result.message === 'string' && getLanguage() === 'en'
+						? result.message
+						: response.ok
+							? getMessage('success')
+							: getMessage('fallback');
+
+				if (status instanceof HTMLElement) status.textContent = resultMessage;
+				if (response.ok && result.success !== false) {
+					window.fhugawzTrackEvent?.('brief_submit_success', {
+						event_category: 'lead',
+						event_label: serviceType,
+					});
+					form.reset();
+				}
+			} catch {
+				if (status instanceof HTMLElement) status.textContent = getMessage('fallback');
+			} finally {
+				if (submit instanceof HTMLButtonElement) {
+					submit.disabled = false;
+					submit.removeAttribute('aria-busy');
+				}
+			}
+		});
+	});
+</script>
