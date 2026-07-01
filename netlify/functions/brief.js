@@ -1,3 +1,5 @@
+import { valueToDisplayText } from './display-labels.js';
+
 const json = (statusCode, body) => ({
 	statusCode,
 	headers: {
@@ -167,7 +169,7 @@ const renderBriefRows = (briefData) =>
 				<tr>
 					<td style="padding:0 0 14px 0;">
 						<p style="margin:0 0 5px 0;color:#FF5A1F;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">${escapeHtml(label)}</p>
-						<p style="margin:0;color:#EFE4CC;font-size:15px;line-height:1.6;white-space:pre-wrap;">${escapeHtml(valueToText(value))}</p>
+						<p style="margin:0;color:#EFE4CC;font-size:15px;line-height:1.6;white-space:pre-wrap;">${escapeHtml(valueToDisplayText(key, value))}</p>
 					</td>
 				</tr>
 			`;
@@ -201,7 +203,7 @@ const sendBriefNotification = async ({ row, briefData, created_at }) => {
 		`Email: ${row.email}`,
 		`Created at: ${createdAt}`,
 		'',
-		...Object.entries(briefData).map(([key, value]) => `${key}: ${valueToText(value)}`),
+		...Object.entries(briefData).map(([key, value]) => `${key}: ${valueToDisplayText(key, value)}`),
 	].join('\n');
 	const html = `
 		<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;line-height:1px;font-size:1px;mso-hide:all;">

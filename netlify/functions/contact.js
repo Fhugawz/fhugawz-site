@@ -1,3 +1,5 @@
+import { valueToDisplayLabel } from './display-labels.js';
+
 const json = (statusCode, body) => ({
 	statusCode,
 	headers: {
@@ -52,9 +54,9 @@ const sendContactNotification = async ({ name, email, selected_service, message,
 	}
 
 	const selectedService = selected_service || '';
-	const selectedServiceLabel = selectedService || 'Not selected';
+	const selectedServiceLabel = selectedService ? valueToDisplayLabel(selectedService) : 'Not selected';
 	const createdAt = created_at || new Date().toISOString();
-	const subject = selectedService ? `New FHUGAWZ inquiry — ${selectedService}` : 'New FHUGAWZ inquiry';
+	const subject = selectedService ? `New FHUGAWZ inquiry — ${selectedServiceLabel}` : 'New FHUGAWZ inquiry';
 	const preheader =
 		'A new project message was received and saved in Supabase. Review the details from FHUGAWZ Studio.';
 	const logoUrl = 'https://fhugawz.com/images/brand/fhugawz-full-logo-transparent-light.svg';
