@@ -20,3 +20,12 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+## Design QA
+
+Before frontend/design changes, read:
+
+- docs/fhugawz-design-quality-rules.md
+- docs/ui-audit-checklist.md
+
+Use these as local instruction files. Do not install external design skills, CLIs, hooks, browser automation tools, or setup scripts without explicit approval.
