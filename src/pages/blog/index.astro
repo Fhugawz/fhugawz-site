@@ -6,29 +6,81 @@ import BlogCard from '../../components/BlogCard.astro';
 // keywords, and EN/ES language fields. Cards render a focused subset of this data.
 const posts = [
 	{
+		title: 'Dark Visuals Make Music Memorable',
+		slug: 'dark-visuals-make-music-memorable',
+		category: 'creative-resources',
+		date: '2026-07-09',
+		excerpt:
+			'Dark visuals help music become more memorable by creating mood, identity, atmosphere, and visual signals that connect songs, artists, and creative worlds.',
+		description:
+			'Dark visuals help music become more memorable by creating mood, identity, atmosphere, and visual signals that connect songs, artists, and creative worlds.',
+		heroImage: '/images/blog/blog-dark-visuals-music-memory-fhugawz-resources.webp.webp',
+		seoTitle: 'Dark Visuals Make Music Memorable — Fhugawz',
+		seoDescription:
+			'Dark visuals help music become more memorable by creating mood, identity, atmosphere, and visual signals that connect songs, artists, and creative worlds.',
+		keywords:
+			'dark visuals, music visual identity, independent artist branding, AI assisted visual assets, world building, music memory, atmospheric visuals, visualizers, Fhugawz resources, creative resources',
+		titleEs: 'Los visuales oscuros hacen la música más memorable',
+		excerptEs:
+			'Los visuales oscuros ayudan a que la música sea más memorable al crear mood, identidad, atmósfera y señales visuales que conectan canciones, artistas y mundos creativos.',
+		meta: 'CREATIVE RESOURCES',
+		metaI18nKey: 'blog.category.creativeResources',
+		titleI18nKey: 'blog.card.visuals.title',
+		descriptionI18nKey: 'blog.card.visuals.description',
+		image: '/images/blog/blog-dark-visuals-music-memory-fhugawz-resources.webp.webp',
+		alt: 'Dark visual identity and atmospheric resources for independent music memory.',
+		href: '/blog/dark-visuals-make-music-memorable',
+	},
+	{
+		title: 'Songs Need More Than Production',
+		slug: 'songs-need-more-than-production',
+		category: 'production-notes',
+		date: '2026-07-09',
+		excerpt:
+			'A song needs more than production to feel complete. Explore how creative direction, arrangement, emotional identity, and demo reconstruction can turn a rough idea into a finished world.',
+		description:
+			'A song needs more than production to feel complete. Explore how creative direction, arrangement, emotional identity, and demo reconstruction can turn a rough idea into a finished world.',
+		heroImage: '/images/blog/blog-from-demo-to-direction-music-production-fhugawz.webp.webp',
+		seoTitle: 'Songs Need More Than Production — Fhugawz',
+		seoDescription:
+			'A song needs more than production to feel complete. Explore how creative direction, arrangement, emotional identity, and demo reconstruction can turn a rough idea into a finished world.',
+		keywords:
+			'music production, independent artist, demo reconstruction, AI assisted music, song arrangement, creative direction, artist development, Fhugawz Studio, dark experimental music, song identity',
+		titleEs: 'Las canciones necesitan más que producción',
+		excerptEs:
+			'Una canción necesita más que producción para sentirse completa: dirección creativa, arreglo, identidad emocional y reconstrucción de demos.',
+		meta: 'PRODUCTION NOTES',
+		metaI18nKey: 'blog.category.productionNotes',
+		titleI18nKey: 'blog.card.demo.title',
+		descriptionI18nKey: 'blog.card.demo.description',
+		image: '/images/blog/blog-from-demo-to-direction-music-production-fhugawz.webp.webp',
+		alt: 'Music production direction from demo to finished song world.',
+		href: '/blog/songs-need-more-than-production',
+	},
+	{
 		title: 'BUILDING AXIOMS',
 		slug: 'building-axioms',
 		category: 'project-diary',
 		date: '2026-06-27',
 		excerpt:
-			'A first note on building a dark pop project from fracture, memory and proof, and on how a difficult experience can become songs, visuals and artistic direction.',
+			'A first note on building a dark experimental music project from fracture, memory and proof, and on how a difficult experience can become songs, visuals and artistic direction.',
 		description:
-			'A first note on building a dark pop project from fracture, memory and proof, and on how a difficult experience can become songs, visuals and artistic direction.',
+			'A first note on building a dark experimental music project from fracture, memory and proof, and on how a difficult experience can become songs, visuals and artistic direction.',
 		heroImage: '/images/blog/building-axioms/building-axioms-dark-pop-origin-hero.webp.webp',
-		seoTitle: 'Building AXIOMS: Dark Pop, Memory and Emotional Reconstruction | FHUGAWZ',
+		seoTitle: 'Building AXIOMS: Dark Experimental Music, Memory and Emotional Reconstruction | Fhugawz',
 		seoDescription:
-			'A personal introduction to AXIOMS, a FHUGAWZ dark pop project shaped by rupture, nostalgia, immigration, recovery and the need to turn lived experience into sound.',
+			'A personal introduction to AXIOMS, a Fhugawz dark experimental music project shaped by rupture, nostalgia, immigration, recovery and the need to turn lived experience into sound.',
 		keywords:
-			'dark pop, dark pop project, cinematic dark pop, experimental pop, independent artist, music production, emotional songwriting, FHUGAWZ, AXIOMS, album diary, production diary, demo reconstruction',
+			'dark experimental music, dark experimental music project, cinematic dark experimental music, experimental pop, independent artist, music production, emotional songwriting, Fhugawz, AXIOMS, album diary, production diary, demo reconstruction',
 		titleEs: 'CONSTRUYENDO AXIOMS',
 		excerptEs:
-			'Una primera nota sobre construir un proyecto dark pop desde la fractura, la memoria y la prueba, y sobre cómo una experiencia difícil puede transformarse en canciones, imagen y dirección artística.',
+			'Una primera nota sobre construir un proyecto de música experimental oscura desde la fractura, la memoria y la prueba, y sobre cómo una experiencia difícil puede transformarse en canciones, imagen y dirección artística.',
 		meta: 'PROJECT DIARY',
 		metaI18nKey: 'blog.category.projectDiary',
 		titleI18nKey: 'blog.card.building.title',
 		descriptionI18nKey: 'blog.card.building.description',
 		image: '/images/blog/building-axioms/building-axioms-dark-pop-origin-hero.webp.webp',
-		alt: 'FHUGAWZ Building Axioms blog image with cinematic dark pop project atmosphere',
+		alt: 'Fhugawz Building Axioms blog image with cinematic dark experimental music project atmosphere',
 		href: '/blog/building-axioms',
 	},
 	{
@@ -37,24 +89,24 @@ const posts = [
 		category: 'project-diary',
 		date: '2026-06-27',
 		excerpt:
-			'A personal note on music, design, recovery and the long process of turning scattered influences into a dark pop world.',
+			'A personal note on music, design, recovery and the long process of turning scattered influences into a dark experimental music world.',
 		description:
-			'A personal note on music, design, recovery and the long process of turning scattered influences into a dark pop world.',
+			'A personal note on music, design, recovery and the long process of turning scattered influences into a dark experimental music world.',
 		heroImage: '/images/blog/why-fhugawz-exists/why-fhugawz-exists-music-origin-hero.webp.webp',
-		seoTitle: 'Why FHUGAWZ Exists: Music, Design and Dark Pop Identity | FHUGAWZ',
+		seoTitle: 'Why Fhugawz Exists: Music, Design and Dark Experimental Identity | Fhugawz',
 		seoDescription:
-			'The story behind FHUGAWZ: from early bands, classical guitar, rock and metalcore influences to design, branding, music production and a cinematic dark pop project.',
+			'The story behind Fhugawz: from early bands, classical guitar, rock and metalcore influences to design, branding, music production and a cinematic dark experimental music project.',
 		keywords:
-			'FHUGAWZ, dark pop, cinematic dark pop, independent artist, music production, artist branding, music and design, visual identity, Billie Eilish influence, Nirvana influence, Pierce the Veil, Sullii, Last Daybreak, Onyx band',
-		titleEs: 'POR QUÉ EXISTE FHUGAWZ',
+			'Fhugawz, dark experimental music, cinematic dark experimental music, independent artist, music production, artist branding, music and design, visual identity, Billie Eilish influence, Nirvana influence, Pierce the Veil, Sullii, Last Daybreak, Onyx band',
+		titleEs: 'POR QUÉ EXISTE Fhugawz',
 		excerptEs:
-			'Una nota personal sobre música, diseño, recuperación y el largo proceso de convertir influencias dispersas en un mundo dark pop.',
+			'Una nota personal sobre música, diseño, recuperación y el largo proceso de convertir influencias dispersas en un mundo de música experimental oscura.',
 		meta: 'PROJECT DIARY',
 		metaI18nKey: 'blog.category.projectDiary',
 		titleI18nKey: 'blog.card.exists.title',
 		descriptionI18nKey: 'blog.card.exists.description',
 		image: '/images/blog/why-fhugawz-exists/why-fhugawz-exists-music-origin-hero.webp.webp',
-		alt: 'Early musical origin and dark pop identity behind FHUGAWZ',
+		alt: 'Early musical origin and dark experimental identity behind Fhugawz',
 		href: '/blog/why-fhugawz-exists',
 	},
 	{
@@ -63,24 +115,24 @@ const posts = [
 		category: 'production-notes',
 		date: '2026-06-27',
 		excerpt:
-			'Where AI sketches the outline, real production gives the song its body, its flaws and the emotional tension that makes dark pop feel human.',
+			'Where AI sketches the outline, real production gives the song its body, its flaws and the emotional tension that makes dark experimental music feel human.',
 		description:
-			'Where AI sketches the outline, real production gives the song its body, its flaws and the emotional tension that makes dark pop feel human.',
+			'Where AI sketches the outline, real production gives the song its body, its flaws and the emotional tension that makes dark experimental music feel human.',
 		heroImage: '/images/blog/sound-of-reconstruction/sound-of-reconstruction-demo-recreation-hero.webp.webp',
-		seoTitle: 'Humanizing AI Songs: Dark Pop, Demo Recreation and Music Production | FHUGAWZ',
+		seoTitle: 'Humanizing AI Songs: Dark Experimental Music, Demo Recreation and Music Production | Fhugawz',
 		seoDescription:
-			'A FHUGAWZ production note on AI generated songs, dark pop, demo recreation and why human emotion, imperfection and arrangement still matter in modern music production.',
+			'A Fhugawz production note on AI generated songs, dark experimental music, demo recreation and why human emotion, imperfection and arrangement still matter in modern music production.',
 		keywords:
-			'AI generated songs, humanizing AI music, dark pop production, demo reconstruction, demo recreation, Suno songs, AI music production, independent artist, FHUGAWZ, cinematic dark pop, music production services, artist development',
+			'AI generated songs, humanizing AI music, dark experimental music production, demo reconstruction, demo recreation, Suno songs, AI music production, independent artist, Fhugawz, cinematic dark experimental music, music production services, artist development',
 		titleEs: 'EL SONIDO DE LA RECONSTRUCCIÓN',
 		excerptEs:
-			'Donde la IA dibuja el contorno, la producción real le da a la canción cuerpo, grieta y la tensión emocional que hace humano al dark pop.',
+			'Donde la IA dibuja el contorno, la producción real le da a la canción cuerpo, grieta y la tensión emocional que hace humana a la música experimental oscura.',
 		meta: 'PRODUCTION NOTES',
 		metaI18nKey: 'blog.category.productionNotes',
 		titleI18nKey: 'blog.card.sound.title',
 		descriptionI18nKey: 'blog.card.sound.description',
 		image: '/images/blog/sound-of-reconstruction/sound-of-reconstruction-demo-recreation-hero.webp.webp',
-		alt: 'AI demo recreation and emotional dark pop production process',
+		alt: 'AI demo recreation and emotional dark experimental music production process',
 		href: '/blog/sound-of-reconstruction',
 	},
 	{
@@ -95,11 +147,11 @@ const posts = [
 		heroImage:
 			'/images/blog/building-an-independent-artist-world/building-independent-artist-world-hero.webp.webp',
 		seoTitle:
-			'How to Build an Independent Artist World: Music, Branding and Visual Identity | FHUGAWZ',
+			'How to Build an Independent Artist World: Music, Branding and Visual Identity | Fhugawz',
 		seoDescription:
-			'A FHUGAWZ guide for independent artists on building a complete artistic world through music, branding, visual identity, storytelling, content and release strategy.',
+			'A Fhugawz guide for independent artists on building a complete artistic world through music, branding, visual identity, storytelling, content and release strategy.',
 		keywords:
-			'independent artist branding, artist world building, music project identity, visual identity for musicians, artist development, music branding, dark pop branding, release strategy, content system for musicians, FHUGAWZ Studio, artistic direction, music project development',
+			'independent artist branding, artist world building, music project identity, visual identity for musicians, artist development, music branding, dark experimental music branding, release strategy, content system for musicians, Fhugawz Studio, artistic direction, music project development',
 		titleEs: 'CÓMO CONSTRUIR UN UNIVERSO ARTÍSTICO',
 		excerptEs:
 			'Una nota práctica sobre cómo convertir canciones, visuales, historia y estrategia de lanzamiento en un universo artístico coherente, reconocible y memorable.',
@@ -116,8 +168,8 @@ const posts = [
 ---
 
 <Layout
-	title="Fhugawz — Dark Pop Production Diary"
-	description="Production notes, artist reflections and creative field notes from FHUGAWZ, covering music, tools, dark pop, reconstruction and independent world building."
+	title="Fhugawz — Dark Experimental Music Production Diary"
+	description="Production notes, artist reflections and creative field notes from Fhugawz, covering music, tools, dark experimental music, reconstruction and independent world building."
 	image="/images/social/og-fhugawz-cinematic-dark-pop.webp"
 >
 	<section
@@ -136,9 +188,10 @@ const posts = [
 	<section class="section">
 		<div class="site-shell">
 			<div class="blog-filter" aria-label="Blog category filters">
-				<button class="blog-filter-button active" type="button" data-blog-filter="all" data-i18n="blog.filter.all">ALL</button>
-				<button class="blog-filter-button" type="button" data-blog-filter="project-diary" data-i18n="blog.filter.projectDiary">PROJECT DIARY</button>
-				<button class="blog-filter-button" type="button" data-blog-filter="production-notes" data-i18n="blog.filter.productionNotes">PRODUCTION NOTES</button>
+				<button class="blog-filter-button active" type="button" data-blog-filter="all" data-i18n="blog.filter.all">All</button>
+				<button class="blog-filter-button" type="button" data-blog-filter="project-diary" data-i18n="blog.filter.projectDiary">Project Diary</button>
+				<button class="blog-filter-button" type="button" data-blog-filter="production-notes" data-i18n="blog.filter.productionNotes">Production Notes</button>
+				<button class="blog-filter-button" type="button" data-blog-filter="creative-resources" data-i18n="blog.filter.creativeResources">Creative Resources</button>
 			</div>
 			<div class="card-grid two">
 				{posts.map((post) => <BlogCard {...post} />)}

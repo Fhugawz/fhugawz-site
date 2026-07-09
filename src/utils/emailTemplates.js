@@ -25,7 +25,7 @@ const normalizeTemplateData = (data = {}) => ({
 const paragraph = (content) =>
 	`<p style="margin:0 0 16px 0;color:#EFE4CC;font-size:16px;line-height:1.7;">${content}</p>`;
 
-const renderEmail = ({ title, eyebrow = 'FHUGAWZ STUDIO', preheader, body, signatureName }) => {
+const renderEmail = ({ title, eyebrow = 'Fhugawz Studio', preheader, body, signatureName }) => {
 	const safePreheader = escapeHtml(preheader);
 
 	return `
@@ -39,7 +39,7 @@ const renderEmail = ({ title, eyebrow = 'FHUGAWZ STUDIO', preheader, body, signa
 						<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;max-width:640px;width:100%;background:#10160F;border:1px solid rgba(239,228,204,0.18);border-radius:10px;overflow:hidden;">
 							<tr>
 								<td style="padding:0;background:#0B0F0B;">
-									<img src="${HERO_IMAGE_URL}" alt="FHUGAWZ cinematic dark pop atmosphere" width="640" style="display:block;width:100%;max-width:640px;height:auto;border:0;line-height:100%;outline:none;text-decoration:none;" />
+									<img src="${HERO_IMAGE_URL}" alt="Fhugawz cinematic dark experimental music atmosphere" width="640" style="display:block;width:100%;max-width:640px;height:auto;border:0;line-height:100%;outline:none;text-decoration:none;" />
 								</td>
 							</tr>
 							<tr>
@@ -56,7 +56,7 @@ const renderEmail = ({ title, eyebrow = 'FHUGAWZ STUDIO', preheader, body, signa
 							</tr>
 							<tr>
 								<td style="padding:20px 26px 26px 26px;border-top:1px solid rgba(239,228,204,0.14);">
-									<p style="margin:0 0 6px 0;color:#EFE4CC;font-size:13px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">FHUGAWZ Studio</p>
+									<p style="margin:0 0 6px 0;color:#EFE4CC;font-size:13px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;">Fhugawz Studio</p>
 									<p style="margin:0 0 8px 0;color:#B9AE99;font-size:13px;line-height:1.6;">Dark pop production, mixing, mastering and artist world building.</p>
 									<p style="margin:0;color:#B9AE99;font-size:13px;line-height:1.6;"><a href="${SITE_URL}" style="color:#FF5A1F;text-decoration:underline;">${SITE_URL}</a></p>
 								</td>
@@ -71,7 +71,7 @@ const renderEmail = ({ title, eyebrow = 'FHUGAWZ STUDIO', preheader, body, signa
 
 export const initialReplyTemplate = (data = {}) => {
 	const { name, service, nextStep, signatureName } = normalizeTemplateData(data);
-	const subject = 'About your project — next step from FHUGAWZ';
+	const subject = 'About your project — next step from Fhugawz';
 	const safeName = escapeHtml(name);
 	const safeService = escapeHtml(service);
 	const nextStepLine = nextStep
@@ -108,7 +108,7 @@ export const initialReplyTemplate = (data = {}) => {
 		'',
 		signatureName,
 		'',
-		'FHUGAWZ Studio',
+		'Fhugawz Studio',
 		'Dark pop production, mixing, mastering and artist world building.',
 		SITE_URL,
 	].join('\n');
@@ -127,7 +127,7 @@ export const initialReplyTemplate = (data = {}) => {
 
 export const followUpTemplate = (data = {}) => {
 	const { name, service, nextStep, signatureName } = normalizeTemplateData(data);
-	const subject = 'Following up on your project — FHUGAWZ';
+	const subject = 'Following up on your project — Fhugawz';
 	const safeName = escapeHtml(name);
 	const safeService = escapeHtml(service);
 	const nextStepLine = nextStep
@@ -140,7 +140,7 @@ export const followUpTemplate = (data = {}) => {
 		paragraph(`Hi ${safeName},`),
 		paragraph(`I wanted to follow up on ${safeService} and see if it is still something you want to move forward.`),
 		paragraph(
-			'If the project is still active, FHUGAWZ can help organize the next step so the idea has a clearer path instead of staying in a rough or unfinished place.'
+			'If the project is still active, Fhugawz can help organize the next step so the idea has a clearer path instead of staying in a rough or unfinished place.'
 		),
 		nextStepLine,
 		paragraph('Either way, the door stays open.'),
@@ -152,7 +152,7 @@ export const followUpTemplate = (data = {}) => {
 		`Hi ${name},`,
 		'',
 		`I wanted to follow up on ${service} and see if it is still something you want to move forward.`,
-		'If the project is still active, FHUGAWZ can help organize the next step so the idea has a clearer path instead of staying in a rough or unfinished place.',
+		'If the project is still active, Fhugawz can help organize the next step so the idea has a clearer path instead of staying in a rough or unfinished place.',
 		nextStep ||
 			'No pressure if timing changed. If the project is still active, we can pick it back up and organize the next step from there.',
 		'',
@@ -160,7 +160,7 @@ export const followUpTemplate = (data = {}) => {
 		'',
 		signatureName,
 		'',
-		'FHUGAWZ Studio',
+		'Fhugawz Studio',
 		'Dark pop production, mixing, mastering and artist world building.',
 		SITE_URL,
 	].join('\n');
@@ -169,7 +169,7 @@ export const followUpTemplate = (data = {}) => {
 		subject,
 		html: renderEmail({
 			title: 'Following up',
-			preheader: 'A calm follow up from FHUGAWZ about your project.',
+			preheader: 'A calm follow up from Fhugawz about your project.',
 			body,
 			signatureName,
 		}),
@@ -179,7 +179,7 @@ export const followUpTemplate = (data = {}) => {
 
 export const nextStepTemplate = (data = {}) => {
 	const { name, service, message, nextStep, signatureName } = normalizeTemplateData(data);
-	const subject = 'Your project direction — FHUGAWZ';
+	const subject = 'Your project direction — Fhugawz';
 	const safeName = escapeHtml(name);
 	const safeService = escapeHtml(service);
 	const contextLine = message
@@ -219,7 +219,7 @@ export const nextStepTemplate = (data = {}) => {
 		'',
 		signatureName,
 		'',
-		'FHUGAWZ Studio',
+		'Fhugawz Studio',
 		'Dark pop production, mixing, mastering and artist world building.',
 		SITE_URL,
 	].join('\n');
@@ -228,7 +228,7 @@ export const nextStepTemplate = (data = {}) => {
 		subject,
 		html: renderEmail({
 			title: 'Your project direction',
-			preheader: 'A strategic next step for shaping your project with FHUGAWZ.',
+			preheader: 'A strategic next step for shaping your project with Fhugawz.',
 			body,
 			signatureName,
 		}),

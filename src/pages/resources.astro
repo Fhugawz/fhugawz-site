@@ -1,0 +1,231 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BlogCard from '../components/BlogCard.astro';
+
+const latestPosts = [
+	{
+		title: 'Dark Visuals Make Music Memorable',
+		description:
+			'Dark visuals help music become more memorable by creating mood, identity, atmosphere, and visual signals that connect songs, artists, and creative worlds.',
+		meta: 'CREATIVE RESOURCES',
+		metaI18nKey: 'blog.category.creativeResources',
+		titleI18nKey: 'blog.card.visuals.title',
+		descriptionI18nKey: 'blog.card.visuals.description',
+		image: '/images/blog/blog-dark-visuals-music-memory-fhugawz-resources.webp.webp',
+		alt: 'Dark visual identity and atmospheric resources for independent music memory.',
+		href: '/blog/dark-visuals-make-music-memorable',
+	},
+	{
+		title: 'Songs Need More Than Production',
+		description:
+			'A song needs more than production to feel complete. Explore how creative direction, arrangement, emotional identity, and demo reconstruction can turn a rough idea into a finished world.',
+		meta: 'PRODUCTION NOTES',
+		metaI18nKey: 'blog.category.productionNotes',
+		titleI18nKey: 'blog.card.demo.title',
+		descriptionI18nKey: 'blog.card.demo.description',
+		image: '/images/blog/blog-from-demo-to-direction-music-production-fhugawz.webp.webp',
+		alt: 'Music production direction from demo to finished song world.',
+		href: '/blog/songs-need-more-than-production',
+	},
+];
+
+const resourceCards = [
+	{
+		title: 'Dark AI Visual Pack',
+		description:
+			'A free AI assisted image pack for creators working with dark, cinematic, nocturnal, emotional, and atmospheric visual worlds.',
+		titleI18nKey: 'resources.free.card1.title',
+		descriptionI18nKey: 'resources.free.card1.description',
+		mainHref: 'https://ko-fi.com/s/c54e716e71',
+	},
+	{
+		title: 'Post Industrial Visual Pack',
+		description:
+			'A free AI assisted image pack with cold, abandoned, futuristic, industrial, and post industrial inspired environments.',
+		titleI18nKey: 'resources.free.card2.title',
+		descriptionI18nKey: 'resources.free.card2.description',
+		mainHref: 'https://ko-fi.com/s/af27df17dc',
+	},
+];
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: 'Resources',
+	url: 'https://fhugawz.com/resources',
+	description:
+		'Free and premium creative resources for dark visuals, AI assisted projects, music experiments, atmospheric content, and experimental world building.',
+	isPartOf: {
+		'@type': 'WebSite',
+		name: 'Fhugawz',
+		url: 'https://fhugawz.com',
+	},
+};
+---
+
+<Layout
+	title="Resources — Dark Visuals, AI Creative Packs & Experimental Music Tools"
+	description="Free and premium creative resources for dark visuals, AI assisted projects, music experiments, atmospheric content, and experimental world building."
+	image="/images/social/og-fhugawz-cinematic-dark-pop.webp"
+	jsonLd={jsonLd}
+>
+	<section
+		class="page-hero with-image resources-hero"
+		style={`--page-hero-image: url("/images/hero/fhugawz-contact-dark-pop-resources-hero.webp")`}
+	>
+		<div class="site-shell resources-hero-grid">
+			<div>
+				<p class="section-kicker" data-i18n="resources.hero.kicker">CREATIVE ARCHIVE</p>
+				<h1 class="page-title" data-i18n="resources.hero.title">Resources</h1>
+				<p class="lede" data-i18n="resources.hero.description">
+					Free and premium creative resources for dark visuals, AI assisted projects, music
+					experiments, and atmospheric content. A growing archive of visual packs, sound based
+					experiments, creative tools, and world building resources connected to the Fhugawz
+					universe.
+				</p>
+				<div class="hero-actions">
+					<a class="button primary" href="#free-resources" data-i18n="resources.hero.primary">Explore Free Resources</a>
+					<a class="button" href="https://ko-fi.com/fhugawz/shop" target="_blank" rel="noopener noreferrer" data-i18n="resources.hero.secondary">Visit the Resource Store</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section resources-section" id="free-resources">
+		<div class="site-shell resources-section-grid">
+			<div class="resources-section-intro">
+				<p class="section-kicker" data-i18n="resources.free.kicker">FREE DROP</p>
+				<h2 class="section-title resources-split-title" data-i18n="resources.free.title">Free Resources</h2>
+				<p class="section-copy" data-i18n="resources.free.description">
+					Download free AI assisted visual packs created for personal creative projects,
+					moodboards, concept development, cover ideas, social content, and experimental
+					world building. These resources are made for creators working with dark, cinematic,
+					futuristic, surreal, post industrial, or atmospheric aesthetics.
+				</p>
+			</div>
+			<div class="resource-card-grid">
+				{
+					resourceCards.map((resource) => (
+						<article class="resource-card">
+							<p class="meta" data-i18n="resources.free.cardMeta">FREE PACK</p>
+							<h3 class="card-title" data-i18n={resource.titleI18nKey}>{resource.title}</h3>
+							<p class="card-copy" data-i18n={resource.descriptionI18nKey}>{resource.description}</p>
+							<div class="resource-card-actions">
+								<a class="button primary" href={resource.mainHref} target="_blank" rel="noopener noreferrer" data-i18n="resources.free.download">Download Free Pack</a>
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section paper-band resources-section" id="premium-packs">
+		<div class="site-shell resources-section-grid">
+			<div class="resources-section-intro">
+				<p class="section-kicker" data-i18n="resources.premium.kicker">PREMIUM RESOURCE</p>
+				<h2 class="section-title resources-split-title" data-i18n="resources.premium.title">Premium Packs</h2>
+				<p class="section-copy" data-i18n="resources.premium.description">
+					Expanded creative packs with AI assisted visuals, sound design elements, atmospheric
+					audio, and soundtrack style material for deeper concept development. These packs are
+					built for creators who want a more complete aesthetic world instead of isolated
+					assets.
+				</p>
+			</div>
+			<article class="resource-card resource-card-featured">
+				<p class="meta" data-i18n="resources.premium.cardMeta">PREMIUM PACK</p>
+				<h3 class="card-title" data-i18n="resources.premium.cardTitle">Dark Horror Atmosphere Premium Pack</h3>
+				<p class="card-copy" data-i18n="resources.premium.cardDescription">
+					A premium creative pack with AI assisted visuals, sound effects, and soundtrack
+					inspired audio pieces for dark horror, psychological tension, abandoned spaces, eerie
+					ambience, and cinematic world building.
+				</p>
+				<div class="resource-card-actions">
+					<a class="button primary" href="https://ko-fi.com/s/b1686007f0" target="_blank" rel="noopener noreferrer" data-i18n="resources.premium.button">Explore Premium Pack</a>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<section class="section resources-section">
+		<div class="site-shell resources-section-grid">
+			<div class="resources-section-intro">
+				<p class="section-kicker" data-i18n="resources.signal.kicker">SIGNAL CHANNEL</p>
+				<h2 class="section-title resources-split-title" data-i18n="resources.signal.title">Fhugawz 314</h2>
+				<p class="section-copy" data-i18n="resources.signal.description">
+					Fhugawz 314 is a parallel signal channel for visualizers, instrumental loops,
+					atmospheric fragments, and short form experiments. It works as a discovery layer
+					connected to the Fhugawz universe: a place for dark visuals, experimental audio,
+					cinematic loops, and creative signals that point back to the main archive.
+				</p>
+			</div>
+			<article class="signal-panel">
+				<p class="meta" data-i18n="resources.signal.cardMeta">COMING SOON</p>
+				<h3 class="card-title" data-i18n="resources.signal.note">Visualizers, loops, and experimental signals are coming soon.</h3>
+				<div class="resource-link-list">
+					<a href="https://www.instagram.com/fhugawz314/" target="_blank" rel="noopener noreferrer" data-i18n="resources.signal.instagram">Follow on Instagram</a>
+					<!-- TODO: update TikTok URL after username change. -->
+					<a href="https://www.tiktok.com/@axiom.lab" target="_blank" rel="noopener noreferrer" data-i18n="resources.signal.tiktok">Follow on TikTok</a>
+					<a href="https://www.youtube.com/@fhugawz" target="_blank" rel="noopener noreferrer" data-i18n="resources.signal.youtube">Watch on YouTube</a>
+					<a href="/blog" data-i18n="resources.signal.blog">Read the Blog</a>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<section class="section resources-section">
+		<div class="site-shell resources-section-grid">
+			<div class="resources-section-intro">
+				<p class="section-kicker" data-i18n="resources.tools.kicker">ASSET QUEUE</p>
+				<h2 class="section-title resources-split-title" data-i18n="resources.tools.title">Creative Assets</h2>
+				<p class="section-copy" data-i18n="resources.tools.description">
+					Soon this section will include creative tools, platforms, plugins, visual resources,
+					AI workflows, music production tools, and systems used across Fhugawz and Fhugawz 314.
+					Some recommendations may include affiliate links in the future, but the focus will
+					stay on tools that genuinely fit the creative process.
+				</p>
+			</div>
+			<article class="resource-card">
+				<p class="meta" data-i18n="resources.tools.cardMeta">QUEUE</p>
+				<h3 class="card-title" data-i18n="resources.tools.cardTitle">Assets Coming Soon</h3>
+				<p class="card-copy" data-i18n="resources.tools.cardDescription">
+					AI visuals, music production, design resources, video tools, sound libraries, and
+					creative platforms.
+				</p>
+			</article>
+		</div>
+	</section>
+
+	<section class="section tight resources-blog">
+		<div class="site-shell">
+			<div class="section-header">
+				<p class="section-kicker" data-i18n="resources.blog.kicker">BLOG NOTES</p>
+				<h2 class="section-title" data-i18n="resources.blog.title">Latest from the Blog</h2>
+				<p class="section-copy" data-i18n="resources.blog.description">
+					Notes, breakdowns, creative processes, visual experiments, and ideas behind the
+					Fhugawz universe. Explore articles connected to dark experimental music, AI assisted
+					creation, visual systems, world building, and independent creative workflows.
+				</p>
+			</div>
+			<div class="card-grid two">
+				{latestPosts.map((post) => <BlogCard {...post} />)}
+			</div>
+			<div class="resources-blog-action">
+				<a class="button primary" href="/blog" data-i18n="resources.blog.button">Read Latest Articles</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section resources-disclosure">
+		<div class="site-shell disclosure-panel">
+			<p class="section-kicker" data-i18n="resources.disclosure.kicker">DISCLOSURE</p>
+			<h2 class="section-title" data-i18n="resources.disclosure.title">Affiliate Disclosure</h2>
+			<p class="section-copy" data-i18n="resources.disclosure.description">
+				Some links on this page may become affiliate links. This means I may earn a small
+				commission if you purchase through them, at no extra cost to you. I only share tools,
+				platforms, or resources that fit the creative direction of Fhugawz, Fhugawz 314, or the
+				workflows used to build these projects.
+			</p>
+		</div>
+	</section>
+</Layout>
