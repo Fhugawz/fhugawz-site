@@ -6,6 +6,7 @@ interface Props {
 	imageAlt?: string;
 	canonical?: string;
 	keywords?: string;
+	type?: string;
 	spanishTitle?: string;
 	spanishDescription?: string;
 	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
@@ -24,6 +25,7 @@ const {
 	imageAlt = defaultImageAlt,
 	canonical,
 	keywords,
+	type = 'website',
 	spanishTitle,
 	spanishDescription,
 	jsonLd,
@@ -48,7 +50,7 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 {spanishDescription && <meta name="description" lang="es" content={spanishDescription} />}
 <link rel="canonical" href={canonicalUrl} />
 <link rel="icon" type="image/svg+xml" href="/images/brand/fhugawz-logo-favicon.svg" />
-<meta property="og:type" content="website" />
+<meta property="og:type" content={type} />
 <meta property="og:site_name" content="FHUGAWZ" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

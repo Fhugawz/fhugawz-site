@@ -1521,6 +1521,13 @@ html[data-language='es'] .article-language-es {
 	text-underline-offset: 4px;
 }
 
+.article-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 28px;
+}
+
 .article-footer {
 	display: grid;
 	gap: 28px;

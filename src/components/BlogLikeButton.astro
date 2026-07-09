@@ -76,6 +76,20 @@ const { slug, initialCount = 0 } = Astro.props;
 			}
 		};
 
+		const getLanguage = () => document.documentElement.lang === 'es' ? 'es' : 'en';
+		const statusMessages = {
+			en: {
+				saving: 'Saving like...',
+				saved: 'Like saved.',
+				error: 'The like could not be saved right now. Please try again soon.',
+			},
+			es: {
+				saving: 'Guardando me gusta...',
+				saved: 'Me gusta guardado.',
+				error: 'No se pudo guardar el me gusta ahora. Inténtalo de nuevo pronto.',
+			},
+		};
+		const getStatusMessage = (key) => statusMessages[getLanguage()][key] || statusMessages.en[key];
 		const setStatus = (message) => {
 			if (status instanceof HTMLElement) status.textContent = message;
 		};
@@ -84,7 +98,7 @@ const { slug, initialCount = 0 } = Astro.props;
 			if (readLiked()) return;
 			button.disabled = true;
 			button.setAttribute('aria-busy', 'true');
-			setStatus('Saving like...');
+			setStatus(getStatusMessage('saving'));
 
 			try {
 				const response = await fetch('/.netlify/functions/like', {
@@ -102,9 +116,9 @@ const { slug, initialCount = 0 } = Astro.props;
 
 				if (!response.ok || result.success === false) {
 					setStatus(
-						typeof result.message === 'string'
+						getLanguage() === 'en' && typeof result.message === 'string'
 							? result.message
-							: 'The like could not be saved right now. Please try again soon.'
+							: getStatusMessage('error')
 					);
 					return;
 				}
@@ -119,9 +133,9 @@ const { slug, initialCount = 0 } = Astro.props;
 					event_category: 'engagement',
 					event_label: slug,
 				});
-				setStatus(typeof result.message === 'string' ? result.message : 'Like saved.');
+				setStatus(getLanguage() === 'en' && typeof result.message === 'string' ? result.message : getStatusMessage('saved'));
 			} catch {
-				setStatus('The like could not be saved right now. Please try again soon.');
+				setStatus(getStatusMessage('error'));
 			} finally {
 				button.disabled = false;
 				button.removeAttribute('aria-busy');

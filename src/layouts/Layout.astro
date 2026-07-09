@@ -13,12 +13,13 @@ interface Props {
 	imageAlt?: string;
 	canonical?: string;
 	keywords?: string;
+	type?: string;
 	spanishTitle?: string;
 	spanishDescription?: string;
 	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, image, imageAlt, canonical, keywords, spanishTitle, spanishDescription, jsonLd } = Astro.props;
+const { title, description, image, imageAlt, canonical, keywords, type, spanishTitle, spanishDescription, jsonLd } = Astro.props;
 ---
 
 <!doctype html>
@@ -31,6 +32,7 @@ const { title, description, image, imageAlt, canonical, keywords, spanishTitle, 
 			imageAlt={imageAlt}
 			canonical={canonical}
 			keywords={keywords}
+			type={type}
 			spanishTitle={spanishTitle}
 			spanishDescription={spanishDescription}
 			jsonLd={jsonLd}
@@ -196,7 +198,7 @@ const { title, description, image, imageAlt, canonical, keywords, spanishTitle, 
 					'services.world.description':
 						'Un sistema creativo completo para artistas que necesitan concepto, identidad sonora, dirección visual, estrategia de lanzamiento, presencia web y plantillas de contenido.',
 					'diary.kicker': 'NOTAS DE CAMPO',
-					'diary.title': 'DIARIO DE PRODUCCIÓN',
+					'diary.title': 'Lo último del blog',
 					'diary.description':
 						'Notas sobre música, producción, herramientas y el proceso de construir un mundo artístico independiente en público, paso a paso, desde adentro.',
 					'diary.cardKicker': 'Diario de producción',
@@ -643,7 +645,7 @@ const { title, description, image, imageAlt, canonical, keywords, spanishTitle, 
 						'Esa es la razón por la que existe Fhugawz: construir un mundo de música experimental oscura donde sonido, imagen y emoción no se sientan separados.',
 					'post.exists.closing':
 						'Sigue el proyecto, escucha los previews y acompaña el proceso. Esto todavía se está construyendo.',
-					'post.era.kicker': 'UNIVERSO ARTÍSTICO',
+					'post.era.kicker': 'RECURSOS CREATIVOS',
 					'post.era.title': 'CÓMO CONSTRUIR\nUN UNIVERSO\nARTÍSTICO',
 					'post.era.lede':
 						'Una nota práctica sobre cómo convertir canciones, visuales, historia y estrategia de lanzamiento en un universo artístico coherente, reconocible y memorable.',
