@@ -10,6 +10,7 @@ interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	imageAlt?: string;
 	canonical?: string;
 	keywords?: string;
 	spanishTitle?: string;
@@ -17,7 +18,7 @@ interface Props {
 	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, image, canonical, keywords, spanishTitle, spanishDescription, jsonLd } = Astro.props;
+const { title, description, image, imageAlt, canonical, keywords, spanishTitle, spanishDescription, jsonLd } = Astro.props;
 ---
 
 <!doctype html>
@@ -27,6 +28,7 @@ const { title, description, image, canonical, keywords, spanishTitle, spanishDes
 			title={title}
 			description={description}
 			image={image}
+			imageAlt={imageAlt}
 			canonical={canonical}
 			keywords={keywords}
 			spanishTitle={spanishTitle}

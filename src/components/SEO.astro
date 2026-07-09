@@ -3,6 +3,7 @@ interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	imageAlt?: string;
 	canonical?: string;
 	keywords?: string;
 	spanishTitle?: string;
@@ -13,11 +14,14 @@ interface Props {
 const site = 'https://fhugawz.com';
 const defaultTitle = 'Fhugawz — Dark Experimental Music & Visual Worlds';
 const defaultDescription =
-	'Fhugawz is a dark experimental music project and creative studio exploring visual worlds, AI assisted creation, cinematic atmosphere, memory and transformation.';
+	'Dark experimental music, original production and artist world building for songs that need more than a release plan.';
+const defaultImage = '/images/hero/fhugawz-cinematic-dark-pop-hero.webp';
+const defaultImageAlt = 'Fhugawz dark experimental music visual portrait';
 const {
 	title = defaultTitle,
 	description = defaultDescription,
-	image = '/images/social/og-fhugawz-cinematic-dark-pop.webp',
+	image = defaultImage,
+	imageAlt = defaultImageAlt,
 	canonical,
 	keywords,
 	spanishTitle,
@@ -50,12 +54,12 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={imageUrl} />
-<meta property="og:image:alt" content={title} />
+<meta property="og:image:alt" content={imageAlt} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl} />
-<meta name="twitter:image:alt" content={title} />
+<meta name="twitter:image:alt" content={imageAlt} />
 {schema && <script type="application/ld+json" set:html={schema} />}
 {
 	gaMeasurementId && (
