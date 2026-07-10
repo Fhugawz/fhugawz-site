@@ -805,6 +805,7 @@ html[data-language="es"] .home-studio .section-title {
 }
 
 .home-resources-panel {
+	position: relative;
 	align-self: start;
 	display: grid;
 	align-content: start;
@@ -1013,6 +1014,7 @@ html[data-language="es"] .home-studio .section-title {
 }
 
 .service-package {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	gap: 22px;
@@ -1235,6 +1237,7 @@ html[data-language="es"] .home-studio .section-title {
 }
 
 .timeline-entry {
+	position: relative;
 	background: linear-gradient(145deg, rgba(223, 211, 187, 0.09), rgba(223, 211, 187, 0.03));
 	border: 1px solid var(--line);
 	box-shadow: var(--shadow-soft);
@@ -1395,6 +1398,107 @@ html[data-language="es"] .resources-split-title {
 	display: grid;
 	align-content: start;
 	gap: 22px;
+}
+
+.feature-card,
+.project-card,
+.blog-card,
+.service-card,
+.track-card,
+.home-resources-panel,
+.resource-card,
+.signal-panel,
+.disclosure-panel,
+.contact-panel,
+.service-package,
+.timeline-entry {
+	transition:
+		border-color 180ms ease,
+		box-shadow 180ms ease;
+}
+
+.feature-card::after,
+.project-card::after,
+.blog-card::after,
+.service-card::after,
+.track-card::after,
+.home-resources-panel::after,
+.resource-card::after,
+.signal-panel::after,
+.disclosure-panel::after,
+.contact-panel::after,
+.service-package::after,
+.timeline-entry::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	height: 2px;
+	content: "";
+	background: color-mix(in srgb, var(--signal-orange) 72%, transparent);
+	opacity: 0;
+	pointer-events: none;
+	transform: scaleX(0.16);
+	transform-origin: left;
+	transition:
+		opacity 180ms ease,
+		transform 180ms ease;
+}
+
+.feature-card:hover,
+.feature-card:focus-within,
+.project-card:hover,
+.project-card:focus-within,
+.blog-card:hover,
+.blog-card:focus-within,
+.service-card:hover,
+.service-card:focus-within,
+.track-card:hover,
+.track-card:focus-within,
+.home-resources-panel:hover,
+.home-resources-panel:focus-within,
+.resource-card:hover,
+.resource-card:focus-within,
+.signal-panel:hover,
+.signal-panel:focus-within,
+.disclosure-panel:hover,
+.disclosure-panel:focus-within,
+.contact-panel:hover,
+.contact-panel:focus-within,
+.service-package:hover,
+.service-package:focus-within,
+.timeline-entry:hover,
+.timeline-entry:focus-within {
+	border-color: color-mix(in srgb, var(--signal-orange) 34%, var(--line));
+}
+
+.feature-card:hover::after,
+.feature-card:focus-within::after,
+.project-card:hover::after,
+.project-card:focus-within::after,
+.blog-card:hover::after,
+.blog-card:focus-within::after,
+.service-card:hover::after,
+.service-card:focus-within::after,
+.track-card:hover::after,
+.track-card:focus-within::after,
+.home-resources-panel:hover::after,
+.home-resources-panel:focus-within::after,
+.resource-card:hover::after,
+.resource-card:focus-within::after,
+.signal-panel:hover::after,
+.signal-panel:focus-within::after,
+.disclosure-panel:hover::after,
+.disclosure-panel:focus-within::after,
+.contact-panel:hover::after,
+.contact-panel:focus-within::after,
+.service-package:hover::after,
+.service-package:focus-within::after,
+.timeline-entry:hover::after,
+.timeline-entry:focus-within::after {
+	opacity: 1;
+	transform: scaleX(1);
 }
 
 .resource-link-list {
