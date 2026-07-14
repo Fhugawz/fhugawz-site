@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { calculateScorecard, categoryIds, getResultId, questionKey } from '../src/data/scorecard.js';
-import { calculateResult, normalizeAnswers, questionKeys } from '../netlify/functions/scorecard-logic.js';
+import { calculateResult, normalizeAnswers, questionKeys } from '../netlify/lib/scorecard-logic.js';
 
 const answersWithValue = (value) => Object.fromEntries(
   categoryIds.flatMap((categoryId) => [0, 1, 2, 3].map((index) => [questionKey(categoryId, index), value])),
