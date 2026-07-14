@@ -13,10 +13,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# environment variables
+# environment variables and local examples
 .env
-.env.production
-.env.local
+.env.*
+!.env.example
 
 # macOS-specific files
 .DS_Store
@@ -26,3 +26,39 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Local working data and private source material
+.local/
+books/
+references/
+private/
+client-data/
+client_data/
+backups/
+backup/
+exports/
+
+# Original image backups must stay outside the public deploy surface
+public/images-original-backup/
+
+# Database exports and application data
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.backup
+
+# Editable Affinity source documents
+*.afdesign
+*.afphoto
+*.afpub
+
+# Private keys, certificates and credential exports
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+service-account*.json
+client_secret*.json
