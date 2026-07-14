@@ -3,34 +3,4 @@ type PromoContext = 'services' | 'resources' | 'contact';
 interface Props { context: PromoContext; image: string; }
 const { context, image } = Astro.props;
 const text = {
- services:{en:['FREE ARTIST DIAGNOSTIC','NOT SURE WHICH SERVICE YOUR PROJECT NEEDS?','Answer 20 focused questions and receive a clearer view of your identity, sound, visual world, release preparation and content system.','The result shows your strongest and priority areas, gives you three practical next steps and provides Fhugawz Studio with useful context if you decide to continue.','TAKE THE FREE SCORECARD'],es:['DIAGNÓSTICO GRATUITO PARA ARTISTAS','¿NO TIENES CLARO QUÉ SERVICIO NECESITA TU PROYECTO?','Responde 20 preguntas y obtén una visión más clara de tu identidad, sonido, universo visual, preparación de lanzamiento y sistema de contenido.','El resultado muestra tus áreas fuertes y prioritarias, te entrega tres próximos pasos y le da a Fhugawz Studio contexto útil si decides continuar.','HACER EL SCORECARD GRATUITO']},
- resources:{en:['FREE CREATIVE RESOURCE','START WITH A CLEARER MAP OF YOUR ARTIST PROJECT','Use the Scorecard before spending more time or money. It helps organize scattered ideas and identify what needs attention first.','In 5–8 minutes you receive a score across five areas, a priority diagnosis and practical actions for your identity, release and content system.','START THE FREE DIAGNOSTIC'],es:['RECURSO CREATIVO GRATUITO','EMPIEZA CON UN MAPA MÁS CLARO DE TU PROYECTO ARTÍSTICO','Usa el Scorecard antes de invertir más tiempo o dinero. Te ayuda a organizar ideas dispersas y detectar qué necesita atención primero.','En 5–8 minutos recibes una puntuación en cinco áreas, un diagnóstico prioritario y acciones prácticas para tu identidad, lanzamiento y contenido.','COMENZAR DIAGNÓSTICO GRATUITO']},
- contact:{en:['FIND YOUR STARTING POINT','NOT READY TO EXPLAIN THE WHOLE PROJECT YET?','Complete the diagnostic first and receive a clearer summary of where your artist project currently stands.','You may email the result to yourself and send the same context to Fhugawz Studio, so the conversation begins with useful information instead of a blank form.','COMPLETE THE FREE SCORECARD'],es:['ENCUENTRA TU PUNTO DE PARTIDA','¿TODAVÍA NO SABES CÓMO EXPLICAR TODO TU PROYECTO?','Completa primero el diagnóstico y recibe un resumen más claro del estado actual de tu proyecto artístico.','Puedes enviarte el resultado por correo y compartir el mismo contexto con Fhugawz Studio, para comenzar la conversación con información útil.','COMPLETAR SCORECARD GRATUITO']}
-}[context];
----
-<section class="promo" style={`--promo-image:url("${image}")`}>
- <div class="site-shell grid">
-  <div class="lang en"><p class="kicker">{text.en[0]}</p><h2>{text.en[1]}</h2><p class="intro">{text.en[2]}</p></div>
-  <div class="lang es"><p class="kicker">{text.es[0]}</p><h2>{text.es[1]}</h2><p class="intro">{text.es[2]}</p></div>
-  <aside class="detail">
-   <div class="lang en"><p>{text.en[3]}</p><div class="meta"><span>20 QUESTIONS</span><span>5 AREAS</span><span>5–8 MIN</span></div><a href="/scorecard" data-analytics-event="scorecard_promo_click" data-analytics-category="lead" data-analytics-label={context}>{text.en[4]}</a></div>
-   <div class="lang es"><p>{text.es[3]}</p><div class="meta"><span>20 PREGUNTAS</span><span>5 ÁREAS</span><span>5–8 MIN</span></div><a href="/scorecard" data-analytics-event="scorecard_promo_click" data-analytics-category="lead" data-analytics-label={context}>{text.es[4]}</a></div>
-  </aside>
- </div>
-</section>
-<style>
- .promo{position:relative;isolation:isolate;overflow:hidden;border-block:1px solid var(--line);background:var(--blackgreen);color:var(--bone)}
- .promo::before{position:absolute;inset:0;z-index:-2;content:"";background-image:var(--promo-image);background-position:center;background-size:cover;filter:saturate(.7) contrast(1.05);opacity:.18}
- .promo::after{position:absolute;inset:0;z-index:-1;content:"";background:linear-gradient(90deg,rgba(13,16,13,.96),rgba(13,16,13,.86) 52%,rgba(13,16,13,.78))}
- .grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.72fr);gap:clamp(28px,6vw,76px);align-items:center;padding-block:clamp(42px,5vw,66px)}
- .lang.es{display:none}:global(html[data-language='es']) .lang.en{display:none}:global(html[data-language='es']) .lang.es{display:block}
- .kicker{margin:0 0 12px;color:var(--signal-orange);font-size:.75rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
- h2{max-width:700px;margin:0;font-family:var(--font-display);font-size:clamp(2.2rem,4.25vw,4.15rem);font-weight:900;line-height:.94;text-transform:uppercase;text-wrap:balance}
- .intro,.detail p{color:rgba(223,211,187,.76);font-size:clamp(.98rem,1.25vw,1.12rem);font-weight:400;line-height:1.72}
- .intro{max-width:680px;margin:21px 0 0}.detail{border:1px solid var(--line);border-radius:8px;background:linear-gradient(145deg,rgba(223,211,187,.085),rgba(223,211,187,.035)),rgba(13,16,13,.62);backdrop-filter:blur(10px);padding:clamp(24px,3vw,34px)}
- .detail p{margin:0}.meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}.meta span{border:1px solid var(--line);border-radius:999px;font-size:.66rem;font-weight:900;letter-spacing:.08em;padding:7px 10px}
- a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;margin-top:24px;border:1px solid color-mix(in srgb,var(--signal-orange) 72%,transparent);border-radius:999px;background:var(--signal-orange);color:#160d08;font-size:.78rem;font-weight:900;letter-spacing:.1em;padding:13px 18px;text-transform:uppercase}
- a:hover,a:focus-visible{outline:2px solid color-mix(in srgb,var(--signal-orange) 60%,transparent);outline-offset:4px;transform:translateY(-1px)}
- @media(max-width:900px){.grid{grid-template-columns:1fr;gap:28px}.detail{max-width:680px}h2{font-size:clamp(2.15rem,7vw,3.7rem)}}
- @media(max-width:600px){.grid{width:min(100% - 28px,1160px);padding-block:38px}h2{font-size:clamp(2rem,10.5vw,3rem)}.intro,.detail p{font-size:.98rem;line-height:1.65}.detail{padding:22px}a{width:100%}}
-</style>
+ services:{en:['FREE ARTIST DIAGNOSTIC','NOT SURE WHICH SERVICE YOUR PROJECT NEEDS?','Answer 20 focused questions and receive a clearer view of your identity, sound, visual
