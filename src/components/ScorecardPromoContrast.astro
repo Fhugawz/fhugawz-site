@@ -1,5 +1,6 @@
 ---
 import ScorecardPromoDark from './ScorecardPromoDark.astro';
+import '../styles/scorecard-promo-refine.css';
 type PromoContext = 'services' | 'resources' | 'contact';
 interface Props { context: PromoContext; image: string; }
 const { context, image } = Astro.props;
