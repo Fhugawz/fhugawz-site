@@ -1,12 +1,20 @@
-import { copyFile, mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 
 const root = process.cwd();
+const publicRoot = path.join(root, 'public');
 const imageRoot = path.join(root, 'public', 'images');
-const backupRoot = path.join(root, 'public', 'images-original-backup');
+const configuredBackupRoot = process.env.IMAGE_BACKUP_DIR?.trim();
+const backupRoot = configuredBackupRoot
+	? path.resolve(configuredBackupRoot)
+	: path.join(root, '.local', 'image-backups');
 const allowedExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 const skipPattern = /(^|[\\/])brand([\\/]|$)|logo|favicon|transparent/i;
+
+if (backupRoot === publicRoot || backupRoot.startsWith(`${publicRoot}${path.sep}`)) {
+	throw new Error('IMAGE_BACKUP_DIR must resolve outside the public directory.');
+}
 
 const formatBytes = (bytes) => `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 
@@ -25,6 +33,26 @@ const walk = async (directory) => {
 	}
 
 	return files;
+};
+
+const preserveOriginal = async (backupPath, original) => {
+	await mkdir(path.dirname(backupPath), { recursive: true });
+
+	try {
+		await writeFile(backupPath, original, { flag: 'wx' });
+		return 'created';
+	} catch (error) {
+		if (!(error instanceof Error) || !('code' in error) || error.code !== 'EEXIST') {
+			throw error;
+		}
+
+		const existing = await readFile(backupPath);
+		if (!existing.equals(original)) {
+			throw new Error(`Backup already exists with different content: ${backupPath}`);
+		}
+
+		return 'verified';
+	}
 };
 
 const optimize = async (filePath) => {
@@ -55,8 +83,7 @@ const optimize = async (filePath) => {
 	}
 
 	const backupPath = path.join(backupRoot, relativePath);
-	await mkdir(path.dirname(backupPath), { recursive: true });
-	await copyFile(filePath, backupPath);
+	const backupStatus = await preserveOriginal(backupPath, original);
 	await writeFile(filePath, optimized);
 
 	return {
@@ -64,13 +91,17 @@ const optimize = async (filePath) => {
 		before: original.length,
 		after: optimized.length,
 		relativePath,
+		backupStatus,
 	};
 };
 
+await mkdir(backupRoot, { recursive: true });
 const files = await walk(imageRoot);
 let totalBefore = 0;
 let totalAfter = 0;
 let optimizedCount = 0;
+let createdBackupCount = 0;
+let verifiedBackupCount = 0;
 
 for (const file of files) {
 	const fileStat = await stat(file);
@@ -83,6 +114,8 @@ for (const file of files) {
 
 	if (!result.skipped) {
 		optimizedCount += 1;
+		if (result.backupStatus === 'created') createdBackupCount += 1;
+		if (result.backupStatus === 'verified') verifiedBackupCount += 1;
 		console.log(
 			`optimized ${result.relativePath}: ${formatBytes(result.before)} -> ${formatBytes(result.after)}`,
 		);
@@ -94,4 +127,6 @@ console.log(`Optimized files: ${optimizedCount}`);
 console.log(`Before: ${formatBytes(totalBefore)}`);
 console.log(`After: ${formatBytes(totalAfter)}`);
 console.log(`Saved: ${formatBytes(saved)}`);
-console.log(`Backups: ${path.relative(root, backupRoot)}`);
+console.log(`Backups created: ${createdBackupCount}`);
+console.log(`Existing backups verified: ${verifiedBackupCount}`);
+console.log(`Backup directory: ${backupRoot}`);
