@@ -11,28 +11,32 @@ if (root instanceof HTMLElement) {
 	);
 	const form = root.querySelector('[data-scorecard-form]');
 	const optionsContainer = root.querySelector('[data-scorecard-options]');
-	const state = { answers: {}, index: 0 };
+	const state = { answers: {}, index: 0, completed: false };
 	const questions = categoryIds.flatMap((categoryId) =>
 		[0, 1, 2, 3].map((questionIndex) => ({ categoryId, questionIndex, key: questionKey(categoryId, questionIndex) })),
 	);
-
 	const getLanguage = () => (document.documentElement.dataset.language === 'es' ? 'es' : 'en');
 	const getContent = () => contentByLanguage[getLanguage()];
+	const track = (eventName, params = {}) => window.fhugawzTrackEvent?.(eventName, params);
+	const setText = (selector, text) => {
+		const element = root.querySelector(selector);
+		if (element instanceof HTMLElement) element.textContent = text;
+	};
 	const showScreen = (name) => {
 		Object.entries(screens).forEach(([screenName, element]) => {
 			if (element instanceof HTMLElement) element.hidden = screenName !== name;
 		});
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	};
-	const setText = (selector, text) => {
-		const element = root.querySelector(selector);
-		if (element instanceof HTMLElement) element.textContent = text;
-	};
-	const track = (eventName, params = {}) => window.fhugawzTrackEvent?.(eventName, params);
 
 	const renderIntro = () => {
 		const { intro } = getContent();
 		Object.entries(intro).forEach(([key, value]) => setText(`[data-scorecard-intro="${key}"]`, value));
+		const meta = root.querySelectorAll('.scorecard-meta span');
+		const labels = getLanguage() === 'es' ? ['20 preguntas', '5 áreas', '5–8 min'] : ['20 questions', '5 areas', '5–8 min'];
+		meta.forEach((element, index) => { element.textContent = labels[index] || ''; });
+		const studioLink = root.querySelector('.scorecard-recommendation a');
+		if (studioLink instanceof HTMLElement) studioLink.textContent = getLanguage() === 'es' ? 'EXPLORAR FHUGAWZ STUDIO' : 'EXPLORE FHUGAWZ STUDIO';
 	};
 
 	const renderQuestion = () => {
@@ -65,7 +69,7 @@ if (root instanceof HTMLElement) {
 		}
 	};
 
-	const renderResults = () => {
+	const renderResults = ({ trackView = false } = {}) => {
 		const content = getContent();
 		const result = calculateScorecard(state.answers);
 		const range = content.results[result.resultId];
@@ -83,7 +87,6 @@ if (root instanceof HTMLElement) {
 		setText('[data-scorecard-recommendation-heading]', content.ui.recommendation);
 		setText('[data-scorecard-recommendation]', result.weakest.map((id) => content.recommendations[id]).join(' '));
 		setText('[data-scorecard-restart]', content.ui.restart);
-
 		const categoryResults = root.querySelector('[data-scorecard-category-results]');
 		if (categoryResults instanceof HTMLElement) {
 			categoryResults.innerHTML = '';
@@ -98,30 +101,27 @@ if (root instanceof HTMLElement) {
 				categoryResults.append(row);
 			});
 		}
-
 		const nextSteps = root.querySelector('[data-scorecard-next-steps]');
 		if (nextSteps instanceof HTMLOListElement) {
 			nextSteps.innerHTML = '';
-			const actions = result.weakest.flatMap((id) => content.actions[id]).slice(0, 3);
-			actions.forEach((action) => {
+			result.weakest.flatMap((id) => content.actions[id]).slice(0, 3).forEach((action) => {
 				const item = document.createElement('li');
 				item.textContent = action;
 				nextSteps.append(item);
 			});
 		}
-		track('scorecard_completed', { score: result.total, result_level: result.resultId });
+		if (trackView) {
+			track('scorecard_completed', { score: result.total, result_level: result.resultId });
+			track('scorecard_result_viewed', { result_level: result.resultId });
+		}
 	};
 
 	root.querySelector('[data-scorecard-start]')?.addEventListener('click', () => {
-		showScreen('questions');
-		renderQuestion();
-		track('scorecard_started');
+		showScreen('questions'); renderQuestion(); track('scorecard_started');
 	});
-
 	root.querySelector('[data-scorecard-previous]')?.addEventListener('click', () => {
 		if (state.index > 0) { state.index -= 1; renderQuestion(); }
 	});
-
 	if (form instanceof HTMLFormElement) {
 		form.addEventListener('submit', (event) => {
 			event.preventDefault();
@@ -133,31 +133,24 @@ if (root instanceof HTMLElement) {
 			}
 			state.answers[questions[state.index].key] = Number(selected.value);
 			if (state.index === questions.length - 1) {
-				renderResults();
+				state.completed = true;
+				renderResults({ trackView: true });
 				showScreen('results');
 				return;
 			}
-			const completedCategory = questions[state.index].questionIndex === 3;
-			if (completedCategory) track('scorecard_category_completed', { category: questions[state.index].categoryId });
-			state.index += 1;
-			renderQuestion();
+			if (questions[state.index].questionIndex === 3) track('scorecard_category_completed', { category: questions[state.index].categoryId });
+			state.index += 1; renderQuestion();
 		});
 	}
-
+	root.querySelector('.scorecard-recommendation a')?.addEventListener('click', () => track('scorecard_cta_clicked'));
 	root.querySelector('[data-scorecard-restart]')?.addEventListener('click', () => {
-		state.answers = {};
-		state.index = 0;
-		renderIntro();
-		showScreen('intro');
-		track('scorecard_restarted');
+		state.answers = {}; state.index = 0; state.completed = false; renderIntro(); showScreen('intro'); track('scorecard_restarted');
 	});
-
 	window.addEventListener('fhugawz:languagechange', () => {
 		renderIntro();
 		if (!screens.questions?.hidden) renderQuestion();
-		if (!screens.results?.hidden) renderResults();
+		if (!screens.results?.hidden && state.completed) renderResults();
 	});
-
 	renderIntro();
 	track('scorecard_viewed');
 }
