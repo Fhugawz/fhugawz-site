@@ -1,0 +1,4 @@
+.scorecard-intro h1{max-width:860px;font-size:clamp(2.6rem,4.35vw,4.35rem);line-height:.94;letter-spacing:-.035em;text-wrap:balance}
+.scorecard-panel legend{font-size:clamp(1.9rem,3.15vw,2.8rem);line-height:1.04}
+.scorecard-option{grid-template-columns:26px minmax(0,1fr);align-items:center;min-height:76px}
+.scorecard-option-score{position:relative;display:flex;align-items:center;justify-content:center;align-self:center;width:22px
