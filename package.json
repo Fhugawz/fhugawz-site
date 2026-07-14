@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "test:scorecard": "node --test tests/scorecard.test.js",
+    "build": "npm run test:scorecard && astro build",
     "optimize:images": "node scripts/optimize-images.mjs",
     "preview": "astro preview",
     "astro": "astro"
