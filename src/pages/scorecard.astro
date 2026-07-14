@@ -24,7 +24,7 @@ import '../styles/scorecard-buttons-rounded.css';
         <p class="scorecard-lede" data-scorecard-intro="body"></p>
         <div class="scorecard-meta"><span></span><span></span><span></span></div>
         <p class="scorecard-privacy" data-scorecard-intro="privacy"></p>
-        <button class="scorecard-button scorecard-button-primary" type="button" data-scorecard-start></button>
+        <button class="scorecard-button scorecard-button-primary" style="border-radius:9999px" type="button" data-scorecard-start></button>
       </section>
 
       <section class="scorecard-panel" data-scorecard-screen="questions" hidden>
@@ -37,8 +37,8 @@ import '../styles/scorecard-buttons-rounded.css';
           <fieldset><legend data-scorecard-question></legend><div class="scorecard-options" data-scorecard-options></div></fieldset>
           <p class="scorecard-error" data-scorecard-error role="alert" hidden></p>
           <div class="scorecard-actions">
-            <button class="scorecard-button scorecard-button-secondary" type="button" data-scorecard-previous></button>
-            <button class="scorecard-button scorecard-button-primary" type="submit" data-scorecard-next></button>
+            <button class="scorecard-button scorecard-button-secondary" style="border-radius:9999px" type="button" data-scorecard-previous></button>
+            <button class="scorecard-button scorecard-button-primary" style="border-radius:9999px" type="submit" data-scorecard-next></button>
           </div>
         </form>
       </section>
@@ -74,14 +74,14 @@ import '../styles/scorecard-buttons-rounded.css';
           <form data-scorecard-capture-form novalidate>
             <div class="scorecard-capture-form">
               <input class="scorecard-email-input" type="email" name="email" autocomplete="email" data-scorecard-email required />
-              <button class="scorecard-button scorecard-button-primary" type="submit" data-scorecard-submit-results></button>
+              <button class="scorecard-button scorecard-button-primary" style="border-radius:9999px" type="submit" data-scorecard-submit-results></button>
             </div>
             <label class="scorecard-consent"><input type="checkbox" name="marketingConsent" data-scorecard-marketing-consent /><span data-scorecard-consent-copy></span></label>
             <p class="scorecard-submit-status" data-scorecard-submit-status role="status" hidden></p>
           </form>
           <div class="scorecard-result-actions">
-            <a class="scorecard-button scorecard-button-secondary" href="/services" data-scorecard-studio-link></a>
-            <button class="scorecard-button scorecard-button-secondary" type="button" data-scorecard-restart></button>
+            <a class="scorecard-button scorecard-button-secondary" style="border-radius:9999px" href="/services" data-scorecard-studio-link></a>
+            <button class="scorecard-button scorecard-button-secondary" style="border-radius:9999px" type="button" data-scorecard-restart></button>
           </div>
         </section>
       </section>
