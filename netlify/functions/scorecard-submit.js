@@ -1,5 +1,5 @@
-import { calculateResult, normalizeAnswers } from './scorecard-logic.js';
-import { ownerEmail, visitorEmail } from './scorecard-emails.js';
+import { calculateResult, normalizeAnswers } from '../lib/scorecard-logic.js';
+import { ownerEmail, visitorEmail } from '../lib/scorecard-emails.js';
 
 const json = (statusCode, body) => ({ statusCode, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
