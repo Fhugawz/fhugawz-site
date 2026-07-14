@@ -1,6 +1,31 @@
 ---
 import SocialLinks from './SocialLinks.astro';
+import ScorecardPromo from './ScorecardPromo.astro';
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const promoByPath = {
+	'/services': {
+		context: 'services',
+		image: '/images/services/service-dark-pop-music-production.webp',
+	},
+	'/resources': {
+		context: 'resources',
+		image: '/images/blog/blog-dark-visuals-music-memory-fhugawz-resources.webp.webp',
+	},
+	'/contact': {
+		context: 'contact',
+		image: '/images/hero/fhugawz-contact-dark-pop-blog-hero.webp',
+	},
+} as const;
+
+const scorecardPromo = promoByPath[pathname as keyof typeof promoByPath];
 ---
+
+{scorecardPromo && (
+	<div data-scorecard-promo-slot>
+		<ScorecardPromo context={scorecardPromo.context} image={scorecardPromo.image} />
+	</div>
+)}
 
 <footer class="site-footer">
 	<div class="site-shell footer-grid">
@@ -63,3 +88,15 @@ import SocialLinks from './SocialLinks.astro';
 		</div>
 	</div>
 </footer>
+
+{scorecardPromo && (
+	<script is:inline>
+		(() => {
+			const promo = document.querySelector('[data-scorecard-promo-slot]');
+			const hero = document.querySelector('main > section:first-of-type');
+			if (promo instanceof HTMLElement && hero instanceof HTMLElement) {
+				hero.insertAdjacentElement('afterend', promo);
+			}
+		})();
+	</script>
+)}
