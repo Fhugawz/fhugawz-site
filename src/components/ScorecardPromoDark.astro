@@ -1,6 +1,11 @@
 ---
-type PromoContext = 'services' | 'resources' | 'contact';
-interface Props { context: PromoContext; image: string; }
-const { context, image } = Astro.props;
-const text = {
- services:{en:['FREE ARTIST DIAGNOSTIC','NOT SURE WHICH SERVICE YOUR PROJECT NEEDS?','Answer 20 focused questions and receive a clearer view of your identity, sound, visual
+import { scorecardPromoCopy } from '../data/scorecard-promo-copy.js';
+type PromoContext='services'|'resources'|'contact';
+interface Props{context:PromoContext;image:string;}
+const{context}=Astro.props;
+const text=scorecardPromoCopy[context];
+---
+<section class="promo"><div class="site-shell grid"><div class="lang en"><p class="kicker">{text.en[0]}</p><h2>{text.en[1]}</h2><p class="intro">{text.en[2]}</p></div><div class="lang es"><p class="kicker">{text.es[0]}</p><h2>{text.es[1]}</h2><p class="intro">{text.es[2]}</p></div><aside class="detail"><div class="lang en"><p class="detail-copy">{text.en[3]}</p><div class="meta"><span>20 QUESTIONS</span><span>5 AREAS</span><span>5–8 MIN</span></div><a href="/scorecard">{text.en[4]}</a></div><div class="lang es"><p class="detail-copy">{text.es[3]}</p><div class="meta"><span>20 PREGUNTAS</span><span>5 ÁREAS</span><span>5–8 MIN</span></div><a href="/scorecard">{text.es[4]}</a></div></aside></div></section>
+<style>
+.promo{border-block:1px solid var(--line);background:var(--blackgreen);color:var(--bone)}.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.72fr);gap:clamp(28px,6vw,76px);align-items:center;padding-block:clamp(42px,5vw,66px)}.lang.es{display:none}:global(html[data-language='es']) .lang.en{display:none}:global(html[data-language='es']) .lang.es{display:block}.kicker{margin:0 0 12px;color:var(--signal-orange);font-size:.75rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase}h2{max-width:700px;margin:0;font-family:var(--font-display);font-size:clamp(2.2rem,4.25vw,4.15rem);font-weight:900;line-height:.94;text-transform:uppercase;text-wrap:balance}.intro{max-width:680px;margin:21px 0 0;color:rgba(223,211,187,.76);font-size:clamp(.98rem,1.25vw,1.12rem);font-weight:400;line-height:1.72}.detail{border:1px solid rgba(255,255,255,.72);border-radius:8px;background:var(--signal-orange);padding:clamp(24px,3vw,34px)}.detail-copy{margin:0;color:var(--ink);font-size:clamp(.98rem,1.25vw,1.12rem);font-weight:400;line-height:1.72}.meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}.meta span{border:1px solid rgba(255,255,255,.76);border-radius:999px;color:#fff;font-size:.66rem;font-weight:900;letter-spacing:.08em;padding:7px 10px;text-transform:uppercase}a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;margin-top:24px;border:0;border-radius:999px;background:#fff;color:var(--ink);font-size:.78rem;font-weight:900;letter-spacing:.1em;padding:13px 18px;text-transform:uppercase}a:hover,a:focus-visible{border:0;outline:0;background:#000;color:var(--signal-orange);transform:translateY(-1px)}@media(max-width:900px){.grid{grid-template-columns:1fr;gap:28px}.detail{max-width:680px}}@media(max-width:600px){.grid{width:min(100% - 28px,1160px);padding-block:38px}.detail{padding:22px}a{width:100%}}
+</style>
