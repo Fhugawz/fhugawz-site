@@ -1,0 +1,1 @@
+.scorecard-result-card ol{display:grid;gap:8px;margin:0;padding-left:1.45rem}.scorecard-result-card li{padding-left:.2rem;text-align:left}.scorecard-recommendation>p:not(.scorecard-kicker){max-width:none;text-wrap:pretty}.scorecard-submit-status[data-state="success"]{color:var(--signal-orange)}

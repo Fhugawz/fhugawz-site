@@ -1,0 +1,93 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/scorecard.css';
+import '../styles/scorecard-review-type.css';
+import '../styles/scorecard-review-controls.css';
+import '../styles/scorecard-review-results.css';
+import '../styles/scorecard-checkbox-final.css';
+import '../styles/scorecard-buttons-rounded.css';
+---
+
+<Layout
+  title="Artist Identity & Release Readiness Scorecard — Fhugawz Studio"
+  description="A free bilingual diagnostic for independent artists to evaluate identity, sonic direction, visual world, release preparation and content systems."
+  canonical="https://fhugawz.com/scorecard"
+  spanishTitle="Diagnóstico de Identidad Artística y Preparación de Lanzamiento — Fhugawz Studio"
+  spanishDescription="Un diagnóstico bilingüe gratuito para evaluar identidad, dirección sonora, universo visual, preparación de lanzamiento y sistema de contenido."
+>
+  <section class="scorecard-page" data-scorecard-app>
+    <div class="scorecard-glow" aria-hidden="true"></div>
+    <div class="site-shell scorecard-shell">
+      <section class="scorecard-intro" data-scorecard-screen="intro">
+        <p class="scorecard-kicker" data-scorecard-intro="kicker"></p>
+        <h1 data-scorecard-intro="title"></h1>
+        <p class="scorecard-lede" data-scorecard-intro="body"></p>
+        <div class="scorecard-meta"><span></span><span></span><span></span></div>
+        <p class="scorecard-privacy" data-scorecard-intro="privacy"></p>
+        <button class="scorecard-button scorecard-button-primary" style="border-radius:9999px" type="button" data-scorecard-start></button>
+      </section>
+
+      <section class="scorecard-panel" data-scorecard-screen="questions" hidden>
+        <div class="scorecard-progress-header">
+          <div><p class="scorecard-kicker" data-scorecard-category-name></p><p class="scorecard-category-description" data-scorecard-category-description></p></div>
+          <p class="scorecard-counter" data-scorecard-counter></p>
+        </div>
+        <div class="scorecard-progress" aria-hidden="true"><span data-scorecard-progress></span></div>
+        <form data-scorecard-form novalidate>
+          <fieldset><legend data-scorecard-question></legend><div class="scorecard-options" data-scorecard-options></div></fieldset>
+          <p class="scorecard-error" data-scorecard-error role="alert" hidden></p>
+          <div class="scorecard-actions">
+            <button class="scorecard-button scorecard-button-secondary" style="border-radius:9999px" type="button" data-scorecard-previous></button>
+            <button class="scorecard-button scorecard-button-primary" style="border-radius:9999px" type="submit" data-scorecard-next></button>
+          </div>
+        </form>
+      </section>
+
+      <section class="scorecard-results" data-scorecard-screen="results" aria-live="polite" hidden>
+        <div class="scorecard-result-hero">
+          <p class="scorecard-kicker" data-scorecard-result-label></p>
+          <div class="scorecard-score"><strong data-scorecard-total></strong><span>/80</span></div>
+          <h2 data-scorecard-result-title></h2>
+          <p data-scorecard-result-diagnosis></p>
+          <p class="scorecard-priority" data-scorecard-result-priority></p>
+        </div>
+
+        <div class="scorecard-result-grid">
+          <section class="scorecard-result-card"><h3 data-scorecard-category-heading></h3><div data-scorecard-category-results></div></section>
+          <section class="scorecard-result-card">
+            <div class="scorecard-strength-row">
+              <div><span data-scorecard-strongest-label></span><strong data-scorecard-strongest></strong></div>
+              <div><span data-scorecard-weakest-label></span><strong data-scorecard-weakest></strong></div>
+            </div>
+            <h3 data-scorecard-next-steps-heading></h3><ol data-scorecard-next-steps></ol>
+          </section>
+        </div>
+
+        <section class="scorecard-recommendation">
+          <p class="scorecard-kicker" data-scorecard-recommendation-heading></p>
+          <p data-scorecard-recommendation></p>
+        </section>
+
+        <section class="scorecard-capture">
+          <h3 data-scorecard-capture-heading></h3>
+          <p class="scorecard-capture-copy" data-scorecard-capture-copy></p>
+          <form data-scorecard-capture-form novalidate>
+            <div class="scorecard-capture-form">
+              <input class="scorecard-email-input" type="email" name="email" autocomplete="email" data-scorecard-email required />
+              <button class="scorecard-button scorecard-button-primary" style="border-radius:9999px" type="submit" data-scorecard-submit-results></button>
+            </div>
+            <label class="scorecard-consent"><input type="checkbox" name="marketingConsent" data-scorecard-marketing-consent /><span data-scorecard-consent-copy></span></label>
+            <p class="scorecard-submit-status" data-scorecard-submit-status role="status" hidden></p>
+          </form>
+          <div class="scorecard-result-actions">
+            <a class="scorecard-button scorecard-button-secondary" style="border-radius:9999px" href="/services" data-scorecard-studio-link></a>
+            <button class="scorecard-button scorecard-button-secondary" style="border-radius:9999px" type="button" data-scorecard-restart></button>
+          </div>
+        </section>
+      </section>
+    </div>
+  </section>
+</Layout>
+
+<script src="../scripts/scorecard-app.js"></script>
+<script src="../scripts/scorecard-review-fixes.js"></script>
