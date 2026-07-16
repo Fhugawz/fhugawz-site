@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "test:scorecard": "node --test tests/scorecard.test.js",
+    "test:brief-flow": "node scripts/test-brief-flow.mjs",
     "build": "npm run test:scorecard && astro build",
     "optimize:images": "node scripts/optimize-images.mjs",
     "preview": "astro preview",
