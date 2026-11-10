@@ -1,150 +1,92 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import WhatsAppLead from '../components/WhatsAppLead.astro';
+
+const contactHeroImage = '/images/hero/fhugawz-contact-dark-pop-blog-hero.webp';
+const contactDirectImage = '/images/contact/fhugawz-contact-direct-channel-background.webp';
 ---
 
 <Layout
-	title="Fhugawz — Contact for Music Production and Artist Projects"
-	description="Contact Fhugawz for cinematic dark experimental music production, mixing, mastering, demo recreation and project inquiries."
-	image="/images/social/og-fhugawz-production-mixing-mastering.webp"
+	title="Contact Fhugawz — Direct Channel"
+	description="A direct channel for collaborations, questions, ideas and conversations related to Fhugawz."
+	image={contactHeroImage}
+	imageAlt="Dark atmospheric image for the Fhugawz contact page"
 >
-	<section
-		class="page-hero with-image"
-		style={`--page-hero-image: url("/images/hero/fhugawz-contact-dark-pop-blog-hero.webp")`}
-	>
-		<div class="site-shell">
-			<p class="section-kicker" data-i18n="contact.page.kicker">OPEN CHANNEL</p>
-			<h1 class="page-title" data-i18n="contact.page.title">CONTACT</h1>
-			<p class="lede" data-i18n="contact.page.description">
-				For production, mixing, mastering, demo reconstruction or Fhugawz project inquiries,
-				send a signal and start the conversation.
-			</p>
-		</div>
-	</section>
-	<section class="section">
-		<div class="site-shell contact-panel">
-			<div class="contact-copy">
-				<p class="section-kicker" data-i18n="contact.panel.kicker">INQUIRIES</p>
-				<h2 class="section-title" data-i18n="contact.panel.title">TELL ME ABOUT YOUR PROJECT</h2>
-				<p class="section-copy" data-i18n="contact.panel.description">
-					Share the idea, the song, the reference or the world you want to build. I’ll help
-					you find the next step.
-				</p>
+	<div class="contact-page">
+		<section class="contact-hero" aria-labelledby="contact-title">
+			<img class="contact-hero-image" src={contactHeroImage} alt="" aria-hidden="true" fetchpriority="high" />
+			<div class="contact-hero-grade" aria-hidden="true"></div>
+			<div class="site-shell contact-hero-copy">
+				<div class="contact-hero-main">
+					<p class="section-kicker" data-i18n="contact.page.kicker">Open channel</p>
+					<h1 id="contact-title" data-i18n="contact.page.title">Get in touch</h1>
+					<p data-i18n="contact.page.description">For collaborations, questions, ideas or anything related to Fhugawz, this is the direct channel.</p>
+				</div>
+				<div class="contact-hero-note">
+					<span data-i18n="contact.heroNote.primary">Direct line</span>
+					<p data-i18n="contact.heroNote.secondary">Open channel · collaborations and inquiries</p>
+				</div>
 			</div>
-			<form class="contact-form" data-contact-form novalidate>
-				<input type="text" name="honeypot" autocomplete="off" tabindex="-1" hidden />
-				<div class="form-field">
-					<label for="contact-name" data-i18n="contact.form.nameLabel">Name</label>
-					<input
-						id="contact-name"
-						name="name"
-						type="text"
-						placeholder="Your name"
-						data-i18n-placeholder="contact.form.namePlaceholder"
-						aria-describedby="contact-name-error"
-						required
-					/>
-					<p class="field-error" id="contact-name-error" data-field-error="name" role="alert" hidden></p>
+		</section>
+
+		<section class="contact-direct" aria-labelledby="contact-direct-title">
+			<img class="contact-direct-image" src={contactDirectImage} alt="" aria-hidden="true" loading="eager" decoding="async" />
+			<div class="contact-direct-grade" aria-hidden="true"></div>
+			<div class="site-shell contact-direct-grid">
+				<div class="contact-direct-copy">
+					<p class="section-kicker" data-i18n="contact.panel.kicker">Direct contact</p>
+					<h2 id="contact-direct-title" data-i18n="contact.panel.title">Send a signal.</h2>
+					<p data-i18n="contact.panel.description">Messages sent here reach me directly. Whether it is a collaboration, a question, an idea or simply a conversation about the work, feel free to write.</p>
+					<div class="contact-direct-rule" aria-hidden="true"><span></span><small>FHUGAWZ / DIRECT</small></div>
 				</div>
-				<div class="form-field">
-					<label for="contact-email" data-i18n="contact.form.emailLabel">Email</label>
-					<input
-						id="contact-email"
-						name="email"
-						type="email"
-						placeholder="your@email.com"
-						data-i18n-placeholder="contact.form.emailPlaceholder"
-						aria-describedby="contact-email-error"
-						required
-					/>
-					<p class="field-error" id="contact-email-error" data-field-error="email" role="alert" hidden></p>
-				</div>
-				<div class="form-field selected-service-field">
-					<label for="contact-service" data-i18n="contact.form.selectedServiceLabel">Selected service</label>
-					<select
-						id="contact-service"
-						name="selectedService"
-						data-selected-service-field
-						aria-describedby="contact-service-error"
-						required
-					>
-						<option value="" data-i18n="contact.form.serviceDefault">Select a service</option>
-						<option value="music-production" data-i18n="contact.form.serviceMusic">Music Production</option>
-						<option value="mixing-mastering" data-i18n="contact.form.serviceMixing">Mixing & Mastering</option>
-						<option value="demo-reconstruction" data-i18n="contact.form.serviceDemo">Demo Reconstruction</option>
-						<option value="artist-world-building" data-i18n="contact.form.serviceWorld">Artist World Building</option>
-					</select>
-					<p class="field-error" id="contact-service-error" data-field-error="selectedService" role="alert" hidden></p>
-				</div>
-				<div class="form-field">
-					<label for="contact-message" data-i18n="contact.form.messageLabel">Message</label>
-					<textarea
-						id="contact-message"
-						name="message"
-						placeholder="Tell me what you need, where the song is now, and where you want to take it."
-						data-i18n-placeholder="contact.form.messagePlaceholder"
-						aria-describedby="contact-message-error"
-						required
-					></textarea>
-					<p class="field-error" id="contact-message-error" data-field-error="message" role="alert" hidden></p>
-				</div>
-				<button class="button primary contact-submit" type="submit" data-i18n="contact.form.button">SEND MESSAGE</button>
-				<p class="form-status" data-contact-status data-i18n="contact.form.status" hidden>
-					Complete the form and send your message.
-				</p>
-			</form>
-		</div>
-	</section>
-	<div class="site-shell">
-		<WhatsAppLead context="contact" />
+
+				<form class="contact-form" name="fhugawz-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-contact-form novalidate>
+					<input type="hidden" name="form-name" value="fhugawz-contact" />
+					<input type="hidden" name="subject" value="New FHUGAWZ contact submission (%{submissionId})" data-remove-prefix />
+					<input type="text" name="bot-field" autocomplete="off" tabindex="-1" hidden />
+					<div class="contact-field">
+						<label for="contact-name" data-i18n="contact.form.nameLabel">Name</label>
+						<input id="contact-name" name="name" type="text" placeholder="Your name" data-i18n-placeholder="contact.form.namePlaceholder" aria-describedby="contact-name-error" required />
+						<p class="field-error" id="contact-name-error" data-field-error="name" role="alert" hidden></p>
+					</div>
+					<div class="contact-field">
+						<label for="contact-email" data-i18n="contact.form.emailLabel">Email</label>
+						<input id="contact-email" name="email" type="email" placeholder="your@email.com" data-i18n-placeholder="contact.form.emailPlaceholder" aria-describedby="contact-email-error" required />
+						<p class="field-error" id="contact-email-error" data-field-error="email" role="alert" hidden></p>
+					</div>
+					<div class="contact-field">
+						<label for="contact-message" data-i18n="contact.form.messageLabel">Message</label>
+						<textarea id="contact-message" name="message" placeholder="Write your message." data-i18n-placeholder="contact.form.messagePlaceholder" aria-describedby="contact-message-error" required></textarea>
+						<p class="field-error" id="contact-message-error" data-field-error="message" role="alert" hidden></p>
+					</div>
+					<p class="contact-privacy-note"><span class="contact-privacy-en">Your message is used to reply to you. Read the <a href="/privacy-policy">Privacy Policy</a>.</span><span class="contact-privacy-es" lang="es">Tu mensaje se usa para responderte. Consulta la <a href="/privacy-policy">Política de privacidad</a>.</span></p>
+					<button class="contact-submit" type="submit"><span data-i18n="contact.form.button">Send message</span><span aria-hidden="true">↗</span></button>
+					<p class="form-status" data-contact-status data-i18n="contact.form.status" role="status" aria-live="polite" hidden>Complete the form and send your message.</p>
+				</form>
+			</div>
+		</section>
 	</div>
 </Layout>
 
 <script>
-	const serviceOptions = {
-		'music-production': {
-			en: 'Music Production',
-			es: 'Producción musical',
-		},
-		'mixing-mastering': {
-			en: 'Mixing & Mastering',
-			es: 'Mezcla y master',
-		},
-		'demo-reconstruction': {
-			en: 'Demo Reconstruction',
-			es: 'Reconstrucción de demos',
-		},
-		'artist-world-building': {
-			en: 'Artist World Building',
-			es: 'Desarrollo de universo artístico',
-		},
-	};
-
 	document.querySelectorAll('[data-contact-form]').forEach((form) => {
 		if (!(form instanceof HTMLFormElement)) return;
 
-		const params = new URLSearchParams(window.location.search);
-		const selectedServiceKey = params.get('service') || '';
-		const selectedServiceField = form.querySelector('[data-selected-service-field]');
-		const messageField = form.querySelector('#contact-message');
-		const startedAt = Date.now();
-		let generatedMessage = '';
 		const messages = {
 			en: {
 				name: 'Please enter your name.',
 				email: 'Please enter a valid email.',
-				selectedService: 'Please choose a service.',
 				message: 'Please write a short message.',
 				loading: 'Sending message...',
+				success: 'Message received. Thank you for reaching out.',
 				fallback: 'Something went wrong. Please try again.',
 			},
 			es: {
 				name: 'Escribe tu nombre.',
-				email: 'Escribe un correo valido.',
-				selectedService: 'Elige un servicio.',
+				email: 'Escribe un correo válido.',
 				message: 'Escribe un mensaje breve.',
 				loading: 'Enviando mensaje...',
-				fallback: 'Algo salio mal. Intentalo de nuevo.',
+				success: 'Mensaje recibido. Gracias por escribir.',
+				fallback: 'Algo salió mal. Inténtalo de nuevo.',
 			},
 		};
 		const getLanguage = () => (document.documentElement.dataset.language === 'es' ? 'es' : 'en');
@@ -163,12 +105,10 @@ import WhatsAppLead from '../components/WhatsAppLead.astro';
 			const formData = new FormData(form);
 			const name = String(formData.get('name') || '').trim();
 			const email = String(formData.get('email') || '').trim();
-			const selectedService = String(formData.get('selectedService') || '').trim();
 			const message = String(formData.get('message') || '').trim();
 			const errors = {
 				name: name ? '' : messages[language].name,
 				email: isValidEmail(email) ? '' : messages[language].email,
-				selectedService: selectedService ? '' : messages[language].selectedService,
 				message: message ? '' : messages[language].message,
 			};
 
@@ -176,51 +116,19 @@ import WhatsAppLead from '../components/WhatsAppLead.astro';
 			return !Object.values(errors).some(Boolean);
 		};
 
-		const applySelectedService = () => {
-			if (
-				!(selectedServiceField instanceof HTMLSelectElement) ||
-				!(messageField instanceof HTMLTextAreaElement)
-			) {
-				return;
-			}
-
-			const currentServiceKey = selectedServiceField.value;
-			const selectedService = serviceOptions[currentServiceKey];
-			if (!selectedService) return;
-
-			const language = document.documentElement.dataset.language === 'es' ? 'es' : 'en';
-			const serviceName = selectedService[language];
-			const nextMessage =
-				language === 'es'
-					? `Estoy interesado en ${serviceName}. Esto es lo que necesito:`
-					: `I'm interested in ${serviceName}. Here is what I need:`;
-
-			if (!messageField.value || messageField.value === generatedMessage) {
-				messageField.value = nextMessage;
-				generatedMessage = nextMessage;
-			}
-		};
-
-		if (selectedServiceKey in serviceOptions && selectedServiceField instanceof HTMLSelectElement) {
-			selectedServiceField.value = selectedServiceKey;
-		}
-
-		applySelectedService();
-		if (selectedServiceField instanceof HTMLSelectElement) {
-			selectedServiceField.addEventListener('change', applySelectedService);
-		}
-		window.addEventListener('fhugawz:languagechange', applySelectedService);
-		form.querySelectorAll('input, select, textarea').forEach((field) => {
+		form.querySelectorAll('input, textarea').forEach((field) => {
 			field.addEventListener('input', () => validateForm());
 			field.addEventListener('change', () => validateForm());
 		});
 
+		let submitting = false;
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
+			if (submitting) return;
 			const status = form.querySelector('[data-contact-status]');
 			const submit = form.querySelector('.contact-submit');
-
 			if (!validateForm()) return;
+			submitting = true;
 
 			if (status instanceof HTMLElement) {
 				status.textContent = messages[getLanguage()].loading;
@@ -232,44 +140,25 @@ import WhatsAppLead from '../components/WhatsAppLead.astro';
 			}
 
 			const formData = new FormData(form);
-			const payload = {
-				name: String(formData.get('name') || ''),
-				email: String(formData.get('email') || ''),
-				selected_service: String(formData.get('selectedService') || ''),
-				message: String(formData.get('message') || ''),
-				honeypot: String(formData.get('honeypot') || ''),
-				started_at: startedAt,
-			};
-
 			try {
-				const response = await fetch('/.netlify/functions/contact', {
+				const encodedForm = new URLSearchParams(
+					Array.from(formData.entries()).map(([key, value]) => [key, String(value)]),
+				);
+				const response = await fetch('/__forms.html', {
 					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(payload),
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: encodedForm.toString(),
 				});
-				const result = await response.json().catch(() => ({}));
-				const message =
-					typeof result.message === 'string'
-						? result.message
-							: response.ok
-								? 'Message sent. Thank you for reaching out.'
-								: messages[getLanguage()].fallback;
-
-				if (status instanceof HTMLElement) status.textContent = message;
-				if (response.ok && result.success !== false) {
-					window.fhugawzTrackEvent?.('contact_submit_success', {
-						event_category: 'lead',
-						event_label: payload.selected_service || 'contact',
-					});
+				if (!response.ok) throw new Error(`Form submission failed with status ${response.status}`);
+				if (status instanceof HTMLElement) status.textContent = messages[getLanguage()].success;
+				if (response.ok) {
+					window.fhugawzTrackEvent?.('contact_submit_success', { event_category: 'lead', event_label: 'direct_contact' });
 					form.reset();
 				}
 			} catch {
-				if (status instanceof HTMLElement) {
-					status.textContent = messages[getLanguage()].fallback;
-				}
+				if (status instanceof HTMLElement) status.textContent = messages[getLanguage()].fallback;
 			} finally {
+				submitting = false;
 				if (submit instanceof HTMLButtonElement) {
 					submit.disabled = false;
 					submit.removeAttribute('aria-busy');
@@ -278,3 +167,64 @@ import WhatsAppLead from '../components/WhatsAppLead.astro';
 		});
 	});
 </script>
+
+<style>
+	.contact-page{min-height:100vh;overflow:clip;background:#080a0b;color:#f1ede4}
+	.contact-hero{position:relative;display:flex;min-height:calc(100svh - 72px);align-items:stretch;overflow:hidden;background:#080a0b}
+	.contact-hero-image,.contact-hero-grade,.contact-direct-image,.contact-direct-grade{position:absolute;inset:0;width:100%;height:100%}
+	.contact-hero-image{object-fit:cover;object-position:center 42%;filter:saturate(.54) contrast(1.08) brightness(.66);transform:scale(1.01)}
+	.contact-hero-grade{background:radial-gradient(circle at 62% 42%,rgba(7,9,10,.12),rgba(7,9,10,.58) 68%),linear-gradient(90deg,rgba(5,7,8,.9) 0%,rgba(5,7,8,.58) 50%,rgba(5,7,8,.22) 100%),linear-gradient(0deg,#080a0b 0%,rgba(8,10,11,.22) 58%,rgba(8,10,11,.5) 100%)}
+	.contact-hero-copy{position:relative;z-index:1;display:flex;width:min(1160px,calc(100% - 40px));max-width:1160px;min-height:calc(100svh - 72px);flex-direction:column;justify-content:flex-end;padding:clamp(112px,15vh,168px) 0 clamp(56px,8vh,88px)}
+	.contact-hero-main{width:100%;max-width:560px}
+	.contact-hero .section-kicker,.contact-direct .section-kicker{margin:0;color:#a39f96;font-size:.7rem;font-weight:650;letter-spacing:.14em}
+	.contact-hero h1{max-width:560px;margin:20px 0 0;font-family:var(--font-sans);font-size:clamp(1.875rem,2.8vw,2.875rem);font-weight:450;letter-spacing:-.025em;line-height:1.12;text-transform:none}
+	.contact-hero-main>p:last-child{max-width:540px;margin:clamp(26px,4vh,38px) 0 0;color:rgba(241,237,228,.7);font-size:clamp(.94rem,1.05vw,1rem);line-height:1.65;text-wrap:pretty}
+	.contact-hero-note{position:relative;display:flex;width:100%;gap:28px;align-items:center;justify-content:space-between;margin-top:clamp(30px,4.5vh,44px);padding-top:16px;border-top:1px solid rgba(241,237,228,.2);color:rgba(241,237,228,.46);font-size:.64rem;font-weight:550;letter-spacing:.07em}
+	.contact-hero-note::after{position:absolute;top:-2px;right:0;width:4px;height:4px;content:'';background:rgba(241,237,228,.88);transform:rotate(45deg)}
+	.contact-hero-note span{color:rgba(255,90,31,.84)}
+	.contact-hero-note p{margin:0;padding-right:12px;text-align:right}
+	.contact-direct{position:relative;isolation:isolate;overflow:hidden;padding:clamp(76px,10vw,144px) 0;background:#080a0b}
+	.contact-direct-image{z-index:-2;object-fit:cover;object-position:center 58%;filter:blur(2px) brightness(.42) saturate(.42);transform:scale(1.04)}
+	.contact-direct-grade{z-index:-1;background:linear-gradient(180deg,#080a0b 0%,rgba(8,10,11,.88) 17%,rgba(8,10,11,.78) 84%,#080a0b 100%),linear-gradient(90deg,rgba(8,10,11,.5),rgba(8,10,11,.22))}
+	.contact-direct-grid{position:relative;z-index:1;display:grid;width:min(1160px,calc(100% - 40px));max-width:1160px;grid-template-columns:minmax(0,.85fr) minmax(320px,.85fr);gap:clamp(42px,8vw,112px);align-items:start}
+	.contact-direct-copy{max-width:450px;padding-top:8px}
+	.contact-direct h2{margin:18px 0 0;font-family:var(--font-sans);font-size:clamp(1.8rem,2.8vw,2.65rem);font-weight:450;letter-spacing:-.025em;line-height:1.12;text-transform:none}
+	.contact-direct-copy>p:not(.section-kicker){margin:26px 0 0;color:rgba(241,237,228,.68);font-size:clamp(.94rem,1.05vw,1rem);line-height:1.68}
+	.contact-direct-rule{display:flex;gap:12px;align-items:center;margin-top:42px;color:rgba(241,237,228,.46);font-size:.6rem;font-weight:650;letter-spacing:.1em}
+	.contact-direct-rule span{display:block;width:26px;height:1px;background:var(--signal-orange)}
+	.contact-direct-rule small{font:inherit}
+	.contact-page .contact-form{display:grid;gap:23px;padding-top:3px}
+	.contact-page .contact-field{display:grid;gap:9px}
+	.contact-page .contact-field label{color:rgba(241,237,228,.72);font-size:.68rem;font-weight:650;letter-spacing:.1em;text-transform:uppercase}
+	.contact-page .contact-field input,.contact-page .contact-field textarea{width:100%;border:0;border-bottom:1px solid rgba(241,237,228,.28);border-radius:0;background:rgba(8,10,11,.3);color:#f1ede4;font:inherit;outline:0;padding:12px 0 13px;transition:border-color 260ms ease,background-color 260ms ease}
+	.contact-page .contact-field textarea{min-height:140px;resize:vertical}
+	.contact-page .contact-field input::placeholder,.contact-page .contact-field textarea::placeholder{color:rgba(241,237,228,.4)}
+	.contact-page .contact-field input:focus,.contact-page .contact-field textarea:focus{border-bottom-color:var(--signal-orange);background:rgba(8,10,11,.52)}
+	.contact-page .contact-field input[aria-invalid="true"],.contact-page .contact-field textarea[aria-invalid="true"]{border-bottom-color:var(--signal-orange)}
+	.contact-page .field-error{margin:0;color:#f59a77;font-size:.76rem;line-height:1.4}
+	.contact-privacy-note{margin:0;color:rgba(241,237,228,.58);font-size:.75rem;line-height:1.5}
+	.contact-privacy-note a{text-decoration:underline;text-underline-offset:3px}
+	.contact-privacy-es,:global(html[data-language='es']) .contact-privacy-en{display:none}
+	:global(html[data-language='es']) .contact-privacy-es{display:inline}
+	.contact-submit{display:flex;width:max-content;gap:12px;align-items:center;border:0;border-bottom:1px solid rgba(241,237,228,.52);border-radius:0;background:transparent;color:#f1ede4;cursor:pointer;font:inherit;font-size:.7rem;font-weight:650;letter-spacing:.1em;padding:12px 0 10px;text-transform:uppercase;transition:border-color 260ms ease,color 260ms ease}
+	.contact-submit:hover,.contact-submit:focus-visible{border-color:var(--signal-orange);color:var(--signal-orange)}
+	.contact-submit:focus-visible{outline:2px solid var(--signal-orange);outline-offset:5px}
+	.contact-submit:disabled{cursor:wait;opacity:.58}
+	.contact-page .form-status{margin:0;color:rgba(241,237,228,.68);font-size:.85rem;line-height:1.5}
+	@media(prefers-reduced-motion:reduce){.contact-hero-image,.contact-direct-image{transform:none}.contact-page .contact-field input,.contact-page .contact-field textarea,.contact-submit{transition:none}}
+	@media(max-width:760px){
+		.contact-hero{min-height:calc(100svh - 64px)}
+		.contact-hero-image{object-position:58% center}
+		.contact-hero-grade{background:linear-gradient(180deg,rgba(7,9,10,.48),rgba(7,9,10,.38) 42%,#080a0b 100%)}
+		.contact-hero-copy{width:100%;max-width:none;min-height:calc(100svh - 64px);padding:96px clamp(20px,6vw,24px) 42px}
+		.contact-hero-main{max-width:340px}
+		.contact-hero .section-kicker,.contact-direct .section-kicker{font-size:.64rem;letter-spacing:.12em}
+		.contact-hero h1{max-width:340px;margin-top:17px;font-size:clamp(1.875rem,8vw,2.25rem)}
+		.contact-hero-main>p:last-child{max-width:340px;margin-top:24px;font-size:.94rem;line-height:1.62}
+		.contact-hero-note{align-items:flex-start;flex-direction:column;gap:10px;margin-top:30px}
+		.contact-hero-note p{text-align:left}
+		.contact-direct{padding:62px 0 70px}
+		.contact-direct-grid{width:min(100% - 40px,1160px);grid-template-columns:1fr;gap:46px}
+		.contact-direct-copy{max-width:390px}
+	}
+</style>

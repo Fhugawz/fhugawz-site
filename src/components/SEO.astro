@@ -15,7 +15,7 @@ interface Props {
 const site = 'https://fhugawz.com';
 const defaultTitle = 'Fhugawz — Dark Experimental Music & Visual Worlds';
 const defaultDescription =
-	'Dark experimental music, original production and artist world building for songs that need more than a release plan.';
+	'Fhugawz is an experimental music and visual art project told through thirteen interconnected album Worlds, images and editorial writing.';
 const defaultImage = '/images/hero/fhugawz-cinematic-dark-pop-hero.webp';
 const defaultImageAlt = 'Fhugawz dark experimental music visual portrait';
 const {
@@ -34,9 +34,14 @@ const {
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site).toString();
 const imageUrl = new URL(image, site).toString();
 const schema = jsonLd ? JSON.stringify(jsonLd) : null;
-const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const configuredGaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || '';
+const gaMeasurementId = /^G-[A-Z0-9]+$/.test(configuredGaId) ? configuredGaId : undefined;
 // TODO: Set PUBLIC_GOOGLE_SITE_VERIFICATION after Google Search Console provides the real token.
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const indexable = import.meta.env.PROD && process.env.CONTEXT === 'production';
+const legacyPaths = new Set(['/404', '/terms-of-service', '/music', '/blog']);
+const pagePath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const pageIndexable = indexable && !legacyPaths.has(pagePath) && !pagePath.startsWith('/projects');
 ---
 
 <meta charset="UTF-8" />
@@ -44,10 +49,9 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>
 <meta name="description" content={description} />
+{!pageIndexable && <meta name="robots" content="noindex, nofollow" />}
 {keywords && <meta name="keywords" content={keywords} />}
 {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
-{spanishTitle && <meta name="title" lang="es" content={spanishTitle} />}
-{spanishDescription && <meta name="description" lang="es" content={spanishDescription} />}
 <link rel="canonical" href={canonicalUrl} />
 <link rel="icon" type="image/svg+xml" href="/images/brand/fhugawz-logo-favicon.svg" />
 <meta property="og:type" content={type} />

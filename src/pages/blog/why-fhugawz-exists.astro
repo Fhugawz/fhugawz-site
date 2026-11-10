@@ -1,182 +1,119 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import BlogLikeButton from '../../components/BlogLikeButton.astro';
-import BlogSubscribeCTA from '../../components/BlogSubscribeCTA.astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 const keywords =
-	'Fhugawz, dark experimental music, cinematic dark experimental music, independent artist, music production, artist branding, music and design, visual identity, Billie Eilish influence, Nirvana influence, Pierce the Veil, Sullii, Last Daybreak, Onyx band';
+	'Fhugawz, independent artist journal, music and design, visual identity, creative process, artistic worlds, Billie Eilish influence, Nirvana influence, Pierce the Veil, Sullii, Last Daybreak, Onyx band';
 const excerpt =
-	'A personal note on music, design, recovery and the long process of turning scattered influences into a dark experimental music world.';
+	'A personal note on music, design, memory and the long process of bringing scattered ideas into one evolving project.';
+const heroImage =
+	'/images/blog/why-fhugawz-exists/why-fhugawz-exists-classical-guitar-bands.webp';
 ---
 
-<Layout
+<ArticleLayout
 	title="Fhugawz — Why Fhugawz Exists"
-	description="The story behind Fhugawz: from early bands, classical guitar, rock and metalcore influences to design, branding, music production and a cinematic dark experimental music project."
-	spanishTitle="Por Qué Existe Fhugawz: Música, Diseño e Identidad Experimental Oscura | Fhugawz"
-	spanishDescription="La historia detrás de Fhugawz: desde bandas, guitarra clásica, influencias de rock y metalcore hasta diseño, branding, producción musical y un proyecto de música experimental oscura cinematográfica."
+	description={excerpt}
+	spanishTitle="Por qué existe Fhugawz | Fhugawz"
+	spanishDescription="Una nota personal sobre música, diseño, memoria y el largo proceso de reunir ideas dispersas dentro de un proyecto en evolución."
 	keywords={keywords}
 	type="article"
-	image="/images/blog/why-fhugawz-exists/why-fhugawz-exists-music-origin-hero.webp.webp"
-	imageAlt="Fhugawz origin article hero with dark experimental music, design, and personal archive atmosphere."
+	image={heroImage}
+	imageAlt="Early band performance from the musical history behind Fhugawz."
+	heroImage={heroImage}
+	heroKicker="PROJECT DIARY"
+	heroKickerI18n="post.exists.kicker"
+	heroLede={excerpt}
 >
-	<section
-		class="page-hero with-image blog-article-hero"
-		style={`--page-hero-image: url("/images/blog/why-fhugawz-exists/why-fhugawz-exists-music-origin-hero.webp.webp")`}
-	>
-		<div class="site-shell">
-			<p class="section-kicker" data-i18n="post.exists.kicker">PROJECT DIARY</p>
-			<h1 class="page-title" data-i18n="post.exists.title">WHY FHUGAWZ EXISTS</h1>
-			<p class="lede" data-i18n="post.exists.lede">{excerpt}</p>
+	<Fragment slot="hero-title">WHY FHUGAWZ EXISTS</Fragment>
+	<div class="article-origin">
+		<p>I do not think Fhugawz really started on the day I decided to call it Fhugawz.</p>
+		<p>When I look back, there are too many things that eventually ended up here: bands, songs that never really found a place, design, images, periods when I left music mostly aside, and others when I came back to it with too many ideas at once.</p>
+		<p>For years I thought of all of those things as separate.</p>
+		<p>Now I am not so sure.</p>
+
+		<h2>The music was there long before the project existed</h2>
+		<p>I started getting seriously involved with music around 2005. At the time, my world was much simpler: guitar, bands, songs, and that obsession that appears when you discover something and immediately want to understand how it works.</p>
+		<p>I studied classical guitar for a while, played in different projects, and went through that period when almost any opportunity to make music seemed like a good idea.</p>
+		<p>There were cover bands playing bars, experimental projects, metalcore, pop rock, and songs that simply appeared without me really knowing what I was supposed to do with them.</p>
+		<p>Two projects became especially important to me: Last Daybreak and Onyx.</p>
+		<p>Not because there is a direct line between those bands and what I am doing now, but because that is where I started understanding things that still appear in Fhugawz: the importance of building an identity, defending your own songs, spending a long time working on something even when nobody is waiting for you to make it, and realizing how much a song changes once it stops existing only inside your head.</p>
+		<p>I also learned something less romantic: a lot of ideas simply get left behind.</p>
+		<p>Sometimes a project ends, people change, life moves somewhere else, or you simply do not yet have the tools to take an idea where you imagined it could go.</p>
+		<p>I have quite a few of those ideas.</p>
+		<p>Fhugawz probably exists partly because of that.</p>
+
+		<div class="article-image">
+			<img src="/images/blog/why-fhugawz-exists/why-fhugawz-exists-design-branding-process.webp" alt="An early band performance from the years before Fhugawz became a defined project." loading="lazy" decoding="async" />
 		</div>
-	</section>
-	<section class="section">
-		<article class="site-shell article">
-			<p data-i18n="post.exists.intro.one">
-				Fhugawz did not appear from one single decision. It is the result of years of music,
-				distance, design, recovery and unfinished ideas that kept asking for a clearer form.
-			</p>
-			<p data-i18n="post.exists.intro.two">
-				I started getting into music around 2005. At first, it was guitar, songs, bands and the
-				need to understand why certain sounds could stay inside the body for years. During that
-				time I studied classical guitar, played in different projects and slowly started building a
-				personal relationship with music that was never only technical. It was always emotional
-				first.
-			</p>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/why-fhugawz-exists/why-fhugawz-exists-classical-guitar-bands.webp"
-					alt="Early musical origin and dark experimental identity behind Fhugawz."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.exists.image.one.alt"
-				/>
-			</div>
+		<h2>Then design appeared</h2>
+		<p>Around 2015 I started teaching myself design, and eventually it became my work.</p>
+		<p>I think that changed the way I looked at music quite a lot, although it took me years to realize it.</p>
+		<p>Before that, I could listen to an album and focus almost entirely on the songs. Later I started paying much more attention to how a project was presented, what photographs it used, which typefaces appeared on a cover, how a video was constructed, and why certain artists seemed to inhabit a place of their own even when their sound changed.</p>
+		<p>The music was still the center, but I could no longer completely separate what I heard from what I saw.</p>
+		<p>Over time I kept learning about design, branding, product, visual direction and a lot of things that, at first, seemed to have nothing directly to do with making records.</p>
+		<p>Now it feels fairly obvious that they did.</p>
+		<p>A lot of what I am doing with Fhugawz comes precisely from mixing disciplines that I spent years treating as separate.</p>
+		<p>I do not have much interest in separating them again.</p>
 
-			<h2 data-i18n="post.exists.music.heading">WHY MUSIC STAYED</h2>
-			<p data-i18n="post.exists.music.one">
-				Before Fhugawz, there were several bands and experiments. Some were practical: two cover
-				bands created to play classic rock songs in English and native rock songs in bars and earn
-				money through music. Others were more personal: an experimental project, a metalcore band,
-				a pop rock band and several loose songs that did not belong to any fixed group.
-			</p>
-			<p data-i18n="post.exists.music.two">
-				The two most important projects from that time were Last Daybreak, a metalcore band, and
-				Onyx, a pop rock band. Both projects became serious attempts to build something scalable,
-				rehearse consistently and understand what it means to defend original music over time.
-			</p>
-			<p>
-				<a
-					class="button primary article-soundcloud-button"
-					href="https://soundcloud.com/jean-fh-gawz"
-					target="_blank"
-					rel="noopener noreferrer"
-					data-i18n="post.exists.soundcloud"
-				>
-					LISTEN
-				</a>
-			</p>
+		<h2>There was a point when everything stopped feeling so abstract</h2>
+		<p>There is also a part of the project that comes from a much more complicated period of my life.</p>
+		<p>I do not need to reconstruct every detail here. Some of those things already appear in Axioms, and they will probably continue showing up in transformed ways across other records.</p>
+		<p>What matters is that after a certain point, returning to music no longer meant exactly the same thing.</p>
+		<p>There were many things I did not know how to explain directly, and I started to understand that maybe I did not need to explain them that way.</p>
+		<p>They could become songs, images, characters, places or situations that never literally happened and still preserve something true about where they came from.</p>
+		<p>That interested me much more.</p>
+		<p>Maybe that is why the project began in memory and gradually started moving away from it.</p>
+		<p>At first there are fairly recognizable memories. Later those memories begin to distort, mix with fiction, horror, technology, surrealism and things that no longer clearly belong to any specific experience.</p>
+		<p>At some point I stopped wanting only to tell what had happened.</p>
+		<p>I started wondering what I could build from it.</p>
 
-			<h2 data-i18n="post.exists.image.heading">FROM SOUND TO IMAGE</h2>
-			<p data-i18n="post.exists.image.one">
-				Around 2015, design became another language. I started learning graphic design on my own
-				and eventually used it as a way to work and make a living.
-			</p>
-			<p data-i18n="post.exists.image.two">
-				That changed the way I understood music. A song was no longer only a song. It needed a
-				visual world, a tone, a system, an atmosphere, a way of being presented. Later, I kept
-				studying production, branding, product design and creative strategy through platforms like
-				Platzi, Google and other learning spaces.
-			</p>
-			<p data-i18n="post.exists.image.three">
-				Over time, the two worlds started connecting: music and design, sound and image, emotion
-				and structure.
-			</p>
+		<h2>The references started mixing too</h2>
+		<p>I have never had one single reference for Fhugawz.</p>
+		<p>I can recognize things that come from Nirvana, Secret &amp; Whisper, Pierce the Veil, Sullii, Billie Eilish and many other artists who probably would not seem to belong on the same list.</p>
+		<p>But that is exactly what I like about it.</p>
+		<p>From some I am drawn to the rawness, from others the atmosphere, fragility, the way a voice is produced, emotional intensity, or the ability to build a visual identity that already exists before the first song even starts.</p>
+		<p>I am not trying to create a mathematical combination of all those references.</p>
+		<p>Usually something much less organized happens.</p>
+		<p>I listen to something for years, then another song appears that seemingly has nothing to do with it, and I discover that a certain decision came from somewhere that had been sitting with me for a very long time.</p>
+		<p>That is also why I do not want Fhugawz to always sound the same.</p>
+		<p>It would actually feel strange if it did.</p>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/why-fhugawz-exists/why-fhugawz-exists-design-branding-process.webp"
-					alt="Design, branding and visual process connected to the Fhugawz project."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.exists.image.two.alt"
-				/>
-			</div>
+		<h2>I think that is where the Worlds appeared</h2>
+		<p>For a long time I looked for coherence by trying to find one consistent sound.</p>
+		<p>Now I think I was looking in the wrong place.</p>
+		<p>The coherence of Fhugawz is not really in genre.</p>
+		<p>It is in continuity.</p>
+		<p>The thirteen Worlds can move between folk, post-hardcore, dark pop, glitch, shoegaze, grunge, horror, rock or things I still do not know exactly how to classify. The images can change dramatically from one record to another too.</p>
+		<p>What I am trying to preserve is something else: the feeling that all of them belong to the same evolution.</p>
+		<p>Each World represents a different state and occupies a specific place inside the sequence. What happens in one leaves something prepared for the next, even when musically they seem very far apart.</p>
+		<p>That solved a problem I had been carrying for years.</p>
+		<p>I no longer need to force all of my influences into the same record.</p>
+		<p>They can transform with the story.</p>
 
-			<h2 data-i18n="post.exists.return.heading">THE RETURN AFTER THE BREAK</h2>
-			<p data-i18n="post.exists.return.one">
-				After the personal incident described in the first AXIOMS article, returning to music felt
-				different.
-			</p>
-			<p data-i18n="post.exists.return.two">
-				This was not about making songs just to make songs. It was about building something with
-				enough emotional weight, visual consistency and professional direction to carry everything
-				that had happened. That process changed the purpose of the project.
-			</p>
-			<p>
-				<a class="article-link" href="/blog/building-axioms" data-i18n="post.exists.firstArticle">
-					Building AXIOMS
-				</a>
-			</p>
-			<p data-i18n="post.exists.return.three">
-				The idea became clearer: even without ideal resources, perfect conditions or an easy path,
-				it is possible to build something serious if the work is approached with discipline,
-				patience and care.
-			</p>
+		<div class="article-image">
+			<img src="/images/blog/why-fhugawz-exists/why-fhugawz-exists-dark-pop-creative-world.webp.webp" alt="A nocturnal personal image connected to the evolving Fhugawz creative world." loading="lazy" decoding="async" />
+		</div>
 
-			<h2 data-i18n="post.exists.sound.heading">WHAT SHAPED THE SOUND</h2>
-			<p data-i18n="post.exists.sound.one">
-				Fhugawz also exists because the influences were never only from one place.
-			</p>
-			<p data-i18n="post.exists.sound.two">
-				Nirvana shaped part of the raw emotional center. Secret &amp; Whisper brought another
-				sense of intensity and atmosphere. Pierce the Veil opened a door to dramatic emotion and
-				post-hardcore urgency. Sullii became an important reference during recovery, especially
-				because of the way fragility and digital melancholy can coexist. Billie Eilish became one
-				of the strongest references for how a modern pop project can be intimate, dark, minimal,
-				visual and massive at the same time.
-			</p>
-			<p data-i18n="post.exists.sound.three">
-				Fhugawz comes from that mix: rock energy, dark experimental intimacy, cinematic atmosphere,
-				digital texture, emotional writing and visual direction.
-			</p>
+		<h2>I am also understanding the project while I build it</h2>
+		<p>One important thing is that a lot of this was not planned from the beginning.</p>
+		<p>It would be very easy to write about it now as if I had always had a perfectly organized map of thirteen albums, a complete narrative and a fully defined visual direction.</p>
+		<p>That was not the case.</p>
+		<p>A lot of things appeared while working.</p>
+		<p>Others changed several times.</p>
+		<p>Some ideas that seemed fundamental eventually disappeared, while details that initially felt minor became much more important than I expected.</p>
+		<p>That still happens.</p>
+		<p>There are Worlds whose identity I understand fairly well and others I am still trying to figure out. Some songs will probably change dramatically once I rebuild them. There are parts of the narrative that work today and maybe a year from now I will find a better way to connect them.</p>
+		<p>That does not bother me too much.</p>
+		<p>In fact, one of the reasons I want to keep this Journal is to record those transformations too.</p>
+		<p>Not only the result.</p>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/why-fhugawz-exists/why-fhugawz-exists-dark-pop-creative-world.webp.webp"
-					alt="Dark pop creative world combining music, image and production."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.exists.image.three.alt"
-				/>
-			</div>
-
-			<h2 data-i18n="post.exists.now.heading">WHY IT EXISTS NOW</h2>
-			<p data-i18n="post.exists.now.one">
-				Fhugawz exists to prove that an artistic project can be built from fragments.
-			</p>
-			<p data-i18n="post.exists.now.two">
-				From old bands. From design work. From recovery. From personal rupture. From references.
-				From songs that never found their place before. From the need to create a professional
-				world even when the starting point is imperfect.
-			</p>
-			<p data-i18n="post.exists.now.three">
-				It is music, but it is also visual identity, production, storytelling and a way to turn
-				difficult experiences into something structured enough to share.
-			</p>
-			<p data-i18n="post.exists.now.four">
-				That is the reason Fhugawz exists: to build a dark experimental music world where sound, image and
-				emotion do not feel separated.
-			</p>
-			<p data-i18n="post.exists.closing">
-				Follow the project, listen to the previews and stay close to the process. This is still
-				being built.
-			</p>
-
-			<footer class="article-footer">
-				<BlogLikeButton slug="why-fhugawz-exists" />
-				<BlogSubscribeCTA id="why-fhugawz-exists-subscribe" />
-			</footer>
-		</article>
-	</section>
-</Layout>
+		<h2>So why does Fhugawz exist?</h2>
+		<p>I suppose it exists because for too long I had music on one side, design somewhere else, stories in another place, and a lot of ideas that did not seem to belong anywhere.</p>
+		<p>Fhugawz became the place where I can finally let all of those things meet.</p>
+		<p>I do not need every song to explain the entire project or every album to use the same language. I only need to be able to step far enough away and still recognize that they are parts of the same thing.</p>
+		<p>That is what I am trying to build now.</p>
+		<p>Thirteen Worlds, different stages, sounds that change, images that change, and a story that is slowly beginning to reveal why they are connected.</p>
+		<p>There is still a lot that is unfinished.</p>
+		<p>Maybe that is exactly why it makes sense to write about it now.</p>
+	</div>
+</ArticleLayout>

@@ -1,0 +1,13 @@
+<script>
+	import { applyArtistLanguage, getDocumentLanguage } from '../../utils/localization';
+
+	const synchronizeArtistLanguage = () => applyArtistLanguage(getDocumentLanguage());
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', synchronizeArtistLanguage, { once: true });
+	} else {
+		synchronizeArtistLanguage();
+	}
+
+	window.addEventListener('fhugawz:languagechange', synchronizeArtistLanguage);
+</script>

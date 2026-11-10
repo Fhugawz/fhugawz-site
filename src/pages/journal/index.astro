@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import JournalArchive from '../../components/journal/JournalArchive.astro';
+import { artistUi } from '../../data/artist-ui';
+import { getJournalPageEntries, journalPageCount } from '../../data/journal';
+
+const entries = getJournalPageEntries(1);
+---
+
+<Layout
+	title={artistUi.journalPage.seoTitle.en}
+	spanishTitle={artistUi.journalPage.seoTitle.es}
+	description={artistUi.journalPage.seoDescription.en}
+	spanishDescription={artistUi.journalPage.seoDescription.es}
+	image="/images/journal/fhugawz-journal-creative-process-hero.webp"
+	imageAlt="Fhugawz journal creative process"
+>
+	<JournalArchive page={1} totalPages={journalPageCount} {...entries} />
+</Layout>

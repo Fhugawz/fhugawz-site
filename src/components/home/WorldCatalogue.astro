@@ -1,0 +1,725 @@
+---
+import type { LocalizedText, World } from '../../types/world';
+import { artistUi, worldStageLabels } from '../../data/artist-ui';
+import { localize, localizedAltAttributes, localizedAriaAttributes, localizedTextAttributes } from '../../utils/localization';
+import DotWavePlayer from '../DotWavePlayer.astro';
+import WorldAlbumCta from '../worlds/WorldAlbumCta.astro';
+
+interface Props {
+	worlds: World[];
+}
+
+const { worlds } = Astro.props;
+const text = (en: string, es: string): LocalizedText => ({ en, es });
+const entries = worlds.map((world) => ({
+	world,
+	previewTrack: world.tracks.find((track) => Boolean(track.preview)),
+}));
+const copy = {
+	label: text('The sequence', 'La secuencia'),
+	instruction: text('Select A World To Enter The Sequence.', 'Selecciona Un Mundo Para Entrar En La Secuencia.'),
+	preview: text('Prototype preview', 'Preview de prototipo'),
+	unavailable: text('Preview not available yet', 'Preview aún no disponible'),
+	selectionLabel: text('Select a world', 'Seleccionar un mundo'),
+};
+---
+
+<section
+	class="world-explorer"
+	id="selected-listening"
+	data-world-explorer
+	aria-label={copy.label.en}
+	{...localizedAriaAttributes(copy.label)}
+>
+	<div class="world-explorer-backdrops" aria-hidden="true">
+		{entries.map(({ world }, index) => (
+			<img class:list={{ active: index === 0 }} data-world-backdrop={index} src={world.artwork.hero} alt="" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+		))}
+		<div></div>
+	</div>
+	<div class="world-explorer-shell">
+		<div class="world-explorer-desktop">
+			<div class="world-explorer-nav">
+				<header class="world-explorer-heading">
+					<p {...localizedTextAttributes(copy.label)}>{localize(copy.label, 'en')}</p>
+					<span aria-hidden="true"></span>
+					<h2 {...localizedTextAttributes(copy.instruction)}>{localize(copy.instruction, 'en')}</h2>
+				</header>
+				<div class="world-explorer-list" role="tablist" aria-label={copy.selectionLabel.en} {...localizedAriaAttributes(copy.selectionLabel)}>
+					{entries.map(({ world }, index) => (
+						<button
+							type="button"
+							role="tab"
+							class:list={{ active: index === 0 }}
+							aria-selected={index === 0 ? 'true' : 'false'}
+							aria-controls={`world-explorer-panel-${index}`}
+							data-world-select={index}
+						>
+							<span>{world.displayNumber}</span>
+							<strong>{world.title}</strong>
+							<small {...localizedTextAttributes(world.genre)}>{localize(world.genre, 'en')}</small>
+						</button>
+					))}
+				</div>
+			</div>
+
+			<div class="world-explorer-stage" aria-live="polite">
+				{entries.map(({ world, previewTrack }, index) => (
+					<article
+						id={`world-explorer-panel-${index}`}
+						role="tabpanel"
+						class:list={['world-explorer-panel', { active: index === 0 }]}
+						aria-hidden={index === 0 ? 'false' : 'true'}
+						inert={index === 0 ? undefined : true}
+						data-world-panel={index}
+					>
+						<div class="world-explorer-visual">
+							<img src={world.artwork.hero} alt={localize(world.artwork.alt, 'en')} {...localizedAltAttributes(world.artwork.alt)} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+							<div class="world-explorer-image-grade" aria-hidden="true"></div>
+							<span class="world-explorer-count">{world.displayNumber} / 13</span>
+							<div class="world-explorer-image-copy">
+								<p><span {...localizedTextAttributes(world.genre)}>{localize(world.genre, 'en')}</span> · <span {...localizedTextAttributes(worldStageLabels[world.stage])}>{localize(worldStageLabels[world.stage], 'en')}</span></p>
+								<h3>{world.title}</h3>
+								<p class="world-explorer-summary" {...localizedTextAttributes(world.summary)}>{localize(world.summary, 'en')}</p>
+							</div>
+
+							<div class="world-audio-bar">
+								<img class="world-audio-cover" src={world.artwork.hero} alt={localize(world.artwork.alt, 'en')} {...localizedAltAttributes(world.artwork.alt)} loading="lazy" decoding="async" />
+								{previewTrack?.preview ? (
+									<>
+										<p class="world-audio-meta"><span {...localizedTextAttributes(copy.preview)}>{localize(copy.preview, 'en')}</span><strong>{previewTrack.title}</strong></p>
+										<DotWavePlayer
+											id={`world-explorer-desktop-${previewTrack.id}`}
+											title={`${world.title} — ${previewTrack.title}`}
+											audioSrc={previewTrack.preview.src}
+											playLabel={artistUi.player.play.en}
+											playLabelEs={artistUi.player.play.es}
+											pauseLabel={artistUi.player.pause.en}
+											pauseLabelEs={artistUi.player.pause.es}
+											visualizerLabel={artistUi.player.visualizer.en}
+											visualizerLabelEs={artistUi.player.visualizer.es}
+											visualization="line"
+										/>
+									</>
+								) : (
+									<p class="world-audio-unavailable" {...localizedTextAttributes(copy.unavailable)}>{localize(copy.unavailable, 'en')}</p>
+								)}
+								<WorldAlbumCta href={world.sunoAlbumUrl} />
+							</div>
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+
+		<div class="world-explorer-mobile">
+			<header class="world-explorer-heading">
+				<p {...localizedTextAttributes(copy.label)}>{localize(copy.label, 'en')}</p>
+				<span aria-hidden="true"></span>
+				<h2 {...localizedTextAttributes(copy.instruction)}>{localize(copy.instruction, 'en')}</h2>
+			</header>
+			{entries.map(({ world, previewTrack }, index) => (
+				<div class="world-accordion-item">
+					<button
+						type="button"
+						aria-expanded="false"
+						aria-controls={`world-accordion-panel-${index}`}
+						data-world-accordion={index}
+					>
+						<span>{world.displayNumber}</span>
+						<strong>{world.title}</strong>
+						<i aria-hidden="true">+</i>
+					</button>
+					<div id={`world-accordion-panel-${index}`} class="world-accordion-panel" data-world-accordion-panel={index} hidden>
+						<div class="world-accordion-visual">
+							<img src={world.artwork.hero} alt={localize(world.artwork.alt, 'en')} {...localizedAltAttributes(world.artwork.alt)} loading="lazy" decoding="async" />
+							<div class="world-explorer-image-grade" aria-hidden="true"></div>
+							<div class="world-accordion-copy">
+								<p class="world-accordion-meta"><span {...localizedTextAttributes(world.genre)}>{localize(world.genre, 'en')}</span> · <span {...localizedTextAttributes(worldStageLabels[world.stage])}>{localize(worldStageLabels[world.stage], 'en')}</span></p>
+								<h3>{world.title}</h3>
+								<p class="world-accordion-summary" {...localizedTextAttributes(world.summary)}>{localize(world.summary, 'en')}</p>
+							</div>
+							<div class="world-audio-bar">
+								<img class="world-audio-cover" src={world.artwork.hero} alt={localize(world.artwork.alt, 'en')} {...localizedAltAttributes(world.artwork.alt)} loading="lazy" decoding="async" />
+								{previewTrack?.preview ? (
+									<>
+										<p class="world-audio-meta"><span {...localizedTextAttributes(copy.preview)}>{localize(copy.preview, 'en')}</span><strong>{previewTrack.title}</strong></p>
+										<DotWavePlayer
+											id={`world-explorer-mobile-${previewTrack.id}`}
+											title={`${world.title} — ${previewTrack.title}`}
+											audioSrc={previewTrack.preview.src}
+											playLabel={artistUi.player.play.en}
+											playLabelEs={artistUi.player.play.es}
+											pauseLabel={artistUi.player.pause.en}
+											pauseLabelEs={artistUi.player.pause.es}
+											visualizerLabel={artistUi.player.visualizer.en}
+											visualizerLabelEs={artistUi.player.visualizer.es}
+											visualization="line"
+										/>
+									</>
+								) : (
+									<p class="world-audio-unavailable" {...localizedTextAttributes(copy.unavailable)}>{localize(copy.unavailable, 'en')}</p>
+								)}
+								<WorldAlbumCta href={world.sunoAlbumUrl} />
+							</div>
+						</div>
+					</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<script>
+	document.querySelectorAll('[data-world-explorer]').forEach((root) => {
+		const selectors = Array.from(root.querySelectorAll('[data-world-select]'));
+		const panels = Array.from(root.querySelectorAll('[data-world-panel]'));
+		const backdrops = Array.from(root.querySelectorAll('[data-world-backdrop]'));
+		const accordionButtons = Array.from(root.querySelectorAll('[data-world-accordion]'));
+		const accordionPanels = Array.from(root.querySelectorAll('[data-world-accordion-panel]'));
+
+		const stopPlayers = () => window.dispatchEvent(new CustomEvent('fhugawz:pause-players', { detail: 'world-selection-change' }));
+		const selectBackdrop = (index) => backdrops.forEach((backdrop, backdropIndex) => backdrop.classList.toggle('active', backdropIndex === index));
+
+		const selectWorld = (index) => {
+			stopPlayers();
+			selectBackdrop(index);
+			selectors.forEach((selector, selectorIndex) => {
+				const active = selectorIndex === index;
+				selector.classList.toggle('active', active);
+				selector.setAttribute('aria-selected', active ? 'true' : 'false');
+			});
+			panels.forEach((panel, panelIndex) => {
+				const active = panelIndex === index;
+				panel.classList.toggle('active', active);
+				panel.setAttribute('aria-hidden', active ? 'false' : 'true');
+				panel.toggleAttribute('inert', !active);
+			});
+		};
+
+		selectors.forEach((selector, index) => selector.addEventListener('click', () => selectWorld(index)));
+
+		accordionButtons.forEach((button, index) => {
+			button.addEventListener('click', () => {
+				const willOpen = button.getAttribute('aria-expanded') !== 'true';
+				stopPlayers();
+				if (willOpen) selectBackdrop(index);
+				accordionButtons.forEach((candidate, candidateIndex) => {
+					const open = willOpen && candidateIndex === index;
+					candidate.setAttribute('aria-expanded', open ? 'true' : 'false');
+					candidate.classList.toggle('active', open);
+					const marker = candidate.querySelector('i');
+					if (marker) marker.textContent = open ? '−' : '+';
+				});
+				accordionPanels.forEach((panel, panelIndex) => {
+					if (panel instanceof HTMLElement) panel.hidden = !(willOpen && panelIndex === index);
+				});
+				if (willOpen) requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+			});
+		});
+	});
+</script>
+
+<style>
+	.world-explorer {
+		position: relative;
+		overflow: hidden;
+		background: #070a0d;
+		color: #f1ede4;
+		padding: clamp(88px, 10vw, 142px) 0;
+		isolation: isolate;
+	}
+
+	.world-explorer-backdrops,
+	.world-explorer-backdrops img,
+	.world-explorer-backdrops > div {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.world-explorer-backdrops { z-index: -1; pointer-events: none; }
+
+	.world-explorer-backdrops img {
+		object-fit: cover;
+		filter: blur(20px) saturate(.62) brightness(.54);
+		opacity: 0;
+		transform: scale(1.09);
+		transition: opacity 480ms ease;
+	}
+
+	.world-explorer-backdrops img.active { opacity: .78; }
+
+	.world-explorer-backdrops > div {
+		background:
+			linear-gradient(90deg, rgba(5, 7, 8, .8), rgba(5, 7, 8, .58) 48%, rgba(5, 7, 8, .54)),
+			linear-gradient(180deg, rgba(5, 7, 8, .7), rgba(5, 7, 8, .46) 48%, rgba(5, 7, 8, .74));
+	}
+
+	.world-explorer-shell {
+		position: relative;
+		z-index: 1;
+		width: min(1320px, calc(100% - clamp(40px, 8vw, 128px)));
+		margin: 0 auto;
+	}
+
+	.world-explorer-heading {
+		max-width: none;
+		margin-bottom: 28px;
+	}
+
+	.world-explorer-heading p,
+	.world-explorer-heading h2 {
+		margin: 0;
+		font-family: var(--font-sans);
+		font-weight: 500;
+	}
+
+	.world-explorer-heading p {
+		color: rgba(241, 237, 228, .56);
+		font-size: .72rem;
+		letter-spacing: .08em;
+		text-transform: uppercase;
+	}
+
+	.world-explorer-heading > span {
+		display: block;
+		width: 42px;
+		height: 1px;
+		margin: 12px 0;
+		background: linear-gradient(90deg, rgba(241, 237, 228, .28), transparent);
+	}
+
+	.world-explorer-heading h2 {
+		color: rgba(241, 237, 228, .86);
+		font-size: clamp(1.08rem, 1.65vw, 1.3rem);
+		letter-spacing: -.015em;
+		line-height: 1.3;
+		white-space: nowrap;
+		text-transform: none;
+	}
+
+	.world-explorer-desktop {
+		display: grid;
+		grid-template-columns: minmax(350px, .7fr) minmax(540px, 1.3fr);
+		gap: clamp(48px, 7vw, 104px);
+		align-items: start;
+	}
+
+	.world-explorer-list {
+		border-bottom: 1px solid rgba(241, 237, 228, .1);
+	}
+
+	.world-explorer-list button {
+		position: relative;
+		display: grid;
+		width: 100%;
+		grid-template-columns: 36px minmax(0, 1fr) auto;
+		gap: 12px;
+		align-items: baseline;
+		border: 0;
+		border-top: 1px solid rgba(241, 237, 228, .1);
+		background: transparent;
+		color: rgba(241, 237, 228, .45);
+		cursor: pointer;
+		padding: 9px 2px;
+		text-align: left;
+		transition: color 320ms ease, padding 320ms cubic-bezier(.22, 1, .36, 1);
+	}
+
+	.world-explorer-list button::before {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		content: '';
+		background: var(--signal-orange);
+		opacity: 0;
+		transform: translateY(-50%);
+	}
+
+	.world-explorer-list button:hover,
+	.world-explorer-list button:focus-visible,
+	.world-explorer-list button.active {
+		color: #f1ede4;
+		padding-left: 12px;
+	}
+
+	.world-explorer-list button.active::before { opacity: 1; }
+
+	.world-explorer-list button:focus-visible,
+	.world-accordion-item > button:focus-visible {
+		outline: 1px solid var(--signal-orange);
+		outline-offset: 4px;
+	}
+
+	.world-explorer-list button > span {
+		color: rgba(241, 237, 228, .38);
+		font-size: .64rem;
+		font-weight: 700;
+		letter-spacing: .08em;
+	}
+
+	.world-explorer-list button.active > span { color: var(--signal-orange); }
+
+	.world-explorer-list strong {
+		font-size: clamp(.95rem, 1.25vw, 1.1rem);
+		font-weight: 550;
+		line-height: 1.2;
+	}
+
+	.world-explorer-list small {
+		color: rgba(241, 237, 228, .3);
+		font-size: .56rem;
+		font-weight: 600;
+		letter-spacing: .06em;
+	}
+
+	.world-explorer-stage {
+		display: grid;
+		min-width: 0;
+		margin-top: 84px;
+	}
+
+	.world-explorer-panel {
+		grid-area: 1 / 1;
+		min-width: 0;
+		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
+		transform: translateY(5px);
+		transition: opacity 420ms ease, transform 420ms cubic-bezier(.22, 1, .36, 1), visibility 420ms;
+	}
+
+	.world-explorer-panel.active {
+		opacity: 1;
+		pointer-events: auto;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.world-explorer-visual {
+		position: relative;
+		aspect-ratio: 16 / 10;
+		overflow: hidden;
+		background: #0b0e10;
+	}
+
+	.world-explorer-visual img,
+	.world-explorer-image-grade {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.world-explorer-visual img {
+		object-fit: cover;
+		filter: saturate(.72) contrast(1.06) brightness(.82);
+		transform: scale(1.01);
+	}
+
+	.world-explorer-image-grade {
+		z-index: 1;
+		background:
+			linear-gradient(90deg, rgba(5, 7, 8, .82) 0%, rgba(5, 7, 8, .46) 46%, rgba(5, 7, 8, .08) 78%),
+			linear-gradient(180deg, rgba(5, 7, 8, .46) 0%, transparent 42%, rgba(5, 7, 8, .72) 100%);
+	}
+
+	.world-explorer-count {
+		position: absolute;
+		top: 24px;
+		right: 20px;
+		z-index: 2;
+		color: rgba(241, 237, 228, .76);
+		font-size: .66rem;
+		font-weight: 700;
+		letter-spacing: .1em;
+	}
+
+	.world-explorer-image-copy {
+		position: absolute;
+		top: clamp(30px, 4vw, 52px);
+		left: clamp(28px, 4vw, 52px);
+		z-index: 2;
+		max-width: min(540px, 68%);
+	}
+
+	.world-explorer-image-copy > p:first-child,
+	.world-accordion-meta,
+	.world-audio-meta,
+	.world-audio-unavailable {
+		margin: 0;
+		color: rgba(241, 237, 228, .62);
+		font-size: .62rem;
+		font-weight: 600;
+		letter-spacing: .07em;
+	}
+
+	.world-explorer-image-copy > p:first-child,
+	.world-accordion-meta {
+		text-transform: uppercase;
+	}
+
+	.world-explorer-image-copy h3 {
+		margin: 10px 0 12px;
+		font-family: var(--font-sans);
+		font-size: clamp(2rem, 3.6vw, 3.25rem);
+		font-weight: 450;
+		letter-spacing: -.035em;
+		line-height: 1;
+		text-transform: none;
+	}
+
+	.world-explorer-summary,
+	.world-accordion-summary {
+		margin: 0;
+		color: rgba(241, 237, 228, .76);
+		font-size: .92rem;
+		line-height: 1.65;
+	}
+
+	.world-audio-bar {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 3;
+		display: grid;
+		grid-template-columns: 34px 52px minmax(120px, auto) minmax(80px, 1fr) auto;
+		gap: 14px;
+		align-items: center;
+		min-height: 72px;
+		padding: 12px 24px;
+		border: 0;
+		border-top: 1px solid rgba(255, 90, 31, .28);
+		background: linear-gradient(90deg, rgba(7, 9, 10, .74), rgba(7, 9, 10, .54));
+		backdrop-filter: blur(16px);
+		box-shadow: 0 -12px 32px rgba(255, 90, 31, .045);
+	}
+
+	.world-audio-meta {
+		display: grid;
+		grid-column: 3;
+		grid-row: 1;
+		gap: 3px;
+		min-width: 0;
+		color: rgba(241, 237, 228, .72);
+		white-space: nowrap;
+	}
+	.world-audio-meta span {
+		color: rgba(241, 237, 228, .54);
+		font-size: .55rem;
+		text-transform: uppercase;
+	}
+	.world-audio-meta strong {
+		overflow: hidden;
+		color: var(--signal-orange);
+		font-size: .72rem;
+		font-weight: 600;
+		letter-spacing: .01em;
+		line-height: 1.2;
+		text-overflow: ellipsis;
+		text-shadow: 0 0 12px rgba(255, 90, 31, .14);
+	}
+
+	.world-audio-unavailable {
+		grid-column: 3 / 5;
+		color: rgba(241, 237, 228, .52);
+	}
+
+	.world-audio-bar :global(.world-album-cta) {
+		grid-column: 5;
+		grid-row: 1;
+		justify-self: end;
+		white-space: nowrap;
+	}
+
+	.world-audio-cover,
+	.world-explorer-visual .world-audio-cover {
+		position: static;
+		inset: auto;
+		grid-column: 2;
+		grid-row: 1;
+		width: 52px;
+		height: 52px;
+		border: 1px solid rgba(241, 237, 228, .16);
+		object-fit: contain;
+		filter: none;
+		transform: none;
+	}
+
+	.world-audio-bar :global(.dot-player) {
+		display: contents;
+		margin: 0;
+	}
+
+	.world-audio-bar :global(.player-button) {
+		grid-column: 1;
+		grid-row: 1;
+		width: 34px;
+		height: 34px;
+	}
+
+	.world-audio-bar :global(.player-icon-play) {
+		border-top-width: 6px;
+		border-bottom-width: 6px;
+		border-left-width: 9px;
+	}
+
+	.world-audio-bar :global(.player-icon-pause) {
+		width: 10px;
+		height: 13px;
+		border-left-width: 3px;
+		border-right-width: 3px;
+	}
+
+	.world-audio-bar :global(.dot-wave) {
+		grid-column: 4;
+		grid-row: 1;
+		width: 100%;
+		height: 42px;
+	}
+
+	.world-explorer-mobile { display: none; }
+
+	@media (max-width: 1200px) {
+		.world-explorer-desktop .world-audio-bar {
+			grid-template-columns: 34px 52px minmax(120px, auto) minmax(80px, 1fr);
+			row-gap: 10px;
+		}
+		.world-explorer-desktop .world-audio-bar :global(.world-album-cta) {
+			grid-column: 1 / -1;
+			grid-row: 2;
+		}
+	}
+
+	@media (max-width: 980px) {
+		.world-explorer-desktop {
+			grid-template-columns: minmax(330px, .72fr) minmax(430px, 1.28fr);
+			gap: 32px;
+		}
+
+		.world-explorer-list small { display: none; }
+		.world-explorer-image-copy { max-width: 72%; }
+	}
+
+	@media (max-width: 860px) {
+		.world-explorer { padding: 76px 0 84px; }
+		.world-explorer-shell { width: min(100% - 40px, 560px); }
+		.world-explorer-heading {
+			max-width: 330px;
+			margin-bottom: 34px;
+		}
+		.world-explorer-heading h2 { font-size: .88rem; }
+		.world-explorer-desktop { display: none; }
+		.world-explorer-mobile { display: block; }
+
+		.world-accordion-item { border-top: 1px solid rgba(241, 237, 228, .11); }
+		.world-accordion-item:last-child { border-bottom: 1px solid rgba(241, 237, 228, .11); }
+
+		.world-accordion-item > button {
+			display: grid;
+			width: 100%;
+			grid-template-columns: 34px minmax(0, 1fr) auto;
+			gap: 10px;
+			align-items: center;
+			border: 0;
+			background: transparent;
+			color: rgba(241, 237, 228, .66);
+			cursor: pointer;
+			padding: 14px 2px;
+			text-align: left;
+		}
+
+		.world-accordion-item > button.active { color: #f1ede4; }
+		.world-accordion-item > button span {
+			color: rgba(241, 237, 228, .38);
+			font-size: .64rem;
+			font-weight: 700;
+		}
+		.world-accordion-item > button.active span { color: var(--signal-orange); }
+		.world-accordion-item > button strong { font-size: 1rem; font-weight: 550; }
+		.world-accordion-item > button i { color: rgba(241, 237, 228, .42); font-size: 1rem; font-style: normal; font-weight: 400; }
+
+		.world-accordion-panel { padding: 4px 0 34px 44px; }
+		.world-accordion-panel[hidden] { display: none; }
+		.world-accordion-visual {
+			position: relative;
+			aspect-ratio: 4 / 5;
+			overflow: hidden;
+			background: #0b0e10;
+		}
+		.world-accordion-visual > img {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			filter: saturate(.72) contrast(1.06) brightness(.82);
+		}
+		.world-accordion-copy {
+			position: absolute;
+			top: 24px;
+			right: 22px;
+			left: 22px;
+			z-index: 2;
+		}
+		.world-accordion-copy h3 {
+			margin: 9px 0 10px;
+			font-family: var(--font-sans);
+			font-size: clamp(1.8rem, 9vw, 2.7rem);
+			font-weight: 450;
+			letter-spacing: -.035em;
+			line-height: 1;
+			text-transform: none;
+		}
+		.world-accordion-summary {
+			font-size: .84rem;
+			line-height: 1.55;
+		}
+		.world-accordion-visual .world-audio-bar {
+			right: 0;
+			bottom: 0;
+			left: 0;
+			grid-template-columns: 28px 40px minmax(0, .8fr) minmax(52px, 1.2fr);
+			gap: 9px;
+			min-height: 56px;
+			padding: 8px 14px;
+		}
+		.world-accordion-visual .world-audio-unavailable {
+			grid-column: 3 / -1;
+			grid-row: 1;
+		}
+		.world-accordion-visual .world-audio-bar :global(.world-album-cta) {
+			grid-column: 1 / -1;
+			grid-row: 2;
+			justify-self: start;
+			margin-top: 5px;
+		}
+		.world-accordion-visual .world-audio-cover {
+			width: 40px;
+			height: 40px;
+		}
+		.world-accordion-visual .world-audio-bar :global(.player-button) {
+			width: 28px;
+			height: 28px;
+		}
+		.world-accordion-visual .world-audio-meta {
+			overflow: hidden;
+			font-size: .55rem;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.world-accordion-visual .world-audio-bar :global(.dot-wave) { height: 34px; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.world-explorer-backdrops img,
+		.world-explorer-list button,
+		.world-explorer-panel { transition: none; }
+	}
+</style>

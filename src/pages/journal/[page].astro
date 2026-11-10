@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import JournalArchive from '../../components/journal/JournalArchive.astro';
+import { artistUi } from '../../data/artist-ui';
+import { getJournalPageEntries, journalPageCount } from '../../data/journal';
+
+export function getStaticPaths() {
+	return Array.from({ length: Math.max(0, journalPageCount - 1) }, (_, index) => ({
+		params: { page: String(index + 2) },
+	}));
+}
+
+const page = Number(Astro.params.page);
+const entries = getJournalPageEntries(page);
+---
+
+<Layout
+	title={`${artistUi.journalPage.seoTitle.en} — ${String(page).padStart(2, '0')}`}
+	spanishTitle={`${artistUi.journalPage.seoTitle.es} — ${String(page).padStart(2, '0')}`}
+	description={artistUi.journalPage.seoDescription.en}
+	spanishDescription={artistUi.journalPage.seoDescription.es}
+	image="/images/journal/fhugawz-journal-creative-process-hero.webp"
+	imageAlt="Fhugawz journal creative process"
+>
+	<JournalArchive page={page} totalPages={journalPageCount} {...entries} />
+</Layout>

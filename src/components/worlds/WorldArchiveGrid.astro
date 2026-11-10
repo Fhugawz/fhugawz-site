@@ -1,0 +1,65 @@
+---
+import type { World } from '../../types/world';
+import { artistUi } from '../../data/artist-ui';
+import { localizedAriaAttributes } from '../../utils/localization';
+import WorldArchiveCard from './WorldArchiveCard.astro';
+
+interface Props {
+	worlds: World[];
+}
+
+const { worlds } = Astro.props;
+---
+
+<section class="world-grid-section" aria-label={artistUi.navigation.worldsIndex.en} {...localizedAriaAttributes(artistUi.navigation.worldsIndex)}>
+	<video
+		class="world-grid-background"
+		data-world-grid-video
+		autoplay
+		loop
+		muted
+		playsinline
+		disablepictureinpicture
+		disableremoteplayback
+		controlslist="nodownload nofullscreen noremoteplayback"
+		tabindex="-1"
+		preload="metadata"
+		poster="/media/worlds/fhugawz-worlds-grid-vertical-background-poster.webp"
+		aria-hidden="true"
+	>
+		<source src="/media/worlds/fhugawz-worlds-grid-vertical-background.mp4" type="video/mp4" />
+	</video>
+	<div class="world-grid-overlay" aria-hidden="true"></div>
+	<ol class="site-shell world-grid">
+		{worlds.map((world, index) => <WorldArchiveCard world={world} index={index} />)}
+	</ol>
+</section>
+
+<script>
+	const worldGridMotionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+	const worldGridVideo = document.querySelector('[data-world-grid-video]');
+	const syncWorldGridMotion = () => {
+		if (!(worldGridVideo instanceof HTMLVideoElement)) return;
+		if (worldGridMotionPreference.matches) {
+			worldGridVideo.pause();
+			return;
+		}
+		worldGridVideo.play().catch(() => undefined);
+	};
+	syncWorldGridMotion();
+	worldGridMotionPreference.addEventListener('change', syncWorldGridMotion);
+</script>
+
+<style>
+	.world-grid-section{position:relative;z-index:0;isolation:isolate;overflow:hidden;padding:clamp(76px,10vw,144px) 0 clamp(100px,13vw,180px);background:#080a0b url('/media/worlds/fhugawz-worlds-grid-vertical-background-poster.webp') center/cover no-repeat}
+	.world-grid-background,.world-grid-overlay{position:absolute;inset:0;width:100%;height:100%}
+	.world-grid-background{z-index:0;display:block;object-fit:cover;object-position:center;filter:saturate(.5) contrast(1.06) brightness(.62);transform:scale(1.015)}
+	.world-grid-overlay{z-index:1;background:linear-gradient(180deg,rgba(8,10,11,.82) 0%,rgba(8,10,11,.64) 18%,rgba(8,10,11,.68) 78%,rgba(8,10,11,.9) 100%),radial-gradient(circle at 50% 42%,rgba(8,10,11,.22),rgba(8,10,11,.68) 78%);pointer-events:none}
+	.world-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,2.6vw,38px);margin:0 auto;padding-left:0;list-style:none}
+	@media(max-width:900px){.world-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+	@media(max-width:620px){
+		.world-grid-section{padding:66px 0 96px}
+		.world-grid{grid-template-columns:1fr;gap:22px}
+	}
+	@media(prefers-reduced-motion:reduce){.world-grid-background{display:none}}
+</style>

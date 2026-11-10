@@ -1,0 +1,66 @@
+---
+import type { JournalEntry } from '../../data/journal';
+import { artistUi } from '../../data/artist-ui';
+import { localize, localizedAltAttributes, localizedTextAttributes } from '../../utils/localization';
+
+interface Props {
+	entry: JournalEntry;
+	featured?: boolean;
+}
+
+const { entry, featured = false } = Astro.props;
+---
+
+<article class:list={['journal-entry-card', { featured }]}>
+	<a href={entry.href}>
+		<div class="journal-entry-media">
+			<img src={entry.image} alt={localize(entry.alt, 'en')} {...localizedAltAttributes(entry.alt)} loading="lazy" decoding="async" />
+		</div>
+		<div class="journal-entry-copy">
+			<p class="journal-entry-meta">
+				<span {...localizedTextAttributes(entry.category)}>{localize(entry.category, 'en')}</span>
+				<time datetime={entry.date}>{entry.date}</time>
+			</p>
+			<h3 {...localizedTextAttributes(entry.title)}>{localize(entry.title, 'en')}</h3>
+			<p class="journal-entry-excerpt" {...localizedTextAttributes(entry.excerpt)}>{localize(entry.excerpt, 'en')}</p>
+			<span class="journal-entry-action" {...localizedTextAttributes(artistUi.journalPage.readArticle)}>{localize(artistUi.journalPage.readArticle, 'en')}</span>
+		</div>
+	</a>
+</article>
+
+<style>
+		.journal-entry-card{min-width:0}
+		.journal-entry-card a{display:flex;height:100%;flex-direction:column;border-top:1px solid rgba(241,237,228,.2);padding-top:12px;color:inherit;text-decoration:none}
+
+	.journal-entry-card a:focus-visible {
+		outline: 2px solid var(--signal-orange);
+		outline-offset: 5px;
+	}
+
+		.journal-entry-media{aspect-ratio:4 / 3;overflow:hidden;background:#0c1011}
+		.journal-entry-media img{width:100%;height:100%;object-fit:cover;transition:transform 620ms cubic-bezier(.22,1,.36,1),filter 620ms cubic-bezier(.22,1,.36,1)}
+		.journal-entry-card a:hover img,.journal-entry-card a:focus-visible img{filter:brightness(1.1);transform:scale(1.02)}
+		.journal-entry-copy{display:flex;min-width:0;flex:1;flex-direction:column;padding-top:18px}
+		.journal-entry-meta{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:0;color:var(--signal-orange);font-size:.65rem;font-weight:650;letter-spacing:.09em;text-transform:uppercase}
+		.journal-entry-meta time{color:rgba(241,237,228,.48);font-weight:500;letter-spacing:.04em}
+		h3{margin:13px 0 10px;font-family:var(--font-sans);font-size:clamp(1.12rem,1.35vw,1.35rem);font-weight:500;letter-spacing:-.018em;line-height:1.18;text-transform:none}
+		.journal-entry-excerpt{margin:0;color:rgba(241,237,228,.64);font-size:.9rem;line-height:1.58}
+		.journal-entry-action{margin-top:20px;color:rgba(241,237,228,.78);font-size:.68rem;font-weight:650;letter-spacing:.07em;text-decoration:none}
+		.journal-entry-action::after{margin-left:8px;color:var(--signal-orange);content:'→';transition:transform 620ms cubic-bezier(.22,1,.36,1)}
+		.journal-entry-card a:hover .journal-entry-action::after,.journal-entry-card a:focus-visible .journal-entry-action::after{display:inline-block;transform:translateX(4px)}
+		.journal-entry-card.featured a{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:clamp(26px,4vw,64px);border-top:0;padding-top:0}
+		.journal-entry-card.featured .journal-entry-media{min-height:clamp(360px,43vw,580px);aspect-ratio:auto}
+		.journal-entry-card.featured .journal-entry-copy{justify-content:flex-end;padding:clamp(28px,4vw,48px) 0}
+		.journal-entry-card.featured h3{font-size:clamp(1.8rem,3.2vw,3rem);line-height:1.05}
+		.journal-entry-card.featured .journal-entry-excerpt{max-width:32rem;font-size:clamp(.94rem,1.05vw,1rem)}
+
+	@media (prefers-reduced-motion: reduce) {
+			.journal-entry-media img,.journal-entry-action::after{transition:none}
+	}
+
+		@media(max-width:760px){
+			.journal-entry-card.featured a{display:flex;gap:0}
+			.journal-entry-card.featured .journal-entry-media{min-height:0;aspect-ratio:4 / 3}
+			.journal-entry-card.featured .journal-entry-copy{padding:22px 0 0}
+	}
+</style>

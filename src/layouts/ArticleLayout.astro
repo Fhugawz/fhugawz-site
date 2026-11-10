@@ -1,0 +1,330 @@
+---
+import Layout from './Layout.astro';
+import { journalEntries } from '../data/journal';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	imageAlt?: string;
+	canonical?: string;
+	keywords?: string;
+	type?: string;
+	spanishTitle?: string;
+	spanishDescription?: string;
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+	heroImage: string;
+	heroKicker: string;
+	heroKickerI18n?: string;
+	heroTitleI18n?: string;
+	heroTitleLinebreaks?: boolean;
+	heroLede: string;
+	heroLedeI18n?: string;
+}
+
+const {
+	title,
+	heroImage,
+	heroKicker,
+	heroKickerI18n,
+	heroTitleI18n: _heroTitleI18n,
+	heroTitleLinebreaks: _heroTitleLinebreaks = false,
+	heroLede,
+	heroLedeI18n,
+	...layoutProps
+} = Astro.props;
+
+const articleTitle = title?.replace(/^Fhugawz\s+—\s+/, '').replace(/\s+—\s+Fhugawz$/, '') ?? '';
+const articleUrl = `https://fhugawz.com${Astro.url.pathname}`;
+const articleEntry = journalEntries.find((entry) => entry.href === Astro.url.pathname.replace(/\/$/, ''));
+const articleSchema = articleEntry ? [{
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: articleEntry.title.en,
+	description: articleEntry.excerpt.en,
+	datePublished: articleEntry.date,
+	image: `https://fhugawz.com${heroImage}`,
+	mainEntityOfPage: articleUrl,
+	author: { '@type': 'MusicGroup', name: 'Fhugawz', url: 'https://fhugawz.com' },
+}, {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://fhugawz.com/' },
+		{ '@type': 'ListItem', position: 2, name: 'Journal', item: 'https://fhugawz.com/journal' },
+		{ '@type': 'ListItem', position: 3, name: articleEntry.title.en, item: articleUrl },
+	],
+}] : undefined;
+---
+
+<Layout title={title} {...layoutProps} jsonLd={layoutProps.jsonLd ?? articleSchema}>
+	<div class="article-page">
+		<header class="article-hero" style={`--article-hero-image: url("${heroImage}")`}>
+			<div class="site-shell article-hero-inner">
+				<div class="article-hero-main">
+					<p class="section-kicker" data-i18n={heroKickerI18n}>{heroKicker}</p>
+					<h1 class="article-title">{articleTitle}</h1>
+					<p class="article-standfirst" data-i18n={heroLedeI18n}>{heroLede}</p>
+				</div>
+				<div class="article-hero-note">
+					<span>JOURNAL</span>
+					<p>ONGOING ARCHIVE · PROCESS NOTES</p>
+				</div>
+			</div>
+		</header>
+
+		<section class="article-section">
+			<article class="site-shell article-content">
+				<slot />
+			</article>
+		</section>
+	</div>
+</Layout>
+
+<style is:global>
+	.article-page {
+		background: #090a09;
+	}
+
+	.article-hero {
+		display: flex;
+		min-height: clamp(560px, calc(100svh - 72px), 760px);
+		align-items: stretch;
+		border-bottom: 1px solid rgba(241, 237, 228, 0.1);
+		background:
+			linear-gradient(90deg, rgba(8, 9, 8, 0.9), rgba(8, 9, 8, 0.52) 62%, rgba(8, 9, 8, 0.7)),
+			linear-gradient(0deg, rgba(8, 9, 8, 0.98), rgba(8, 9, 8, 0.16) 64%),
+			var(--article-hero-image);
+		background-position: center;
+		background-size: cover;
+	}
+
+	.article-hero-inner {
+		display: flex;
+		width: min(1160px, calc(100% - 40px));
+		max-width: 1160px;
+		min-height: clamp(560px, calc(100svh - 72px), 760px);
+		flex-direction: column;
+		justify-content: flex-end;
+		margin: 0 auto;
+		padding: clamp(112px, 15vh, 168px) 0 clamp(56px, 8vh, 88px);
+	}
+
+	.article-hero-main {
+		width: 100%;
+		max-width: 760px;
+	}
+
+	.article-hero .section-kicker {
+		margin: 0;
+		color: rgba(255, 90, 31, 0.84);
+		font-size: 0.7rem;
+		font-weight: 650;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.article-title {
+		max-width: 760px;
+		margin: 20px 0 0;
+		color: var(--paper);
+		font-family: var(--font-sans);
+		font-size: clamp(2.1rem, 3.4vw, 3.25rem);
+		font-weight: 450;
+		letter-spacing: -0.02em;
+		line-height: 1.06;
+		overflow-wrap: anywhere;
+		text-transform: none;
+		text-wrap: balance;
+	}
+
+	.article-standfirst {
+		max-width: 640px;
+		margin: clamp(26px, 4vh, 38px) 0 0;
+		color: rgba(241, 237, 228, 0.68);
+		font-size: clamp(0.94rem, 1.05vw, 1rem);
+		line-height: 1.65;
+		text-transform: none;
+		text-wrap: pretty;
+	}
+
+	.article-hero-note {
+		position: relative;
+		display: flex;
+		width: 100%;
+		gap: 28px;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: clamp(30px, 4.5vh, 44px);
+		padding-top: 16px;
+		border-top: 1px solid rgba(241, 237, 228, 0.2);
+		color: rgba(241, 237, 228, 0.46);
+		font-size: 0.64rem;
+		font-weight: 550;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
+	}
+
+	.article-hero-note::after {
+		position: absolute;
+		top: -2px;
+		right: 0;
+		width: 4px;
+		height: 4px;
+		content: '';
+		background: rgba(241, 237, 228, 0.88);
+		transform: rotate(45deg);
+	}
+
+	.article-hero-note span {
+		color: rgba(255, 90, 31, 0.84);
+	}
+
+	.article-hero-note p {
+		margin: 0;
+		padding-right: 12px;
+		text-align: right;
+	}
+
+	.article-section {
+		padding: clamp(64px, 9vw, 104px) 0 clamp(88px, 12vw, 144px);
+	}
+
+	.article-content {
+		max-width: 900px;
+	}
+
+	.article-content p,
+	.article-content li {
+		color: rgba(241, 237, 228, 0.76);
+		font-size: clamp(1.03rem, 1.4vw, 1.12rem);
+		line-height: 1.82;
+	}
+
+	.article-content h2,
+	.article-content h3 {
+		max-width: 820px;
+		color: var(--paper);
+		font-family: var(--font-sans);
+		font-weight: 450;
+		letter-spacing: -0.01em;
+		line-height: 1.04;
+		text-transform: none;
+		text-wrap: balance;
+	}
+
+	.article-content h2 {
+		margin: clamp(52px, 7vw, 76px) 0 18px;
+		font-size: clamp(2rem, 2.7vw, 3rem);
+	}
+
+	.article-content h3 {
+		margin: 42px 0 14px;
+		font-size: clamp(1.55rem, 3vw, 2.3rem);
+	}
+
+	.article-image {
+		margin: clamp(40px, 6vw, 64px) 0;
+		overflow: hidden;
+		border: 0;
+		border-radius: 4px;
+	}
+
+	.article-image img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.article-language-es {
+		display: none;
+	}
+
+	html[data-language='es'] .article-language-en {
+		display: none;
+	}
+
+	html[data-language='es'] .article-language-es {
+		display: block;
+	}
+
+	.article-link {
+		color: var(--signal-orange);
+		cursor: pointer;
+		font-weight: 900;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	.article-link:hover,
+	.article-link:focus-visible {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	.article-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 32px;
+	}
+
+	@media (max-width: 720px) {
+		.article-hero {
+			min-height: clamp(540px, calc(100svh - 64px), 720px);
+			background-position: center;
+		}
+
+		.article-hero-inner {
+			width: 100%;
+			max-width: none;
+			min-height: clamp(540px, calc(100svh - 64px), 720px);
+			padding: 96px clamp(20px, 6vw, 24px) 42px;
+		}
+
+		.article-hero-main {
+			max-width: 420px;
+		}
+
+		.article-hero .section-kicker {
+			font-size: 0.64rem;
+			letter-spacing: 0.12em;
+		}
+
+		.article-title {
+			max-width: 420px;
+			margin-top: 17px;
+			font-size: clamp(2rem, 9vw, 2.75rem);
+			line-height: 1.06;
+		}
+
+		.article-standfirst {
+			max-width: 390px;
+			margin-top: 24px;
+			font-size: 0.94rem;
+			line-height: 1.62;
+		}
+
+		.article-hero-note {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 10px;
+			margin-top: 30px;
+		}
+
+		.article-hero-note p {
+			padding-right: 12px;
+			text-align: left;
+		}
+
+		.article-section {
+			padding-top: 58px;
+			padding-bottom: 92px;
+		}
+
+		.article-actions {
+			align-items: stretch;
+			flex-direction: column;
+		}
+	}
+</style>

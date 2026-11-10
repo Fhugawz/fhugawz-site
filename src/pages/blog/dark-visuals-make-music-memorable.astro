@@ -1,447 +1,103 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import BlogLikeButton from '../../components/BlogLikeButton.astro';
-import BlogSubscribeCTA from '../../components/BlogSubscribeCTA.astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 const keywords =
-	'dark visuals, music visual identity, independent artist branding, AI assisted visual assets, world building, music memory, atmospheric visuals, visualizers, Fhugawz resources, creative resources';
+	'Fhugawz, thirteen Worlds, visual direction, album covers, music and image, creative process, 199X, Phobia, 314, narrative music project, artist journal';
 const excerpt =
-	'Dark visuals help music become more memorable by creating mood, identity, atmosphere, and visual signals that connect songs, artists, and creative worlds.';
+	'Notes on how the visual identity of each World is helping me understand the music, the sequence and what actually belongs inside each part of Fhugawz.';
 const heroImage = '/images/blog/blog-dark-visuals-music-memory-fhugawz-resources.webp.webp';
 const imageBase = '/images/blog/dark-visuals-music-memory-fhugawz-resources';
 ---
 
-<Layout
-	title="Dark Visuals Make Music Memorable — Fhugawz"
+<ArticleLayout
+	title="When a World Starts to Take Shape — Fhugawz"
 	description={excerpt}
-	spanishTitle="Los visuales oscuros hacen la música más memorable — Fhugawz"
-	spanishDescription="Los visuales oscuros ayudan a que la música sea más memorable al crear mood, identidad, atmósfera y señales visuales que conectan canciones, artistas y mundos creativos."
+	spanishTitle="Cuando un Mundo empieza a tomar forma — Fhugawz"
+	spanishDescription="Notas sobre cómo la identidad visual de cada Mundo me ayuda a entender la música, la secuencia y lo que realmente pertenece dentro de cada parte de Fhugawz."
 	keywords={keywords}
 	type="article"
 	image={heroImage}
-	imageAlt="Dark Visuals Make Music Memorable article hero with atmospheric resources for independent music visual identity."
+	imageAlt="Fhugawz observing a nocturnal scene while developing the visual identity of the Worlds."
+	heroImage={heroImage}
+	heroKicker="PROJECT DIARY"
+	heroLede={excerpt}
 >
-	<section class="page-hero with-image blog-article-hero" style={`--page-hero-image: url("${heroImage}")`}>
-		<div class="site-shell">
-			<p class="section-kicker" data-i18n="post.visuals.kicker">CREATIVE RESOURCES</p>
-			<h1 class="page-title" data-i18n="post.visuals.title" data-i18n-linebreaks>
-				DARK VISUALS<br />MAKE MUSIC<br />MEMORABLE
-			</h1>
-			<p class="lede" data-i18n="post.visuals.lede">{excerpt}</p>
+	<div class="article-world-shape">
+		<p>I’ve been comparing several of the Fhugawz covers and realized something that probably should have been obvious, but I had never really thought about it this way.</p>
+		<p>There are Worlds I started understanding visually before I completely understood them through the music.</p>
+		<p>That does not mean the image always comes first. Sometimes I have a fairly clear sense of the songs and still have no idea what the record should look like. Other times the opposite happens: I find an image, a texture or a particular way of lighting something and suddenly I understand the music a little better.</p>
+		<p>I think that is why it is becoming harder for me to separate the two.</p>
+
+		<h2>I am not trying to make everything look the same</h2>
+		<p>It is very easy to confuse coherence with repetition.</p>
+		<p>If you have a certain palette, a typeface, a photographic treatment and keep repeating them, everything quickly starts looking like it belongs to the same project.</p>
+		<p>The problem is that Fhugawz does not really work that way.</p>
+		<p>If the thirteen Worlds represent different states, it would not make much sense for all of them to look like variations of the same cover. 199X should not look like Phobia, just as Phobia should not feel visually like 314.</p>
+		<p>I am trying to let each one develop its own language.</p>
+		<p>Sometimes that means changing the photography completely, working with a different amount of detail, removing color, bringing it back, making something much cleaner or going in almost the opposite direction.</p>
+		<p>The difficult part is understanding how far I can move without losing the connection between them.</p>
+		<p>I am still figuring out where that limit is.</p>
+
+		<div class="article-image">
+			<img src={`${imageBase}/ai-assisted-visual-assets-music-world-building.webp`} alt="A rainy nocturnal scene showing one possible visual language within the Fhugawz Worlds." loading="lazy" decoding="async" />
 		</div>
-	</section>
-	<section class="section">
-		<article class="site-shell article">
-			<div class="article-language article-language-en">
-				<p>Music is not only remembered through sound.</p>
-				<p>
-					Someone might forget the chord progression, the exact drum pattern, or the shape of a synth
-					line, but still remember an image: a half lit street, a blurred cover, a worn texture, a face
-					in shadow, a green light, a repeated symbol, a scene that feels like it came from a strange
-					dream.
-				</p>
-				<p>That also becomes part of the song.</p>
-				<p>
-					Not as decoration. More like an extension of the atmosphere. An image can hold what the sound
-					leaves floating. It can give shape to an emotion that does not have a name yet. It can keep a
-					song from feeling like another file lost between hundreds of posts.
-				</p>
-				<p>
-					For an independent artist, that matters. A song can disappear quickly when it arrives alone,
-					without a world around it. But when it carries a clear visual identity, even a minimal one, it
-					begins to leave a mark that is easier to recognize.
-				</p>
-				<p>The image becomes a kind of echo.</p>
 
-				<h2>A SONG NEEDS A VISUAL SIGNAL</h2>
-				<p>Every release leaves a signal, even when it is not planned carefully.</p>
-				<p>
-					It can be a color palette, a cover, a texture, a type of light, a typeface, a symbol, a short
-					video, a processed photo, a visualizer, or a specific way of showing the song title.
-				</p>
-				<p>
-					When all of that changes without direction, the project becomes harder to remember. Not
-					because every image has to look the same, but because something should return: a similar
-					tension, a recognizable atmosphere, a language that slowly starts to feel like its own.
-				</p>
-				<p>
-					Dark visuals work well here because they can carry mystery, nostalgia, beauty, anxiety, noise,
-					calm, and threat without explaining everything. They can suggest more than they show. Many
-					songs need exactly that.
-				</p>
+		<h2>An image can tell me I still do not understand the record</h2>
+		<p>This has happened several times.</p>
+		<p>I have a visual idea that I really like on its own. I work on it, look at it for a while and technically there is nothing particularly wrong with it.</p>
+		<p>But it does not belong.</p>
+		<p>Before, I probably would have tried to justify it because I had already spent time working on it. Now I try to pay more attention to that feeling.</p>
+		<p>If I have to explain too much why an image belongs to a particular World, there is probably something I still do not understand.</p>
+		<p>And sometimes the problem is not even the image.</p>
+		<p>I go back to the songs and realize I was not completely sure what I was trying to represent there either.</p>
+		<p>That is one of the things I like about working visually. Sometimes it reveals a problem that actually started somewhere else.</p>
 
-				<div class="article-image">
-					<img
-						src={`${imageBase}/dark-visual-identity-independent-music.webp`}
-						alt="Dark visual identity for independent music."
-						loading="lazy"
-						decoding="async"
-					/>
-				</div>
+		<h2>The covers are becoming reference points</h2>
+		<p>Now that several covers already exist together, I can look at the sequence differently.</p>
+		<p>Not only as thirteen individual designs.</p>
+		<p>I can put them next to each other and see whether I actually feel an evolution.</p>
+		<p>Things appear and disappear. The character changes age, the environments change, and so does the distance from which we observe everything. Some images are much more intimate while others begin to feel enormous or simply strange.</p>
+		<p>That helps me quite a lot.</p>
+		<p>A cover can work perfectly well by itself and still interrupt the sequence once I place it next to everything else.</p>
+		<p>That has already happened.</p>
+		<p>It will probably happen again.</p>
+		<p>I would rather notice those problems while the project is still alive than after everything is supposedly finished.</p>
 
-				<h2>VISUAL IDENTITY GIVES MUSIC A PLACE TO LIVE</h2>
-				<p>A song becomes easier to remember when it feels like it comes from somewhere.</p>
-				<p>
-					That place can be real or imagined: a low lit room, a wet city, an abandoned station, a
-					digital archive, an industrial landscape, a night road, a damaged screen, a memory that no
-					longer looks clean.
-				</p>
-				<p>What matters is the feeling of belonging.</p>
-				<p>
-					When music, images, colors, words, and texture point in the same direction, the project stops
-					feeling like a collection of loose pieces. It starts to have territory.
-				</p>
-				<p>
-					A single, a reel, a blog image, a visualizer, and a downloadable resource can speak the same
-					language without repeating the exact same formula.
-				</p>
-				<p>
-					Consistency does not have to be rigid. It can be a returning stain, a recurring light, a
-					frame, a type of grain, a way of using silence, or the shape of empty space.
-				</p>
+		<h2>I do not want “dark” to become a formula</h2>
+		<p>For a long time it would have been very easy to describe Fhugawz visually as simply dark.</p>
+		<p>There is still darkness throughout a lot of the project.</p>
+		<p>But that word is starting to feel too small.</p>
+		<p>Dark can very quickly become black, fog, grain, low light and someone looking down. If I repeat that thirteen times, it stops meaning much.</p>
+		<p>I am more interested in understanding why an image needs to feel dark.</p>
+		<p>In 199X it can come from memory. In Fake/minds it can feel more physical, youthful and aggressive. In Protocol 7 the darkness starts relating to another kind of isolation, while later Worlds can push it toward something uncomfortable or surreal.</p>
+		<p>Some traces can remain across them.</p>
+		<p>The reason behind those traces does not have to be the same.</p>
+		<p>I think that distinction matters.</p>
 
-				<h2>IN SHORT FORM CONTENT, THE IMAGE ARRIVES FIRST</h2>
-				<p>On TikTok, Reels, Shorts, and Pinterest, people decide quickly.</p>
-				<p>
-					The image often arrives before the song. Before someone understands the lyric or the sound,
-					they already received a visual impression. If that impression feels generic, it gets lost. If
-					it has something recognizable, even something small, it can open a door.
-				</p>
-				<p>
-					It does not need to scream visually. Many times the strongest thing is what feels contained: a
-					still scene, a strange texture, a light that does not look clean, a frame that leaves more
-					questions than answers.
-				</p>
-				<p>
-					Short form content works better when each piece feels connected to something larger. A loop, a
-					visualizer, a still image with minimal motion, or an instrumental fragment can act like a
-					signal. It does not have to explain everything. It only needs to leave enough tension for
-					someone to come back.
-				</p>
+		<div class="article-image">
+			<img src={`${imageBase}/fhugawz-314-creative-resources-visual-worlds.webp`} alt="A green visual language associated with 314 and the changing identity of the later Worlds." loading="lazy" decoding="async" />
+		</div>
 
-				<div class="article-image">
-					<img
-						src={`${imageBase}/ai-assisted-visual-assets-music-world-building.webp`}
-						alt="AI assisted visual assets for music world building."
-						loading="lazy"
-						decoding="async"
-					/>
-				</div>
+		<h2>I am also learning to leave things out</h2>
+		<p>Another thing I have noticed is that I tend to want too many ideas inside one image.</p>
+		<p>If a World contains several concepts, my first instinct is often to represent all of them.</p>
+		<p>Usually that does not work.</p>
+		<p>I am becoming more interested in letting a cover hold one strong feeling and allowing the songs to do the rest.</p>
+		<p>I do not need to fit the entire story inside a square.</p>
+		<p>Sometimes a silhouette, a particular distance between two characters or an empty space is enough.</p>
+		<p>And if someone listens to the record later and begins to see that image differently because of what they heard, even better.</p>
+		<p>I prefer that to explaining everything visually from the beginning.</p>
 
-				<h2>VISUAL RESOURCES CAN ALSO OPEN DOORS</h2>
-				<p>A resource does not have to be only a downloadable file.</p>
-				<p>It can be an entry point.</p>
-				<p>
-					Someone may arrive looking for an image for a cover, a texture for a video, an atmosphere for
-					a moodboard, or a reference for a personal project. Maybe they do not arrive through the music
-					first. Maybe they arrive through an image. That also counts.
-				</p>
-				<p>
-					Free or paid resources can help other creators while creating a wider connection with the work
-					behind them. It does not need to become a heavy strategy. The material just needs intention,
-					taste, and a clear direction.
-				</p>
-				<p>
-					When a visual resource is well presented, it can live in more than one place: a website, a
-					blog, Pinterest, a shop, a post, a short video, or a reference sent to another artist. Each
-					point can become a different door into the same kind of sensitivity.
-				</p>
-
-				<div class="article-image">
-					<img
-						src={`${imageBase}/music-visualizers-dark-atmospheric-content.webp`}
-						alt="Dark atmospheric music visualizers and content."
-						loading="lazy"
-						decoding="async"
-					/>
-				</div>
-
-				<h2>IT IS NOT ABOUT LOOKING BIGGER</h2>
-				<p>Independent artists often feel pressure to look like a finished brand before they even know what they are building.</p>
-				<p>There is no need to fake scale.</p>
-				<p>
-					Sometimes it is enough to repeat a few decisions with intention: a limited palette, a specific
-					texture, a way of using shadows, a visual rhythm between covers and posts, a secondary
-					typeface, a small symbol that starts appearing in different places.
-				</p>
-				<p>That can be stronger than publishing many images that do not belong to each other.</p>
-				<p>
-					Identity is not built all at once. It accumulates. One piece does not say much yet. Five
-					pieces begin to form a pattern. Ten pieces can start feeling like a world.
-				</p>
-				<p>
-					What matters is that every visual decision does not look like it was made from zero. There
-					should be memory between one image and the next.
-				</p>
-
-				<h2>MEMORY IS BUILT THROUGH REPETITION</h2>
-				<p>People remember what returns.</p>
-				<p>
-					A color returns.<br />
-					A texture returns.<br />
-					A symbol returns.<br />
-					A phrase returns.<br />
-					A type of light returns.<br />
-					A feeling returns.
-				</p>
-				<p>
-					Over time, those repetitions create identity. Not in an obvious or forced way, but like
-					certain songs you recognize before the voice enters. Something in the atmosphere already tells
-					you where it belongs.
-				</p>
-				<p>
-					Dark visuals have a special advantage: they leave space for mystery. They do not deliver
-					everything. They do not close the interpretation too early. They let the listener complete
-					part of the scene.
-				</p>
-				<p>And when someone completes something on their own, they are more likely to remember it.</p>
-
-				<div class="article-image">
-					<img
-						src={`${imageBase}/fhugawz-314-creative-resources-visual-worlds.webp`}
-						alt="Fhugawz 314 creative resources for dark visual worlds."
-						loading="lazy"
-						decoding="async"
-					/>
-				</div>
-
-				<h2>What Stays After the Scroll</h2>
-				<p>Music can live alone, but it is rarely discovered alone.</p>
-				<p>
-					A song appears surrounded by images, titles, thumbnails, fragments, posts, colors, textures,
-					and small visual decisions. All of that affects the way someone perceives it before, during,
-					and after listening.
-				</p>
-				<p>
-					Dark visuals do not make a song better by themselves, but they can help its atmosphere last
-					longer in memory.
-				</p>
-				<p>For an independent project, that memory matters.</p>
-				<p>
-					Explore useful free and premium resources for dark visuals, atmospheric projects, and creative
-					experiments.
-				</p>
-				<div class="article-actions">
-					<a class="button primary article-services-button" href="/resources">Explore Resources</a>
-					<a
-						class="button article-services-button"
-						href="https://ko-fi.com/fhugawz/shop"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Visit the Resource Store
-					</a>
-				</div>
-			</div>
-
-			<div class="article-language article-language-es" lang="es">
-				<p>La música no se recuerda solo por el sonido.</p>
-				<p>
-					Alguien puede olvidar la progresión de acordes, el patrón exacto de la batería o la forma de
-					una línea de sintetizador, pero seguir recordando una imagen: una calle medio iluminada, una
-					portada borrosa, una textura gastada, un rostro en sombra, una luz verde, un símbolo repetido,
-					una escena que parece venir de un sueño extraño.
-				</p>
-				<p>Eso también se vuelve parte de la canción.</p>
-				<p>
-					No como decoración. Más bien como una extensión de la atmósfera. Una imagen puede sostener lo
-					que el sonido deja flotando. Puede darle forma a una emoción que todavía no tiene nombre.
-					Puede evitar que una canción se sienta como otro archivo perdido entre cientos de posts.
-				</p>
-				<p>
-					Para un artista independiente, eso importa. Una canción puede desaparecer rápido cuando llega
-					sola, sin un mundo alrededor. Pero cuando trae una identidad visual clara, aunque sea mínima,
-					empieza a dejar una marca más fácil de reconocer.
-				</p>
-				<p>La imagen se vuelve una especie de eco.</p>
-
-				<h2>UNA CANCIÓN NECESITA UNA SEÑAL VISUAL</h2>
-				<p>Cada lanzamiento deja una señal, incluso cuando no se planea con cuidado.</p>
-				<p>
-					Puede ser una paleta de color, una portada, una textura, un tipo de luz, una tipografía, un
-					símbolo, un video corto, una foto procesada, un visualizer o una forma específica de mostrar
-					el título de la canción.
-				</p>
-				<p>
-					Cuando todo eso cambia sin dirección, el proyecto se vuelve más difícil de recordar. No porque
-					cada imagen tenga que verse igual, sino porque algo debería regresar: una tensión similar, una
-					atmósfera reconocible, un lenguaje que poco a poco empiece a sentirse propio.
-				</p>
-				<p>
-					Los visuales oscuros funcionan bien aquí porque pueden cargar misterio, nostalgia, belleza,
-					ansiedad, ruido, calma y amenaza sin explicarlo todo. Pueden sugerir más de lo que muestran.
-					Muchas canciones necesitan exactamente eso.
-				</p>
-
-				<div class="article-image">
-					<img
-						src={`${imageBase}/dark-visual-identity-independent-music.webp`}
-						alt="Identidad visual oscura para música independiente."
-						loading="lazy"
-						decoding="async"
-					/>
-				</div>
-
-				<h2>LA IDENTIDAD VISUAL LE DA A LA MÚSICA UN LUGAR DONDE VIVIR</h2>
-				<p>Una canción se vuelve más fácil de recordar cuando parece venir de algún lugar.</p>
-				<p>
-					Ese lugar puede ser real o imaginado: una habitación con poca luz, una ciudad mojada, una
-					estación abandonada, un archivo digital, un paisaje industrial, una carretera de noche, una
-					pantalla dañada, una memoria que ya no se ve limpia.
-				</p>
-				<p>Lo importante es la sensación de pertenencia.</p>
-				<p>
-					Cuando la música, las imágenes, los colores, las palabras y la textura apuntan en la misma
-					dirección, el proyecto deja de sentirse como una colección de piezas sueltas. Empieza a tener
-					territorio.
-				</p>
-				<p>
-					Un single, un reel, una imagen de blog, un visualizer y un recurso descargable pueden hablar
-					el mismo idioma sin repetir exactamente la misma fórmula.
-				</p>
-				<p>
-					La consistencia no tiene que ser rígida. Puede ser una mancha que vuelve, una luz recurrente,
-					un encuadre, un tipo de grano, una forma de usar el silencio o la silueta del espacio vacío.
-				</p>
-
-				<h2>EN EL CONTENIDO CORTO, LA IMAGEN LLEGA PRIMERO</h2>
-				<p>En TikTok, Reels, Shorts y Pinterest, la gente decide rápido.</p>
-				<p>
-					La imagen muchas veces llega antes que la canción. Antes de que alguien entienda la letra o el
-					sonido, ya recibió una impresión visual. Si esa impresión se siente genérica, se pierde. Si
-					tiene algo reconocible, aunque sea pequeño, puede abrir una puerta.
-				</p>
-				<p>
-					No necesita gritar visualmente. Muchas veces lo más fuerte es lo contenido: una escena quieta,
-					una textura extraña, una luz que no se ve limpia, un encuadre que deja más preguntas que
-					respuestas.
-				</p>
-				<p>
-					El contenido corto funciona mejor cuando cada pieza se siente conectada a algo más grande. Un
-					loop, un visualizer, una imagen fija con movimiento mínimo o un fragmento instrumental pueden
-					funcionar como señal. No tienen que explicarlo todo. Solo necesitan dejar suficiente tensión
-					para que alguien vuelva.
-				</p>
-
-				<div class="article-image">
-					<img
-						src={`${imageBase}/ai-assisted-visual-assets-music-world-building.webp`}
-						alt="Recursos visuales asistidos con IA para world building musical."
-						loading="lazy"
-						decoding="async"
-					/>
-				</div>
-
-				<h2>LOS RECURSOS VISUALES TAMBIÉN PUEDEN ABRIR PUERTAS</h2>
-				<p>Un recurso no tiene que ser solo un archivo descargable.</p>
-				<p>Puede ser un punto de entrada.</p>
-				<p>
-					Alguien puede llegar buscando una imagen para una portada, una textura para un video, una
-					atmósfera para un moodboard o una referencia para un proyecto personal. Tal vez no llega por
-					la música primero. Tal vez llega por una imagen. Eso también cuenta.
-				</p>
-				<p>
-					Los recursos gratuitos o pagos pueden ayudar a otros creadores mientras crean una conexión más
-					amplia con el trabajo detrás de ellos. No hace falta convertirlo en una estrategia pesada. El
-					material solo necesita intención, gusto y una dirección clara.
-				</p>
-				<p>
-					Cuando un recurso visual está bien presentado, puede vivir en más de un lugar: una web, un
-					blog, Pinterest, una tienda, un post, un video corto o una referencia enviada a otro artista.
-					Cada punto puede convertirse en una puerta distinta hacia la misma sensibilidad.
-				</p>
-
-				<div class="article-image">
-					<img
-						src={`${imageBase}/music-visualizers-dark-atmospheric-content.webp`}
-						alt="Visualizers musicales y contenido atmosférico oscuro."
-						loading="lazy"
-						decoding="async"
-					/>
-				</div>
-
-				<h2>NO SE TRATA DE VERSE MÁS GRANDE</h2>
-				<p>Los artistas independientes suelen sentir presión por verse como una marca terminada antes de saber realmente qué están construyendo.</p>
-				<p>No hace falta fingir escala.</p>
-				<p>
-					A veces basta con repetir algunas decisiones con intención: una paleta limitada, una textura
-					específica, una forma de usar sombras, un ritmo visual entre portadas y posts, una tipografía
-					secundaria, un símbolo pequeño que empieza a aparecer en distintos lugares.
-				</p>
-				<p>Eso puede ser más fuerte que publicar muchas imágenes que no pertenecen entre sí.</p>
-				<p>
-					La identidad no se construye de golpe. Se acumula. Una pieza todavía no dice mucho. Cinco
-					piezas empiezan a formar un patrón. Diez piezas pueden empezar a sentirse como un mundo.
-				</p>
-				<p>
-					Lo importante es que cada decisión visual no parezca hecha desde cero. Debería haber memoria
-					entre una imagen y la siguiente.
-				</p>
-
-				<h2>LA MEMORIA SE CONSTRUYE CON REPETICIÓN</h2>
-				<p>La gente recuerda lo que vuelve.</p>
-				<p>
-					Vuelve un color.<br />
-					Vuelve una textura.<br />
-					Vuelve un símbolo.<br />
-					Vuelve una frase.<br />
-					Vuelve un tipo de luz.<br />
-					Vuelve una sensación.
-				</p>
-				<p>
-					Con el tiempo, esas repeticiones crean identidad. No de una forma obvia o forzada, sino como
-					ciertas canciones que reconoces antes de que entre la voz. Algo en la atmósfera ya te dice a
-					dónde pertenece.
-				</p>
-				<p>
-					Los visuales oscuros tienen una ventaja especial: dejan espacio para el misterio. No entregan
-					todo. No cierran la interpretación demasiado pronto. Dejan que quien escucha complete parte de
-					la escena.
-				</p>
-				<p>Y cuando alguien completa algo por su cuenta, es más probable que lo recuerde.</p>
-
-				<div class="article-image">
-					<img
-						src={`${imageBase}/fhugawz-314-creative-resources-visual-worlds.webp`}
-						alt="Recursos creativos de Fhugawz 314 para mundos visuales oscuros."
-						loading="lazy"
-						decoding="async"
-					/>
-				</div>
-
-				<h2>Lo que queda después del scroll</h2>
-				<p>La música puede vivir sola, pero rara vez se descubre sola.</p>
-				<p>
-					Una canción aparece rodeada de imágenes, títulos, thumbnails, fragmentos, posts, colores,
-					texturas y pequeñas decisiones visuales. Todo eso afecta la forma en que alguien la percibe
-					antes, durante y después de escucharla.
-				</p>
-				<p>
-					Los visuales oscuros no hacen que una canción sea mejor por sí solos, pero pueden ayudar a
-					que su atmósfera dure más tiempo en la memoria.
-				</p>
-				<p>Para un proyecto independiente, esa memoria importa.</p>
-				<p>
-					Explora recursos gratuitos y premium para visuales oscuros, proyectos atmosféricos y
-					experimentos creativos.
-				</p>
-				<div class="article-actions">
-					<a class="button primary article-services-button" href="/resources">Explorar recursos</a>
-					<a
-						class="button article-services-button"
-						href="https://ko-fi.com/fhugawz/shop"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Visitar la tienda de recursos
-					</a>
-				</div>
-			</div>
-
-			<footer class="article-footer">
-				<BlogLikeButton slug="dark-visuals-make-music-memorable" />
-				<BlogSubscribeCTA id="dark-visuals-make-music-memorable-subscribe" />
-			</footer>
-		</article>
-	</section>
-</Layout>
+		<h2>I think I am looking for the same thing from two directions</h2>
+		<p>When I work on the songs, I am trying to understand what belongs to each World.</p>
+		<p>With the images I am doing almost the same thing.</p>
+		<p>Sometimes I arrive through sound and other times an image shows me something I had not yet found musically.</p>
+		<p>That is why the covers no longer feel like something I will solve after the records are finished.</p>
+		<p>They are part of how I am understanding them while I build them.</p>
+		<p>And several will probably change before reaching their final versions.</p>
+		<p>That does not bother me.</p>
+		<p>If I look at a cover a few months from now and feel that the World no longer lives there, I would rather change it.</p>
+		<p>In the end I am not trying to create thirteen memorable images in isolation.</p>
+		<p>I am trying to reach a point where, when all thirteen are together, I can see the same journey I am trying to hear.</p>
+	</div>
+</ArticleLayout>

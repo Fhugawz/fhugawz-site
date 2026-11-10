@@ -1,57 +1,55 @@
 ---
-const links = [
-	{ href: '/', label: 'Home', i18nKey: 'nav.home' },
-	{ href: '/projects', label: 'Projects', i18nKey: 'nav.projects' },
-	{ href: '/music', label: 'Music', i18nKey: 'nav.music' },
-	{ href: '/services', label: 'Services', i18nKey: 'nav.services' },
-	{ href: '/resources', label: 'Resources', i18nKey: 'nav.resources' },
-	{ href: '/blog', label: 'Blog', i18nKey: 'nav.blog' },
-	{ href: '/contact', label: 'Contact', i18nKey: 'nav.contact' },
+import type { LocalizedText } from '../types/world';
+import { artistUi } from '../data/artist-ui';
+import { localize, localizedAriaAttributes, localizedTextAttributes } from '../utils/localization';
+
+const links: { href: string; label: LocalizedText; activePrefixes?: string[] }[] = [
+	{ href: '/', label: artistUi.navigation.home },
+	{ href: '/worlds', label: artistUi.navigation.worlds },
+	{ href: '/journal', label: artistUi.navigation.journal, activePrefixes: ['/blog'] },
+	{ href: '/contact', label: artistUi.navigation.contact },
 ];
 
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => {
 	if (href === '/') return pathname === '/';
-	return pathname === href || pathname.startsWith(`${href}/`);
+	const link = links.find((entry) => entry.href === href);
+	return pathname === href || pathname.startsWith(`${href}/`) || Boolean(link?.activePrefixes?.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)));
 };
 ---
 
-<header class="site-header">
+<header class:list={['site-header', { 'over-hero': pathname === '/' }]} data-site-header>
 	<div class="site-shell header-inner">
-		<a href="/" aria-label="Fhugawz home">
+		<a href="/" aria-label={artistUi.navigation.homeLink.en} {...localizedAriaAttributes(artistUi.navigation.homeLink)}>
 			<img
 				class="brand-logo"
 				src="/images/brand/fhugawz-full-logo-transparent-light.svg"
-				alt="FHUGAWZ cinematic dark experimental music logo"
+				alt={artistUi.navigation.brandLogoAlt.en}
+				data-artist-alt-en={artistUi.navigation.brandLogoAlt.en}
+				data-artist-alt-es={artistUi.navigation.brandLogoAlt.es}
 				width="308"
 				height="80"
 			/>
 		</a>
-		<nav class="nav-links" aria-label="Main navigation">
+		<nav class="nav-links" aria-label={artistUi.navigation.mainNavigation.en} {...localizedAriaAttributes(artistUi.navigation.mainNavigation)}>
 			{
 				links.map((link) => (
 					<a
 						href={link.href}
 						class:list={{ active: isActive(link.href) }}
 						aria-current={isActive(link.href) ? 'page' : undefined}
-						data-i18n={link.i18nKey}
+						{...localizedTextAttributes(link.label)}
 					>
-						{link.label}
+						{localize(link.label, 'en')}
 					</a>
 				))
 			}
 		</nav>
-		<button
-			class="language-toggle"
-			type="button"
-			data-language-toggle
-			data-active-lang="en"
-			aria-label="Switch language to Spanish"
-			aria-pressed="false"
-		>
-			<span class="language-toggle-label" data-language-toggle-label>EN</span>
-			<span class="language-toggle-knob" aria-hidden="true"></span>
-		</button>
+		<div class="header-archive-detail" aria-hidden="true">
+			<span class="header-archive-marker"></span>
+			<span class="header-archive-line"></span>
+			<span>Ongoing archive</span>
+		</div>
 		<button
 			class="mobile-menu-toggle"
 			type="button"
@@ -59,6 +57,7 @@ const isActive = (href: string) => {
 			data-i18n-aria-label="nav.openMenu"
 			data-mobile-menu-open
 			aria-expanded="false"
+			aria-controls="mobile-menu-overlay"
 		>
 			<span aria-hidden="true"></span>
 			<span aria-hidden="true"></span>
@@ -67,7 +66,7 @@ const isActive = (href: string) => {
 	</div>
 </header>
 
-<div class="mobile-menu-overlay" data-mobile-menu-overlay hidden>
+<div id="mobile-menu-overlay" class="mobile-menu-overlay" data-mobile-menu-overlay role="dialog" aria-modal="true" aria-label={artistUi.navigation.mobileNavigation.en} {...localizedAriaAttributes(artistUi.navigation.mobileNavigation)} hidden>
 	<div class="mobile-menu-panel">
 		<button
 			class="mobile-menu-close"
@@ -79,16 +78,16 @@ const isActive = (href: string) => {
 			<span aria-hidden="true"></span>
 			<span aria-hidden="true"></span>
 		</button>
-		<nav class="mobile-menu-links" aria-label="Mobile navigation">
+		<nav class="mobile-menu-links" aria-label={artistUi.navigation.mobileNavigation.en} {...localizedAriaAttributes(artistUi.navigation.mobileNavigation)}>
 			{
 				links.map((link) => (
 					<a
 						href={link.href}
 						class:list={{ active: isActive(link.href) }}
 						aria-current={isActive(link.href) ? 'page' : undefined}
-						data-i18n={link.i18nKey}
+						{...localizedTextAttributes(link.label)}
 					>
-						{link.label}
+						{localize(link.label, 'en')}
 					</a>
 				))
 			}
@@ -97,35 +96,76 @@ const isActive = (href: string) => {
 </div>
 
 <script>
+	const siteHeader = document.querySelector('[data-site-header]');
 	const overlay = document.querySelector('[data-mobile-menu-overlay]');
 	const openButton = document.querySelector('[data-mobile-menu-open]');
 	const closeButton = document.querySelector('[data-mobile-menu-close]');
 	const mobileLinks = document.querySelectorAll('.mobile-menu-links a');
+	let headerFrame = 0;
 
-	const closeMobileMenu = () => {
+	const updateHeaderState = () => {
+		if (!(siteHeader instanceof HTMLElement)) return;
+		siteHeader.classList.toggle('is-scrolled', window.scrollY > 18);
+	};
+
+	const requestHeaderUpdate = () => {
+		if (headerFrame) return;
+		headerFrame = window.requestAnimationFrame(() => {
+			updateHeaderState();
+			headerFrame = 0;
+		});
+	};
+
+	updateHeaderState();
+	window.addEventListener('scroll', requestHeaderUpdate, { passive: true });
+
+	const closeMobileMenu = (returnFocus = true) => {
 		if (!(overlay instanceof HTMLElement)) return;
+		if (overlay.hidden) return;
 		overlay.hidden = true;
 		document.body.classList.remove('mobile-menu-open');
+		document.documentElement.classList.remove('mobile-menu-open');
 		openButton instanceof HTMLButtonElement && openButton.setAttribute('aria-expanded', 'false');
+		if (returnFocus && openButton instanceof HTMLButtonElement && window.innerWidth <= 768) openButton.focus();
 	};
 
 	const openMobileMenu = () => {
 		if (!(overlay instanceof HTMLElement)) return;
 		overlay.hidden = false;
 		document.body.classList.add('mobile-menu-open');
+		document.documentElement.classList.add('mobile-menu-open');
 		openButton instanceof HTMLButtonElement && openButton.setAttribute('aria-expanded', 'true');
 		closeButton instanceof HTMLButtonElement && closeButton.focus();
 	};
 
 	openButton?.addEventListener('click', openMobileMenu);
-	closeButton?.addEventListener('click', closeMobileMenu);
+	closeButton?.addEventListener('click', () => closeMobileMenu());
 	overlay?.addEventListener('click', (event) => {
 		if (event.target === overlay) closeMobileMenu();
 	});
-	mobileLinks.forEach((link) => link.addEventListener('click', closeMobileMenu));
+	mobileLinks.forEach((link) => link.addEventListener('click', () => closeMobileMenu(false)));
 
 	document.addEventListener('keydown', (event) => {
-		if (event.key === 'Escape') closeMobileMenu();
+		if (!(overlay instanceof HTMLElement) || overlay.hidden) return;
+		if (event.key === 'Escape') {
+			event.preventDefault();
+			closeMobileMenu();
+			return;
+		}
+		if (event.key !== 'Tab') return;
+		const focusable = [closeButton, ...mobileLinks].filter((item) => item instanceof HTMLElement);
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+		if (!overlay.contains(document.activeElement) && first instanceof HTMLElement) {
+			event.preventDefault();
+			first.focus();
+		} else if (event.shiftKey && document.activeElement === first && last instanceof HTMLElement) {
+			event.preventDefault();
+			last.focus();
+		} else if (!event.shiftKey && document.activeElement === last && first instanceof HTMLElement) {
+			event.preventDefault();
+			first.focus();
+		}
 	});
 
 	window.addEventListener('resize', () => {

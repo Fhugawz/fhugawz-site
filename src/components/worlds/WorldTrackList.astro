@@ -1,0 +1,162 @@
+---
+import type { WorldTrack } from '../../types/world';
+import { artistUi } from '../../data/artist-ui';
+import { localize, localizedAltAttributes, localizedTextAttributes } from '../../utils/localization';
+import DotWavePlayer from '../DotWavePlayer.astro';
+import ReleaseLinks from './ReleaseLinks.astro';
+
+interface Props {
+	tracks: WorldTrack[];
+	prototypePlaylistUrl?: string;
+}
+
+const { tracks, prototypePlaylistUrl } = Astro.props;
+const trackStatusLabel = (status: WorldTrack['status']) => {
+	if (status === 'official') return artistUi.status.finalRelease;
+	if (status === 'reconstruction') return artistUi.status.reconstruction;
+	return artistUi.status.selectedPrototype;
+};
+---
+
+<section class="world-sound section paper-band">
+	<div class="site-shell">
+		<div class="section-header">
+			<p class="section-kicker" {...localizedTextAttributes(artistUi.sections.listen)}>{localize(artistUi.sections.listen, 'en')}</p>
+			<h2 class="section-title" {...localizedTextAttributes(artistUi.sections.sound)}>{localize(artistUi.sections.sound, 'en')}</h2>
+		</div>
+
+		<div class="world-track-list">
+			{tracks.map((track) => (
+				<article class="world-track">
+					{track.artwork && (
+						<div class="world-track-artwork">
+							<img src={track.artwork.src} alt={localize(track.artwork.alt, 'en')} {...localizedAltAttributes(track.artwork.alt)} loading="lazy" decoding="async" />
+						</div>
+					)}
+					<div class="world-track-content">
+						<p class="world-track-status" {...localizedTextAttributes(trackStatusLabel(track.status))}>{localize(trackStatusLabel(track.status), 'en')}</p>
+						<h3>{track.title}</h3>
+						<p class="world-track-description" {...localizedTextAttributes(track.description)}>{localize(track.description, 'en')}</p>
+						{track.status === 'prototype' && (
+							<p class="prototype-disclosure" {...localizedTextAttributes(artistUi.status.prototypeDisclosure)}>{localize(artistUi.status.prototypeDisclosure, 'en')}</p>
+						)}
+						{track.preview && (
+							<DotWavePlayer
+								id={`world-${track.id}`}
+								title={track.title}
+								audioSrc={track.preview.src}
+								playLabel={artistUi.player.play.en}
+								playLabelEs={artistUi.player.play.es}
+								pauseLabel={artistUi.player.pause.en}
+								pauseLabelEs={artistUi.player.pause.es}
+								visualizerLabel={artistUi.player.visualizer.en}
+								visualizerLabelEs={artistUi.player.visualizer.es}
+							/>
+						)}
+						{track.externalPrototypeUrl && (
+							<a class="button" href={track.externalPrototypeUrl} target="_blank" rel="noopener noreferrer" {...localizedTextAttributes(artistUi.actions.listenToPrototype)}>
+								{localize(artistUi.actions.listenToPrototype, 'en')}
+							</a>
+						)}
+						<ReleaseLinks links={track.releaseLinks} />
+					</div>
+				</article>
+			))}
+		</div>
+
+		{prototypePlaylistUrl && (
+			<div class="prototype-playlist">
+				<p {...localizedTextAttributes(artistUi.status.prototypeDisclosure)}>{localize(artistUi.status.prototypeDisclosure, 'en')}</p>
+				<a class="button primary" href={prototypePlaylistUrl} target="_blank" rel="noopener noreferrer" {...localizedTextAttributes(artistUi.actions.listenToPrototype)}>
+					{localize(artistUi.actions.listenToPrototype, 'en')}
+				</a>
+			</div>
+		)}
+	</div>
+</section>
+
+<style>
+	.world-track-list {
+		display: grid;
+		gap: 18px;
+	}
+
+	.world-track {
+		display: grid;
+		grid-template-columns: minmax(220px, 0.55fr) minmax(0, 1fr);
+		border: 1px solid var(--soft-line);
+		background: rgba(241, 231, 212, 0.52);
+		color: var(--ink);
+	}
+
+	.world-track-artwork {
+		min-width: 0;
+		min-height: 300px;
+		overflow: hidden;
+	}
+
+	.world-track-artwork img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.world-track-content {
+		min-width: 0;
+		padding: clamp(24px, 4vw, 44px);
+	}
+
+	.world-track-status,
+	.prototype-disclosure {
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.11em;
+		text-transform: uppercase;
+	}
+
+	.world-track-status {
+		margin: 0;
+		color: var(--signal-orange);
+	}
+
+	h3 {
+		margin: 12px 0 16px;
+		font-family: var(--font-display);
+		font-size: clamp(2.2rem, 5vw, 4rem);
+		line-height: 0.95;
+		text-transform: uppercase;
+	}
+
+	.world-track-description {
+		max-width: 680px;
+		line-height: 1.65;
+	}
+
+	.prototype-disclosure {
+		margin: 20px 0;
+		color: rgba(13, 16, 13, 0.62);
+	}
+
+	.prototype-playlist {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px 24px;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 22px;
+		border-top: 1px solid var(--soft-line);
+		padding-top: 22px;
+		color: var(--ink);
+	}
+
+	@media (max-width: 720px) {
+		.world-track {
+			grid-template-columns: 1fr;
+		}
+
+		.world-track-artwork {
+			min-height: 0;
+			aspect-ratio: 4 / 3;
+		}
+	}
+</style>

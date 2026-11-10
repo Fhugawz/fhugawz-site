@@ -1,0 +1,423 @@
+---
+import type { World } from '../../types/world';
+import { artistUi } from '../../data/artist-ui';
+import { localize, localizedAltAttributes, localizedAriaAttributes, localizedTextAttributes } from '../../utils/localization';
+import DotWavePlayer from '../DotWavePlayer.astro';
+
+interface Props {
+	worlds: World[];
+}
+
+const { worlds } = Astro.props;
+const selections = worlds.flatMap((world) =>
+	world.tracks.filter((track) => Boolean(track.preview)).map((track) => ({ world, track }))
+);
+---
+
+<section class="signal-chamber" id="selected-listening" data-signal-chamber>
+	<div class="signal-chamber-shell">
+		<header class="signal-chamber-heading">
+			<p {...localizedTextAttributes(artistUi.home.listening.kicker)}>{localize(artistUi.home.listening.kicker, 'en')}</p>
+			<h2 {...localizedTextAttributes(artistUi.home.listening.title)}>{localize(artistUi.home.listening.title, 'en')}</h2>
+			<span {...localizedTextAttributes(artistUi.home.listening.description)}>{localize(artistUi.home.listening.description, 'en')}</span>
+		</header>
+
+		<div class="signal-chamber-stage">
+			<div class="signal-chamber-media">
+				{selections.map(({ world, track }, index) => track.artwork && (
+					<img
+						class:list={{ active: index === 0 }}
+						data-signal-image={index}
+						src={track.artwork.src}
+						alt={localize(track.artwork.alt, 'en')}
+						{...localizedAltAttributes(track.artwork.alt)}
+						loading="lazy"
+						decoding="async"
+					/>
+				))}
+				<div class="signal-chamber-scan" aria-hidden="true"></div>
+				<span class="signal-chamber-status" {...localizedTextAttributes(artistUi.status.prototypeDisclosure)}>{localize(artistUi.status.prototypeDisclosure, 'en')}</span>
+			</div>
+
+			<div class="signal-chamber-console">
+				<div class="signal-selector" role="tablist" aria-label={artistUi.home.listening.selectSignal.en} {...localizedAriaAttributes(artistUi.home.listening.selectSignal)}>
+					{selections.map(({ world, track }, index) => (
+						<button
+							type="button"
+							role="tab"
+							class:list={{ active: index === 0 }}
+							aria-selected={index === 0 ? 'true' : 'false'}
+							aria-controls={`signal-panel-${index}`}
+							data-signal-selector={index}
+						>
+							<span>0{index + 1}</span>
+							<strong>{world.title}</strong>
+							<small>{track.title}</small>
+						</button>
+					))}
+				</div>
+
+				<div class="signal-panels">
+					{selections.map(({ world, track }, index) => (
+						<div
+							class:list={['signal-panel', { active: index === 0 }]}
+							id={`signal-panel-${index}`}
+							role="tabpanel"
+							data-signal-panel={index}
+							hidden={index !== 0}
+						>
+							<p>{world.displayNumber} / 13</p>
+							<h3>{world.title} <span>— {track.title}</span></h3>
+							<p class="signal-panel-description" {...localizedTextAttributes(track.description)}>{localize(track.description, 'en')}</p>
+							{track.preview && (
+								<DotWavePlayer
+									id={`home-${track.id}`}
+									title={`${world.title} — ${track.title}`}
+									audioSrc={track.preview.src}
+									playLabel={artistUi.player.play.en}
+									playLabelEs={artistUi.player.play.es}
+									pauseLabel={artistUi.player.pause.en}
+									pauseLabelEs={artistUi.player.pause.es}
+									visualizerLabel={artistUi.player.visualizer.en}
+									visualizerLabelEs={artistUi.player.visualizer.es}
+								/>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	document.querySelectorAll('[data-signal-chamber]').forEach((root) => {
+		const selectors = Array.from(root.querySelectorAll('[data-signal-selector]'));
+		const panels = Array.from(root.querySelectorAll('[data-signal-panel]'));
+		const images = Array.from(root.querySelectorAll('[data-signal-image]'));
+
+		const activate = (index) => {
+			window.dispatchEvent(new CustomEvent('fhugawz:pause-players', { detail: 'signal-selection-change' }));
+			selectors.forEach((selector, selectorIndex) => {
+				const active = selectorIndex === index;
+				selector.classList.toggle('active', active);
+				selector.setAttribute('aria-selected', active ? 'true' : 'false');
+			});
+			panels.forEach((panel, panelIndex) => {
+				const active = panelIndex === index;
+				panel.classList.toggle('active', active);
+				if (panel instanceof HTMLElement) panel.hidden = !active;
+			});
+			images.forEach((image, imageIndex) => image.classList.toggle('active', imageIndex === index));
+		};
+
+		selectors.forEach((selector, index) => selector.addEventListener('click', () => activate(index)));
+	});
+</script>
+
+<style>
+	.signal-chamber {
+		background: #10151a;
+		padding: clamp(92px, 12vw, 180px) 0;
+	}
+
+	.signal-chamber-shell {
+		width: min(1360px, calc(100% - clamp(40px, 8vw, 140px)));
+		margin: 0 auto;
+	}
+
+	.signal-chamber-heading {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) minmax(280px, 0.58fr);
+		gap: clamp(24px, 5vw, 80px);
+		align-items: end;
+		margin-bottom: clamp(44px, 6vw, 74px);
+	}
+
+	.signal-chamber-heading > p {
+		margin: 0 0 7px;
+		color: var(--signal-orange);
+		font-size: 0.67rem;
+		font-weight: 800;
+		letter-spacing: 0.17em;
+		text-transform: uppercase;
+		writing-mode: vertical-rl;
+		transform: rotate(180deg);
+	}
+
+	.signal-chamber-heading h2 {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: clamp(4rem, 9vw, 8.5rem);
+		font-weight: 900;
+		letter-spacing: -0.05em;
+		line-height: 0.76;
+		text-transform: uppercase;
+	}
+
+	.signal-chamber-heading > span {
+		color: rgba(242, 239, 231, 0.56);
+		font-size: 0.9rem;
+		line-height: 1.65;
+	}
+
+	.signal-chamber-stage {
+		display: grid;
+		grid-template-columns: minmax(380px, 0.82fr) minmax(0, 1.18fr);
+		min-height: 650px;
+	}
+
+	.signal-chamber-media {
+		position: relative;
+		min-height: 650px;
+		overflow: hidden;
+		background: #080b0d;
+	}
+
+	.signal-chamber-media img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		opacity: 0;
+		transform: scale(1.025);
+		transition: opacity 480ms ease, transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+
+	.signal-chamber-media img.active {
+		opacity: 0.88;
+		transform: scale(1);
+	}
+
+	.signal-chamber-scan {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, transparent 45%, rgba(5, 8, 10, 0.72));
+		pointer-events: none;
+	}
+
+	.signal-chamber-status {
+		position: absolute;
+		bottom: 30px;
+		left: 30px;
+		max-width: 250px;
+		color: #f4f0e7;
+		font-size: 0.65rem;
+		font-weight: 800;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	.signal-chamber-console {
+		display: grid;
+		grid-template-rows: auto 1fr;
+		background: #080b0d;
+		padding: clamp(30px, 5vw, 70px);
+	}
+
+	.signal-selector {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border-bottom: 1px solid rgba(242, 239, 231, 0.14);
+	}
+
+	.signal-selector button {
+		position: relative;
+		display: grid;
+		gap: 7px;
+		border: 0;
+		background: transparent;
+		color: rgba(242, 239, 231, 0.4);
+		cursor: pointer;
+		padding: 0 16px 20px 0;
+		text-align: left;
+		transition: color 220ms ease;
+	}
+
+	.signal-selector button::after {
+		position: absolute;
+		right: 16px;
+		bottom: -1px;
+		left: 0;
+		height: 1px;
+		content: '';
+		background: var(--signal-orange);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 260ms ease;
+	}
+
+	.signal-selector button:hover,
+	.signal-selector button:focus-visible,
+	.signal-selector button.active {
+		color: #f4f0e7;
+	}
+
+	.signal-selector button.active::after {
+		transform: scaleX(1);
+	}
+
+	.signal-selector button:focus-visible {
+		outline: 1px solid var(--signal-orange);
+		outline-offset: 5px;
+	}
+
+	.signal-selector span {
+		color: var(--signal-orange);
+		font-size: 0.62rem;
+		font-weight: 800;
+	}
+
+	.signal-selector strong,
+	.signal-selector small {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.signal-selector strong {
+		font-family: var(--font-display);
+		font-size: 1.25rem;
+		text-transform: uppercase;
+	}
+
+	.signal-selector small {
+		font-size: 0.63rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.signal-panels {
+		display: grid;
+		align-items: end;
+		padding-top: clamp(46px, 7vw, 90px);
+	}
+
+	.signal-panel[hidden] {
+		display: none;
+	}
+
+	.signal-panel > p:first-child {
+		margin: 0;
+		color: var(--signal-orange);
+		font-size: 0.66rem;
+		font-weight: 800;
+		letter-spacing: 0.13em;
+	}
+
+	.signal-panel h3 {
+		margin: 13px 0 18px;
+		font-family: var(--font-display);
+		font-size: clamp(2.8rem, 5vw, 5.5rem);
+		font-weight: 900;
+		letter-spacing: -0.035em;
+		line-height: 0.88;
+		text-transform: uppercase;
+	}
+
+	.signal-panel h3 span {
+		display: block;
+		color: rgba(242, 239, 231, 0.48);
+		font-size: 0.45em;
+		letter-spacing: 0;
+		margin-top: 10px;
+	}
+
+	.signal-panel-description {
+		max-width: 560px;
+		margin: 0;
+		color: rgba(242, 239, 231, 0.58);
+		font-size: 0.9rem;
+		line-height: 1.65;
+	}
+
+	.signal-panel :global(.dot-player) {
+		margin-top: 36px;
+	}
+
+	@media (max-width: 900px) {
+		.signal-chamber-heading {
+			grid-template-columns: auto 1fr;
+		}
+
+		.signal-chamber-heading > span {
+			grid-column: 2;
+		}
+
+		.signal-chamber-stage {
+			grid-template-columns: 0.75fr 1.25fr;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.signal-chamber {
+			padding: 80px 0;
+		}
+
+		.signal-chamber-shell {
+			width: min(100% - 28px, 1360px);
+		}
+
+		.signal-chamber-heading {
+			display: block;
+			margin-bottom: 34px;
+		}
+
+		.signal-chamber-heading > p {
+			margin-bottom: 12px;
+			writing-mode: initial;
+			transform: none;
+		}
+
+		.signal-chamber-heading h2 {
+			font-size: clamp(3.5rem, 18vw, 5.4rem);
+		}
+
+		.signal-chamber-heading > span {
+			display: block;
+			margin-top: 22px;
+		}
+
+		.signal-chamber-stage {
+			display: block;
+		}
+
+		.signal-chamber-media {
+			min-height: 0;
+			aspect-ratio: 4 / 5;
+		}
+
+		.signal-chamber-console {
+			padding: 28px 0 0;
+		}
+
+		.signal-selector {
+			gap: 12px;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+		}
+
+		.signal-selector button {
+			min-width: 138px;
+			scroll-snap-align: start;
+		}
+
+		.signal-panels {
+			padding-top: 38px;
+		}
+
+		.signal-panel h3 {
+			font-size: clamp(2.8rem, 14vw, 4.4rem);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.signal-chamber-media img,
+		.signal-selector button,
+		.signal-selector button::after {
+			transition: none;
+		}
+	}
+</style>

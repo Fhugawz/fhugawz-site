@@ -1,0 +1,51 @@
+---
+import type { ReleaseLinks } from '../../types/world';
+import { artistUi } from '../../data/artist-ui';
+import { localize, localizedTextAttributes } from '../../utils/localization';
+
+interface Props {
+	links?: ReleaseLinks;
+}
+
+const { links } = Astro.props;
+const platforms = links
+	? [
+			{ key: 'spotify', url: links.spotify, label: artistUi.platforms.spotify },
+			{ key: 'youtube', url: links.youtube, label: artistUi.platforms.youtube },
+			{ key: 'appleMusic', url: links.appleMusic, label: artistUi.platforms.appleMusic },
+			{ key: 'bandcamp', url: links.bandcamp, label: artistUi.platforms.bandcamp },
+			{ key: 'soundcloud', url: links.soundcloud, label: artistUi.platforms.soundcloud },
+		].filter((platform) => Boolean(platform.url))
+	: [];
+---
+
+{platforms.length > 0 && (
+	<div class="release-links">
+		<p class="release-links-label" {...localizedTextAttributes(artistUi.status.finalRelease)}>{localize(artistUi.status.finalRelease, 'en')}</p>
+		<div class="release-links-list">
+			{platforms.map((platform) => (
+				<a class="button" href={platform.url} target="_blank" rel="noopener noreferrer" data-release-platform={platform.key}>
+					<span {...localizedTextAttributes(artistUi.actions.listenOn)}>{localize(artistUi.actions.listenOn, 'en')}</span>
+					{' '}{localize(platform.label, 'en')}
+				</a>
+			))}
+		</div>
+	</div>
+)}
+
+<style>
+	.release-links-label {
+		margin: 0 0 12px;
+		color: var(--signal-orange);
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.release-links-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+</style>

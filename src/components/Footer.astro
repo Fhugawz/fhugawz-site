@@ -1,102 +1,190 @@
 ---
 import SocialLinks from './SocialLinks.astro';
-import ScorecardPromoContrast from './ScorecardPromoContrast.astro';
+import { artistUi } from '../data/artist-ui';
+import { localize, localizedAriaAttributes, localizedTextAttributes } from '../utils/localization';
 
-const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
-const promoByPath = {
-	'/services': {
-		context: 'services',
-		image: '/images/services/service-dark-pop-music-production.webp',
-	},
-	'/resources': {
-		context: 'resources',
-		image: '/images/blog/blog-dark-visuals-music-memory-fhugawz-resources.webp.webp',
-	},
-	'/contact': {
-		context: 'contact',
-		image: '/images/services/service-artist-world-building.webp',
-	},
-} as const;
+const footerDescriptor = {
+	en: 'Narrative music & audiovisual worlds.',
+	es: 'Música narrativa y mundos audiovisuales.',
+};
+const cookiePreferencesLabel = { en: 'Cookie preferences', es: 'Preferencias de cookies' };
 
-const scorecardPromo = promoByPath[pathname as keyof typeof promoByPath];
 ---
 
-{scorecardPromo && (
-	<div class="scorecard-promo-slot" data-scorecard-promo-slot>
-		<ScorecardPromoContrast context={scorecardPromo.context} image={scorecardPromo.image} />
-	</div>
-)}
+<footer class="site-footer artist-footer">
+	<div class="site-shell artist-footer-grid">
+		<div class="artist-footer-identity">
+			<a href="/" aria-label={artistUi.navigation.homeLink.en} {...localizedAriaAttributes(artistUi.navigation.homeLink)}>
+				<img
+					class="footer-logo"
+					src="/images/brand/fhugawz-full-logo-transparent-light.svg"
+					alt={artistUi.navigation.brandLogoAlt.en}
+					data-artist-alt-en={artistUi.navigation.brandLogoAlt.en}
+					data-artist-alt-es={artistUi.navigation.brandLogoAlt.es}
+					width="308"
+					height="80"
+				/>
+			</a>
+				<p class="footer-description" {...localizedTextAttributes(footerDescriptor)}>{localize(footerDescriptor, 'en')}</p>
+		</div>
 
-<footer class="site-footer">
-	<div class="site-shell footer-grid">
-		<div class="footer-main">
-			<img
-				class="footer-logo"
-				src="/images/brand/fhugawz-full-logo-transparent-light.svg"
-				alt="FHUGAWZ cinematic dark experimental music studio logo"
-				width="308"
-				height="80"
-			/>
-			<p class="footer-label" data-i18n="footer.label">Fhugawz Studio</p>
-			<p class="footer-description" data-i18n="footer.description">
-				Dark experimental music, original production and artist world building for songs that need more than a
-				release plan.
-			</p>
-			<p class="footer-support" data-i18n="footer.support">
-				Listen to the music, read the diary or start building a project with a clear sonic and
-				visual direction.
-			</p>
-			<p class="fine-print">Copyright 2026 Fhugawz. All rights reserved.</p>
-			<nav class="footer-legal-links" aria-label="Legal links">
-				<a
-					href="/privacy-policy"
-					data-i18n="footer.legal.privacy"
-					data-i18n-tooltip="footer.legal.privacyTooltip"
-					data-tooltip="How personal data and contact information are handled."
-				>
-					Privacy Policy
-				</a>
-				<a
-					href="/terms-of-service"
-					data-i18n="footer.legal.terms"
-					data-i18n-tooltip="footer.legal.termsTooltip"
-					data-tooltip="Basic conditions for using the site and requesting services."
-				>
-					Terms of Service
-				</a>
-				<a
-					href="/cookie-policy"
-					data-i18n="footer.legal.cookies"
-					data-i18n-tooltip="footer.legal.cookiesTooltip"
-					data-tooltip="Information about cookies and basic site tracking."
-				>
-					Cookie Policy
-				</a>
-				<a
-					href="/copyright-notice"
-					data-i18n="footer.legal.copyright"
-					data-i18n-tooltip="footer.legal.copyrightTooltip"
-					data-tooltip="Ownership and usage rules for Fhugawz content."
-				>
-					Copyright Notice
-				</a>
-			</nav>
+			<div class="artist-footer-social">
+				<p class="footer-label" {...localizedTextAttributes(artistUi.footer.socialLabel)}>{localize(artistUi.footer.socialLabel, 'en')}</p>
+				<SocialLinks />
 		</div>
-		<div class="footer-social-column">
-			<p class="footer-label" data-i18n="footer.socialLabel">LISTEN / FOLLOW</p>
-			<SocialLinks />
-		</div>
+	</div>
+
+	<div class="site-shell artist-footer-base">
+		<p class="fine-print" {...localizedTextAttributes(artistUi.footer.copyright)}>{localize(artistUi.footer.copyright, 'en')}</p>
+		<nav class="footer-legal-links" aria-label={artistUi.footer.legalNavigation.en} {...localizedAriaAttributes(artistUi.footer.legalNavigation)}>
+			<a href="/privacy-policy" data-i18n="footer.legal.privacy">Privacy Policy</a>
+			<a href="/cookie-policy" data-i18n="footer.legal.cookies">Cookie Policy</a>
+			<a href="/copyright-notice" data-i18n="footer.legal.copyright">Copyright Notice</a>
+			<button type="button" data-cookie-preferences {...localizedTextAttributes(cookiePreferencesLabel)} hidden>{localize(cookiePreferencesLabel, 'en')}</button>
+		</nav>
 	</div>
 </footer>
 
-{scorecardPromo && (
-	<script is:inline>
-		(() => {
-			const promo = document.querySelector('[data-scorecard-promo-slot]');
-			const hero = document.querySelector('main > section:first-of-type');
-			if (promo instanceof HTMLElement && hero instanceof HTMLElement) {
-				hero.insertAdjacentElement('afterend', promo);
+<script is:inline>
+	(() => {
+		const control = document.querySelector('[data-cookie-preferences]');
+		if (!(control instanceof HTMLButtonElement) || !window.fhugawzAnalyticsId) return;
+		control.hidden = false;
+		control.addEventListener('click', () => window.dispatchEvent(new Event('fhugawz:open-cookie-preferences')));
+	})();
+</script>
+
+<style>
+	.artist-footer {
+		border-top: 1px solid var(--line);
+			background: #080a0b;
+		padding: 0;
+	}
+
+	.artist-footer-grid {
+		display: grid;
+			grid-template-columns: minmax(240px, 1fr) auto;
+			gap: 38px clamp(48px, 8vw, 112px);
+			align-items: end;
+			padding-top: clamp(42px, 6vw, 68px);
+			padding-bottom: 34px;
+	}
+
+		.artist-footer-identity {
+		min-width: 0;
+	}
+
+	.footer-logo {
+			width: min(190px, 58vw);
+		height: auto;
+	}
+
+	.artist-footer-identity .footer-description {
+			max-width: 330px;
+			margin: 16px 0 0;
+			color: rgba(223, 211, 187, 0.54);
+			font-size: .78rem;
+		line-height: 1.55;
+	}
+
+	.artist-footer-social {
+			justify-self: end;
+	}
+
+	.artist-footer-social .footer-label {
+			margin: 0 0 12px;
+			color: rgba(223, 211, 187, .48);
+			font-size: .64rem;
+			font-weight: 600;
+			letter-spacing: .08em;
+			text-transform: none;
+	}
+
+	.artist-footer-social :global(.social-links) {
+			justify-content: flex-end;
+	}
+
+	.artist-footer-social :global(.social-links a) {
+		width: 36px;
+		height: 36px;
+		border-color: rgba(223, 211, 187, .14);
+	}
+
+	.artist-footer-social :global(.social-links svg) {
+		width: 17px;
+		height: 17px;
+	}
+
+	.artist-footer-base {
+		display: flex;
+			gap: 24px 40px;
+		align-items: center;
+		justify-content: space-between;
+		border-top: 1px solid var(--line);
+			padding-top: 20px;
+			padding-bottom: 24px;
+		}
+
+		.artist-footer-base .fine-print {
+			margin: 0;
+			color: rgba(223, 211, 187, .42);
+			font-size: .7rem;
+		}
+
+		.footer-legal-links {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px 22px;
+			justify-content: flex-end;
+		}
+
+		.footer-legal-links a,
+		.footer-legal-links button {
+			border: 0;
+			padding: 0;
+			background: transparent;
+			color: rgba(223, 211, 187, .5);
+			cursor: pointer;
+			font-family: var(--font-sans);
+			font-size: .68rem;
+			font-weight: 550;
+			letter-spacing: .03em;
+			line-height: 1.5;
+			text-decoration: none;
+			transition: color 260ms ease;
+		}
+
+		.footer-legal-links a:hover,
+		.footer-legal-links a:focus-visible,
+		.footer-legal-links button:hover,
+		.footer-legal-links button:focus-visible {
+			color: var(--signal-orange);
+	}
+
+	.footer-legal-links a:focus-visible,
+	.footer-legal-links button:focus-visible {
+		outline: 1px solid var(--signal-orange);
+		outline-offset: 4px;
+	}
+
+	@media (max-width: 760px) {
+		.artist-footer-grid {
+			grid-template-columns: 1fr;
+				align-items: start;
+		}
+
+			.artist-footer-social {
+				justify-self: start;
 			}
-		})();
-	</script>
-)}
+
+			.artist-footer-social :global(.social-links),
+			.footer-legal-links {
+				justify-content: flex-start;
+		}
+
+		.artist-footer-base {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+</style>

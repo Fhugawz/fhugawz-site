@@ -1,216 +1,93 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import BlogLikeButton from '../../components/BlogLikeButton.astro';
-import BlogSubscribeCTA from '../../components/BlogSubscribeCTA.astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 const keywords =
-	'AI generated songs, humanizing AI music, dark experimental music production, demo reconstruction, demo recreation, Suno songs, AI music production, independent artist, Fhugawz, cinematic dark experimental music, music production services, artist development';
+	'song reconstruction, rebuilding demos, music production journal, unfinished songs, emotional songwriting, independent artist, Fhugawz, demo reconstruction, creative process, music arrangement, learning music production';
 const excerpt =
-	'Where AI sketches the outline, real production gives the song its body, its flaws and the emotional tension that makes dark experimental music feel human.';
+	'A working journal note on returning to old demos, rebuilding songs without erasing their emotional center, and learning through the process.';
+const heroImage =
+	'/images/blog/sound-of-reconstruction/sound-of-reconstruction-demo-recreation-hero.webp.webp';
 ---
 
-<Layout
-	title="Fhugawz — The Sound of Reconstruction"
-	description="A Fhugawz production note on AI generated songs, dark experimental music, demo recreation and why human emotion, imperfection and arrangement still matter in modern music production."
-	spanishTitle="Humanizar Canciones con IA: Música Experimental Oscura, Reconstrucción de Demos y Producción Musical | Fhugawz"
-	spanishDescription="Una nota de producción de Fhugawz sobre canciones generadas con IA, música experimental oscura, reconstrucción de demos y por qué la emoción humana, la imperfección y el arreglo siguen siendo importantes."
+<ArticleLayout
+	title="Fhugawz — Rebuilding Without Erasing What Was Already There"
+	description={excerpt}
+	spanishTitle="Reconstruir sin borrar lo que ya estaba ahí | Fhugawz"
+	spanishDescription="Una nota personal sobre volver a demos antiguos, reconstruir canciones sin borrar su centro emocional y aprender durante el proceso."
 	keywords={keywords}
 	type="article"
-	image="/images/blog/sound-of-reconstruction/sound-of-reconstruction-demo-recreation-hero.webp.webp"
-	imageAlt="Fhugawz Sound of Reconstruction article hero showing AI demo recreation and human music production process."
+	image={heroImage}
+	imageAlt="Fhugawz reconstruction journal article about revisiting old demos and preserving their emotional center."
+	heroImage={heroImage}
+	heroKicker="PRODUCTION NOTES"
+	heroKickerI18n="post.sound.kicker"
+	heroLede={excerpt}
 >
-	<section
-		class="page-hero with-image blog-article-hero"
-		style={`--page-hero-image: url("/images/blog/sound-of-reconstruction/sound-of-reconstruction-demo-recreation-hero.webp.webp")`}
-	>
-		<div class="site-shell">
-			<p class="section-kicker" data-i18n="post.sound.kicker">PRODUCTION NOTES</p>
-			<h1 class="page-title blog-sound-title" data-i18n="post.sound.title" data-i18n-linebreaks>
-				THE SOUND OF<br />RECONSTRUCTION
-			</h1>
-			<p class="lede" data-i18n="post.sound.lede">{excerpt}</p>
+	<Fragment slot="hero-title">REBUILDING WITHOUT ERASING WHAT WAS ALREADY THERE</Fragment>
+	<div class="article-reconstruction">
+		<p>Today I opened one of those demos I have been carrying around for years, and it made me think about something that keeps coming back during this process: finishing a song and rebuilding one are not exactly the same thing.</p>
+		<p>Finishing something can mean continuing from wherever I left it. Rebuilding means going back, looking at what is already there and deciding what still makes sense to keep, what needs to change, and what was probably there simply because, at the time, I did not know how to do it differently.</p>
+		<p>That is something I am constantly doing with Fhugawz.</p>
+		<p>There are songs that started years ago, ideas that belong to completely different periods of my life, demos that no longer represent how I want the records to sound, and decisions I would probably make differently today. I still keep returning to them because there is usually something there that continues to interest me.</p>
+		<p>I do not want to preserve them exactly as they were. But I also do not want to lose whatever made me care about them in the first place.</p>
+
+		<h2>I do not always want to start from zero</h2>
+		<p>For a long time I associated improving a song with replacing things: changing the drums, recording guitars again, finding better sounds, rearranging the structure or cleaning up the mix. I will probably continue doing many of those things because I am also learning more about production while I build these records.</p>
+		<p>But the more I return to old material, the more I realize that starting completely from zero is not always the best decision.</p>
+		<p>A demo can be badly recorded and still contain an atmosphere that becomes surprisingly difficult to recreate later. A performance can be imperfect but communicate something that disappears when I try to perform it “better.” Even a strange sound that happened by accident can eventually become one of the details I remember most from the song.</p>
+		<p>Now I am trying to listen to those early versions differently, not only looking for what is wrong but trying to recognize what should not disappear.</p>
+		<p>That changes the process quite a bit.</p>
+
+		<div class="article-image">
+			<img src="/images/blog/sound-of-reconstruction/sound-of-reconstruction-ai-demo-to-human-production.webp" alt="An early song demo being revisited during the reconstruction process." loading="lazy" decoding="async" />
 		</div>
-	</section>
-	<section class="section">
-		<article class="site-shell article">
-			<p data-i18n="post.sound.intro.one">AI generated songs are not the enemy.</p>
-			<p data-i18n="post.sound.intro.two">
-				For many independent artists, they are becoming a starting point: a sketch, a direction,
-				a first signal. They can help someone hear a possible arrangement, test an emotional idea
-				or understand what kind of world a song could belong to before spending months trying to
-				build it from nothing.
-			</p>
-			<p data-i18n="post.sound.intro.three">
-				The problem is not using artificial intelligence. The problem is confusing the first
-				result with the final work.
-			</p>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/sound-of-reconstruction/sound-of-reconstruction-ai-demo-to-human-production.webp"
-					alt="AI demo recreation and emotional dark experimental music production process."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.sound.image.one.alt"
-				/>
-			</div>
+		<h2>Imperfection contains information too</h2>
+		<p>Incomplete recordings are interesting because many of the decisions inside them have not passed through too many filters yet.</p>
+		<p>A guitar enters where I felt it should enter, a vocal ended up slightly behind, a silence lasts longer than expected, or some unplanned noise appears and completely changes the feeling of a section. If it works for me, I might keep it. If it starts feeling like an accident that distracts from everything else, I will probably change it. I do not need to turn every mistake into something valuable just because it happened.</p>
+		<p>I am also learning to distinguish between an imperfect decision and a decision I simply do not know how to solve yet.</p>
+		<p>That is not always obvious.</p>
+		<p>Sometimes I listen to a demo and immediately know what I want to correct. Other times I prefer to leave it alone for a few days because I still do not really understand what is bothering me. Before, I probably would have started moving things immediately. Now I am trying to listen a little longer before doing that.</p>
 
-			<h2 data-i18n="post.sound.tool.heading">A TOOL, NOT A FINISH LINE</h2>
-			<p data-i18n="post.sound.tool.one">
-				There is still a lot of fear around AI music. Some of it comes from real concerns. Some
-				of it comes from confusion. And some of it comes from the same old purist impulse that
-				attacks anything new before trying to understand it.
-			</p>
-			<p data-i18n="post.sound.tool.two">But rejecting a tool does not make the work more human.</p>
-			<p data-i18n="post.sound.tool.three">
-				What matters is how the tool is used. A platform like Suno, or any similar AI song
-				generator, can give you a surprisingly useful direction. It can help you find a mood, a
-				structure, a hook, a rough atmosphere. For artists without a big budget, a studio team or
-				years of production knowledge, that can be powerful.
-			</p>
-			<p data-i18n="post.sound.tool.four">It can become a compass.</p>
-			<p data-i18n="post.sound.tool.five">But a compass is not the destination.</p>
+		<h2>Rebuilding also forces me to understand each song better</h2>
+		<p>When I return to an old demo, I try not to begin by immediately changing sounds.</p>
+		<p>First I need to remember what interested me about that song.</p>
+		<p>It could be a melody, a progression, a particular way of singing a phrase, a texture or simply the overall feeling I had when I made it. Sometimes I find that center very quickly. Other times I discover that the thing I thought was important was not actually what was holding the song together.</p>
+		<p>That is where the process becomes interesting to me.</p>
+		<p>I can change quite a lot around that center: structure, instruments, performances and even complete parts of the production. But if I also remove the thing that made me want to return to the song, I am probably building something else.</p>
+		<p>And that is not necessarily a problem either. I just want to notice when it happens.</p>
 
-			<h2 data-i18n="post.sound.digital.heading">WHERE THE DIGITAL FEEL APPEARS</h2>
-			<p data-i18n="post.sound.digital.one">
-				The reason many AI generated songs are criticized is not only cultural. There is also a
-				sonic reason.
-			</p>
-			<p data-i18n="post.sound.digital.two">
-				A lot of these results can feel flat, overly digital, blurry or strangely dirty. The song
-				may have an interesting idea, but the finish often lacks the separation, intention and
-				imperfection of a real production process.
-			</p>
-			<p data-i18n="post.sound.digital.three">
-				In traditional production, a song is built in layers: drums, bass, chords, textures,
-				vocals, transitions, details, space. Each decision has weight. Each sound can be replaced,
-				edited, shaped or performed differently.
-			</p>
-			<p data-i18n="post.sound.digital.four">
-				With many AI generated songs, the result arrives as a fused piece of audio. It can sound
-				like a complete track, but underneath it does not always behave like one. There are not
-				always clean stems, clear performances or separate layers to shape with precision.
-			</p>
-			<p data-i18n="post.sound.digital.five">
-				The ear notices that, even when the listener cannot explain it.
-			</p>
-			<p data-i18n="post.sound.digital.six">
-				Sometimes the subconscious understands before the language does.
-			</p>
+		<div class="article-image">
+			<img src="/images/blog/sound-of-reconstruction/sound-of-reconstruction-music-production-session.webp" alt="A music production session focused on understanding and rebuilding an older song." loading="lazy" decoding="async" />
+		</div>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/sound-of-reconstruction/sound-of-reconstruction-music-production-session.webp"
-					alt="Transforming an AI generated song idea into a more human music production."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.sound.image.two.alt"
-				/>
-			</div>
+		<h2>Everything starts connecting to the Worlds</h2>
+		<p>One of the things that has changed the way I work the most is that I no longer think of every song as a completely isolated piece.</p>
+		<p>There is a World around it now.</p>
+		<p>That means some decisions that could work perfectly well inside a song stop working once I hear it as part of an album. A sound can feel too clean, a drum too modern, a performance too controlled or a production too large for the narrative space where I want the song to exist.</p>
+		<p>So I sometimes make decisions I probably would not make if I were simply trying to create the “best possible version” of every track independently.</p>
+		<p>I care more about whether it belongs to the right world.</p>
+		<p>That also forces me to learn quite a lot. I am understanding more about production precisely because I keep finding specific problems I want to solve inside the project: how to make something feel more intimate without simply turning everything down, how to make a sound feel damaged without turning that damage into an obvious effect, or how to make very different albums still feel like parts of the same sequence.</p>
+		<p>A lot of the time I do not know the answer when I start.</p>
+		<p>I find it by working.</p>
 
-			<h2 data-i18n="post.sound.imperfection.heading">WHY DARK EXPERIMENTAL MUSIC NEEDS IMPERFECTION</h2>
-			<p data-i18n="post.sound.imperfection.one">Dark pop depends on tension.</p>
-			<p data-i18n="post.sound.imperfection.two">
-				It needs atmosphere, but also breath. It needs clean design, but also damage. It needs
-				production, but not so much polish that the human feeling disappears.
-			</p>
-			<p data-i18n="post.sound.imperfection.three">
-				In the kind of dark experimental music I am building with Fhugawz, the goal is not only to make
-				something sound modern. The goal is to create a connection with the listener. The voice
-				needs to feel close. The textures need to carry weight. The rhythm needs to move, but the
-				emotion has to remain alive inside it.
-			</p>
-			<p data-i18n="post.sound.imperfection.four">
-				That is difficult to achieve if the song stays exactly as the machine delivered it.
-			</p>
-			<p data-i18n="post.sound.imperfection.five">
-				AI can suggest a world. Human production has to make that world believable.
-			</p>
+		<h2>I do not want to preserve the past intact</h2>
+		<p>Fhugawz begins in memory, but I do not want that memory to become a museum.</p>
+		<p>I am not interested in keeping every song exactly as it was originally imagined, and in some cases I do not think that would even be possible. I am not the same person who wrote many of them either.</p>
+		<p>When I return to them now, I hear different things. Some lyrics mean something else, decisions that once seemed right no longer convince me, and details I probably would have removed years ago now feel interesting.</p>
+		<p>That is why I have started thinking about reconstruction more like a conversation with those earlier versions than an attempt to restore them.</p>
+		<p>Memory does not remain intact either. Every time we return to something, we reinterpret part of it, even when we believe we remember it exactly as it was.</p>
+		<p>Something similar is happening with these songs.</p>
 
-			<h2 data-i18n="post.sound.humanizing.heading">HUMANIZING THE DEMO</h2>
-			<p data-i18n="post.sound.humanizing.one">
-				Humanizing an AI generated song does not mean copying it blindly.
-			</p>
-			<p data-i18n="post.sound.humanizing.two">
-				It means listening to what works, identifying the emotional core and rebuilding the track
-				with intention. Sometimes that means recreating the instrumental from scratch. Sometimes
-				it means changing the key, rewriting sections, replacing sounds, cleaning the arrangement,
-				recording new parts, editing vocals or building a stronger mix around the idea.
-			</p>
-			<p data-i18n="post.sound.humanizing.three">The goal is not to erase the origin of the demo.</p>
-			<p data-i18n="post.sound.humanizing.four">
-				The goal is to turn the idea into something with identity.
-			</p>
-			<p data-i18n="post.sound.humanizing.five">
-				A humanized production should feel more specific, more controlled and more emotionally
-				legible. It should have space, movement, contrast and imperfection. The kind of
-				imperfection that makes a song feel real.
-			</p>
-			<p data-i18n="post.sound.humanizing.six">
-				Because sometimes the imperfection is what makes the song perfect.
-			</p>
+		<div class="article-image">
+			<img src="/images/blog/sound-of-reconstruction/sound-of-reconstruction-stems-mixing-process.webp" alt="Song stems and arrangement details being reconsidered during reconstruction." loading="lazy" decoding="async" />
+		</div>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/sound-of-reconstruction/sound-of-reconstruction-stems-mixing-process.webp"
-					alt="Stems, arrangement and mixing process for a more professional final track."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.sound.image.three.alt"
-				/>
-			</div>
-
-			<h2 data-i18n="post.sound.help.heading">WHEN THE DEMO NEEDS REBUILDING</h2>
-			<p data-i18n="post.sound.help.one">
-				If you already have AI generated demos, rough references or unfinished songs, but you do
-				not know how to turn them into something professional, that is where reconstruction becomes
-				useful.
-			</p>
-			<p data-i18n="post.sound.help.two">
-				Maybe you have the idea, but not the technical process. Maybe the emotion is there, but
-				the production feels too digital. Maybe the song has potential, but the arrangement, mix or
-				sound palette needs a stronger direction.
-			</p>
-			<p data-i18n="post.sound.help.three">
-				Fhugawz Studio can help rebuild that material into something more human, more focused and
-				more release ready.
-			</p>
-			<p>
-				<a class="button primary article-services-button" href="/services" data-i18n="post.sound.servicesButton">
-					VIEW SERVICES
-				</a>
-			</p>
-
-			<h2 data-i18n="post.sound.point.heading">THE POINT IS NOT THE TOOL</h2>
-			<p data-i18n="post.sound.point.one">The future is already here. Fighting it will not stop it.</p>
-			<p data-i18n="post.sound.point.two">
-				The better question is: what can you build with it?
-			</p>
-			<p data-i18n="post.sound.point.three">
-				AI can open a door, especially for artists with limited resources. But the final result
-				still needs taste, decisions, production, arrangement, editing, identity and emotional
-				direction.
-			</p>
-			<p data-i18n="post.sound.point.four">
-				Use the tools. Ignore the noise. Do not let purist comments decide what you are allowed
-				to build.
-			</p>
-			<p data-i18n="post.sound.point.five">
-				What matters is not whether the first spark came from a voice memo, a guitar, a laptop,
-				an AI demo or a broken idea at 3 a.m.
-			</p>
-			<p data-i18n="post.sound.point.six">What matters is whether the final song is worth showing.</p>
-			<p data-i18n="post.sound.point.seven">
-				It has to mean something to you first. Then it can find the people who need it.
-			</p>
-			<p data-i18n="post.sound.point.eight">
-				There is always a listener for the right signal.
-			</p>
-
-			<footer class="article-footer">
-				<BlogLikeButton slug="sound-of-reconstruction" />
-				<BlogSubscribeCTA id="sound-of-reconstruction-subscribe" />
-			</footer>
-		</article>
-	</section>
-</Layout>
+		<h2>What deserves to stay</h2>
+		<p>I suppose the process eventually comes down to recognizing what needs to survive for each song to remain emotionally recognizable. It could be a melody, a phrase, a noise behind the voice, or that feeling I still do not really know how to describe. Everything else can change, and a lot of it probably will.</p>
+		<p>There will also be songs where I get it wrong.</p>
+		<p>I might rebuild something for weeks and eventually realize that the first demo had an energy I cannot recover anymore. A new version might be technically better and I may still like it less. Those situations are also part of what I want to document here because, at least right now, I do not see much value in pretending that every decision necessarily leads to an improvement.</p>
+		<p>I am learning while I build these records.</p>
+		<p>And maybe that is why reconstruction has become such an important part of this project. It is not about returning the songs exactly to where they were. It is about understanding what still makes sense after taking them apart and looking at them again from where I am now.</p>
+	</div>
+</ArticleLayout>

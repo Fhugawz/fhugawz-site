@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
 import TextureOverlay from '../components/TextureOverlay.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import ArtistLocalization from '../components/worlds/ArtistLocalization.astro';
 
 interface Props {
 	title?: string;
@@ -46,10 +47,11 @@ const { title, description, image, imageAlt, canonical, keywords, type, spanishT
 		</main>
 		<Footer />
 		<CookieConsent />
+		<ArtistLocalization />
 		<script is:inline>
 			window.fhugawzTrackEvent = (eventName, params = {}) => {
 				try {
-					if (typeof window.gtag === 'function') {
+					if (window.fhugawzAnalyticsLoaded && typeof window.gtag === 'function') {
 						window.gtag('event', eventName, params);
 					}
 				} catch {}
@@ -340,26 +342,22 @@ const { title, description, image, imageAlt, canonical, keywords, type, spanishT
 					'services.faq.artist.answer':
 						'Sí. Desarrollo de Universo Artístico está pensado para artistas que necesitan concepto, sonido, visuales, dirección de lanzamiento y estructura de contenido trabajando en conjunto.',
 					'contact.page.kicker': 'CANAL ABIERTO',
-					'contact.page.title': 'CONTACTO',
+					'contact.page.title': 'Hablemos',
 					'contact.page.description':
-						'Para producción, mezcla, mastering, reconstrucción de demos o consultas sobre proyectos de Fhugawz, envía una señal e inicia la conversación.',
-					'contact.panel.kicker': 'CONSULTAS',
-					'contact.panel.title': 'CUÉNTAME SOBRE TU PROYECTO',
+						'Para colaboraciones, preguntas, ideas o cualquier tema relacionado con Fhugawz, este es el canal directo.',
+					'contact.heroNote.primary': 'LÍNEA DIRECTA',
+					'contact.heroNote.secondary': 'CANAL ABIERTO · COLABORACIONES E INQUIETUDES',
+					'contact.panel.kicker': 'CONTACTO DIRECTO',
+					'contact.panel.title': 'Envía una señal.',
 					'contact.panel.description':
-						'Comparte la idea, la canción, la referencia o el mundo que quieres construir. Te ayudo a encontrar el siguiente paso.',
+						'Los mensajes enviados aquí me llegan directamente. Ya sea una colaboración, una pregunta, una idea o simplemente una conversación sobre el trabajo, puedes escribirme.',
 					'contact.form.nameLabel': 'Nombre',
 					'contact.form.namePlaceholder': 'Tu nombre',
 					'contact.form.emailLabel': 'Correo',
 					'contact.form.emailPlaceholder': 'tu@email.com',
 					'contact.form.messageLabel': 'Mensaje',
 					'contact.form.messagePlaceholder':
-						'Cuéntame qué necesitas, dónde está la canción ahora y hacia dónde quieres llevarla.',
-					'contact.form.selectedServiceLabel': 'SERVICIO SELECCIONADO',
-					'contact.form.serviceDefault': 'Selecciona un servicio',
-					'contact.form.serviceMusic': 'Producción Musical',
-					'contact.form.serviceMixing': 'Mezcla y Master',
-					'contact.form.serviceDemo': 'Reconstrucción de Demos',
-					'contact.form.serviceWorld': 'Desarrollo de Universo Artístico',
+						'Escribe tu mensaje.',
 					'contact.form.button': 'ENVIAR MENSAJE',
 					'contact.form.status': 'Completa el formulario y envía tu mensaje.',
 					'axiomsPage.kicker': 'DISCO EXPERIMENTAL TRAP',
@@ -451,19 +449,6 @@ const { title, description, image, imageAlt, canonical, keywords, type, spanishT
 					'blog.card.building.title': 'CONSTRUYENDO AXIOMS',
 					'blog.card.building.description':
 						'Una primera nota sobre construir un proyecto de música experimental oscura desde la fractura, la memoria y la prueba, y sobre cómo una experiencia difícil puede transformarse en canciones, imagen y dirección artística.',
-					'blog.like.aria': 'Me gusta este artículo',
-					'blog.subscribe.kicker': 'MANTENTE CERCA',
-					'blog.subscribe.title': 'RECIBE LAS PRÓXIMAS NOTAS',
-					'blog.subscribe.description':
-						'Suscríbete para recibir nuevos artículos de Fhugawz, notas de producción y actualizaciones del proyecto cuando se publiquen.',
-					'blog.subscribe.button': 'SUSCRIBIRME AL BLOG',
-					'blog.subscribe.modalTitle': 'Suscríbete al blog de Fhugawz',
-					'blog.subscribe.modalDescription':
-						'Recibe nuevos artículos, notas de producción y actualizaciones del proyecto directamente en tu correo.',
-					'blog.subscribe.emailPlaceholder': 'tu@email.com',
-					'blog.subscribe.submit': 'SUSCRIBIRME',
-					'blog.subscribe.note': 'Sin spam. Solo actualizaciones del proyecto y notas útiles.',
-					'blog.subscribe.success': 'Gracias. Ya estás en la lista.',
 					'blog.card.exists.title': 'POR QUÉ EXISTE FHUGAWZ',
 					'blog.card.exists.description':
 						'Una nota personal sobre música, diseño, recuperación y el largo proceso de convertir influencias dispersas en un mundo de música experimental oscura.',

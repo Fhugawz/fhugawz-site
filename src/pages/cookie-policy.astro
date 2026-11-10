@@ -2,79 +2,27 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout
-	title="Fhugawz - Cookie Policy"
-	description="Cookie policy for Fhugawz, including local storage, language preference, likes, Netlify, Supabase and future analytics."
->
-	<section class="page-hero">
-		<div class="site-shell">
-			<p class="section-kicker" data-i18n="legal.cookies.kicker">LEGAL</p>
-			<h1 class="page-title" data-i18n="legal.cookies.title">COOKIE POLICY</h1>
-			<p class="lede" data-i18n="legal.cookies.lede">
-				Information about cookies, local storage and basic site tracking.
-			</p>
+<Layout title="Cookie Policy | Fhugawz" description="Essential browser preferences and optional Google Analytics cookies on the Fhugawz site.">
+	<section class="page-hero legal-hero"><div class="site-shell">
+		<p class="section-kicker">LEGAL</p><h1 class="page-title">COOKIE POLICY</h1>
+		<p class="lede">The browser storage and optional analytics used by this site.</p>
+	</div></section>
+	<section class="section legal-content"><article class="site-shell article">
+		<div class="article-language article-language-en">
+			<h2>SITE PREFERENCES</h2>
+			<p>The site uses local storage to remember your language choice and, when analytics is configured, your cookie preference. These preferences support the site's operation and do not require Google Analytics to load.</p>
+			<h2>OPTIONAL GOOGLE ANALYTICS 4</h2>
+			<p>When configured and accepted, Google Analytics 4 can set analytics cookies to help understand visits and use of the site. Google tags are blocked before you accept. Rejecting optional analytics keeps the tag unloaded; withdrawing consent stops further analytics loading and refreshes the page to end an existing tag session.</p>
+			<h2>CHANGE YOUR CHOICE</h2>
+			<p>Use Cookie preferences in the footer to accept, reject or change analytics consent. Your choice is stored in local storage. Clearing browser storage removes it, and you will be asked again if analytics is configured. For information about contact messages and providers, read the <a href="/privacy-policy">Privacy Policy</a>.</p>
 		</div>
-	</section>
-	<section class="section">
-		<article class="site-shell article">
-			<div class="article-language article-language-en">
-				<p>
-					This page is general information, not legal advice. Fhugawz is operated from Venezuela,
-					and this policy may be updated as the website and services evolve.
-				</p>
-				<h2>ESSENTIAL STORAGE</h2>
-				<p>
-					The site may use essential local storage for language preference, cookie consent, blog
-					likes, form state or other interface preferences that help the experience work
-					correctly.
-				</p>
-				<h2>OPTIONAL ANALYTICS</h2>
-				<p>
-					Optional analytics cookies may be used only if analytics is configured and accepted.
-					They help understand how Fhugawz is discovered and how the experience can be improved.
-				</p>
-				<h2>FUNCTIONAL DATA</h2>
-				<p>
-					Contact form submissions, blog subscriptions and blog likes may be processed through
-					Netlify Functions and stored in Supabase. Resend may be used for contact email
-					notifications.
-				</p>
-				<h2>PAYMENTS AND DATA REQUESTS</h2>
-				<p>
-					No online payments are processed directly on this website right now. Service quotes,
-					scope, payment terms and delivery conditions are agreed privately. You may request
-					deletion or correction of submitted data by contacting Fhugawz.
-				</p>
-			</div>
-			<div class="article-language article-language-es" lang="es">
-				<p>
-					Esta pagina es informacion general, no asesoria legal. Fhugawz opera desde Venezuela, y
-					esta politica puede actualizarse a medida que el sitio y los servicios evolucionen.
-				</p>
-				<h2>ALMACENAMIENTO ESENCIAL</h2>
-				<p>
-					El sitio puede usar almacenamiento local esencial para preferencia de idioma,
-					consentimiento de cookies, likes del blog, estado de formularios u otras preferencias de
-					interfaz que ayudan a que la experiencia funcione correctamente.
-				</p>
-				<h2>ANALITICAS OPCIONALES</h2>
-				<p>
-					Las cookies analiticas opcionales pueden usarse solo si la analitica esta configurada y
-					aceptada. Ayudan a entender como se descubre Fhugawz y como mejorar la experiencia.
-				</p>
-				<h2>DATOS FUNCIONALES</h2>
-				<p>
-					Los mensajes de contacto, suscripciones del blog y likes pueden procesarse mediante
-					Netlify Functions y almacenarse en Supabase. Resend puede usarse para notificaciones por
-					email de contacto.
-				</p>
-				<h2>PAGOS Y SOLICITUDES DE DATOS</h2>
-				<p>
-					Actualmente no se procesan pagos en linea directamente en este sitio. Las cotizaciones,
-					alcance, terminos de pago y condiciones de entrega se acuerdan de forma privada. Puedes
-					solicitar la eliminacion o correccion de datos enviados contactando a Fhugawz.
-				</p>
-			</div>
-		</article>
-	</section>
+		<div class="article-language article-language-es" lang="es">
+			<h2>PREFERENCIAS DEL SITIO</h2>
+			<p>El sitio usa almacenamiento local para recordar tu idioma y, si la analítica está configurada, tu preferencia de cookies. Estas preferencias ayudan al funcionamiento del sitio y no requieren cargar Google Analytics.</p>
+			<h2>GOOGLE ANALYTICS 4 OPCIONAL</h2>
+			<p>Si está configurado y lo aceptas, Google Analytics 4 puede establecer cookies analíticas para comprender las visitas y el uso del sitio. Las etiquetas de Google permanecen bloqueadas antes de aceptar. Rechazar la analítica opcional impide cargar la etiqueta; retirar el consentimiento detiene la carga futura y actualiza la página para terminar una sesión de etiqueta existente.</p>
+			<h2>CAMBIA TU ELECCIÓN</h2>
+			<p>Usa Preferencias de cookies en el pie de página para aceptar, rechazar o cambiar el consentimiento de analítica. Tu elección se guarda en el almacenamiento local. Si lo borras, se te preguntará de nuevo cuando la analítica esté configurada. Para información sobre mensajes y proveedores, consulta la <a href="/privacy-policy">Política de privacidad</a>.</p>
+		</div>
+	</article></section>
 </Layout>

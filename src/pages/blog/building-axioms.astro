@@ -1,143 +1,161 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import BlogLikeButton from '../../components/BlogLikeButton.astro';
-import BlogSubscribeCTA from '../../components/BlogSubscribeCTA.astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
 
 const keywords =
-	'dark experimental music, dark experimental music project, cinematic dark experimental music, experimental pop, independent artist, music production, emotional songwriting, Fhugawz, AXIOMS, album diary, production diary, demo reconstruction';
+	'Fhugawz, thirteen Worlds, 3–1–4 structure, 314, 199X, Henosis, Axioms, Ehva, Lhilit, narrative music project, circular narrative, artist journal, world building';
 const excerpt =
-	'A first note on building a dark experimental music project from fracture, memory and proof, and on how a difficult experience can become songs, visuals and artistic direction.';
+	'Notes on how thirteen separate Worlds gradually became one connected cycle, and the structure I am still discovering while I build it.';
+const heroImage =
+	'/images/blog/building-axioms/building-axioms-dark-pop-origin-hero.webp.webp';
 ---
 
-<Layout
-	title="Fhugawz — Building Axioms"
+<ArticleLayout
+	title="Fhugawz — Building the Sequence"
 	description={excerpt}
-	spanishTitle="Construyendo AXIOMS: Música Experimental Oscura, Memoria y Reconstrucción Emocional | Fhugawz"
-	spanishDescription="Una primera nota sobre construir un proyecto de música experimental oscura desde la fractura, la memoria y la prueba, y sobre cómo una experiencia difícil puede transformarse en canciones, imagen y dirección artística."
+	spanishTitle="Construyendo la secuencia | Fhugawz"
+	spanishDescription="Notas sobre cómo trece Mundos separados se convirtieron gradualmente en un ciclo conectado y la estructura que sigo descubriendo mientras la construyo."
 	keywords={keywords}
 	type="article"
-	image="/images/blog/building-axioms/building-axioms-dark-pop-origin-hero.webp.webp"
-	imageAlt="Fhugawz Building Axioms article hero with dark experimental music and emotional reconstruction imagery."
+	image={heroImage}
+	imageAlt="Fhugawz working on the connected sequence of thirteen musical Worlds."
+	heroImage={heroImage}
+	heroKicker="PROJECT DIARY"
+	heroKickerI18n="post.building.kicker"
+	heroLede={excerpt}
 >
-	<section
-		class="page-hero with-image blog-article-hero"
-		style={`--page-hero-image: url("/images/blog/building-axioms/building-axioms-dark-pop-origin-hero.webp.webp")`}
-	>
-		<div class="site-shell">
-			<p class="section-kicker" data-i18n="post.building.kicker">PROJECT DIARY</p>
-			<h1 class="page-title" data-i18n="post.building.title">BUILDING AXIOMS</h1>
-			<p class="lede" data-i18n="post.building.lede">{excerpt}</p>
+	<div class="article-sequence">
+		<p>Today I was going through different parts of the project and ended up thinking about how strange it is to see it now as a sequence of thirteen records.</p>
+		<p>Because it did not start that way.</p>
+		<p>There was never a moment when I sat down, wrote thirteen names on a page and already knew exactly what would happen in each one. Many of these ideas existed separately for years, others appeared much later and changed quite a lot while I was trying to understand what I was actually doing with all of this.</p>
+		<p>For a long time I thought about the songs, the records and the images in a much more isolated way.</p>
+		<p>Now I am starting to see a map.</p>
+
+		<h2>The project needed to be bigger than a single record</h2>
+		<p>Axioms was important because it helped me understand a very specific part of what I wanted to do.</p>
+		<p>There were experiences I did not want to explain literally, but I also did not want to leave them simply as memories. I was interested in seeing what happened if those things became songs, images, spaces and situations that could move quite far away from what really happened without losing what was underneath.</p>
+		<p>That is still there.</p>
+		<p>The difference is that now I understand Axioms cannot contain the entire project, and it should not try to.</p>
+		<p>There are things that belong to an earlier stage, things that only make sense much later and others I am still trying to understand. Once I started looking at all of it together, forcing everything to exist inside the same record began to feel too limited.</p>
+		<p>I needed more space.</p>
+		<p>And I needed the project to be able to change language without stopping being the same project.</p>
+		<p>That is when the records started becoming Worlds.</p>
+
+		<div class="article-image">
+			<img src="/images/blog/building-axioms/building-axioms-fhugawz-studio-process.webp" alt="Fhugawz working in the studio as the project expands into a sequence of Worlds." loading="lazy" decoding="async" />
 		</div>
-	</section>
-	<section class="section">
-		<article class="site-shell article">
-			<p data-i18n="post.building.intro.one">
-				AXIOMS began as a way to give shape to things that were too heavy to explain directly.
-			</p>
-			<p data-i18n="post.building.intro.two">
-				Some experiences do not become clearer when you describe them literally. They become
-				clearer when they turn into rhythm, image, pressure, silence and voice. That is the place
-				where this album started.
-			</p>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/building-axioms/building-axioms-argentina-night-memory.webp.webp"
-					alt="Night city atmosphere connected to the emotional origin of AXIOMS."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.building.image.one.alt"
-				/>
-			</div>
+		<h2>Coherence did not have to mean repeating the same thing</h2>
+		<p>One of the decisions that helped me most was letting go of the idea that all the records had to resemble each other in order to remain coherent.</p>
+		<p>I do not want to make thirteen albums with the same production, the same palette or small variations of the same genre just so people can recognize that they belong to the same universe. It would not make much sense for the story I am trying to build and, honestly, I think I would get bored very quickly.</p>
+		<p>Each World occupies a different state within the character’s evolution, so the language should move with it. That is why I can pass through folk, post-hardcore, dark pop, glitch, shoegaze, grunge, horror or things I will probably end up defining differently when I get there.</p>
+		<p>Visually, something similar happens.</p>
+		<p>Some stages can feel fairly close to each other and then another can arrive that breaks almost completely with what came before.</p>
+		<p>That does not worry me too much.</p>
+		<p>What I am trying to preserve is not a surface.</p>
+		<p>It is continuity.</p>
 
-			<h2 data-i18n="post.building.darkPop.heading">WHY DARK EXPERIMENTAL MUSIC</h2>
-			<p data-i18n="post.building.darkPop.one">
-				Dark pop made sense because it can hold contradiction. It can be beautiful and
-				uncomfortable at the same time. It can sound cinematic, fragile, aggressive, intimate and
-				damaged without needing to explain itself too much.
-			</p>
-			<p data-i18n="post.building.darkPop.two">
-				For AXIOMS, that language became the right container for nostalgia, grief, desire,
-				distance and survival. The goal was not to make sadness decorative. The goal was to turn
-				it into something with structure, identity and emotional force.
-			</p>
+		<h2>199X works as an origin</h2>
+		<p>When I look at <strong>199X</strong> now, it makes a lot of sense for it to sit at the beginning.</p>
+		<p>There is something smaller there, something connected to childhood, memory and that strange way certain moments remain completely clear while others almost disappear.</p>
+		<p>I do not need everything to be a literal reproduction of my own childhood. In fact, I am becoming less interested in that.</p>
+		<p>What matters more is the feeling of looking back at a place that no longer exists in quite the same way.</p>
+		<p>Then the project begins to grow and, at the same time, becomes more complicated.</p>
+		<p>In <strong>Fake/minds</strong> we are no longer looking from the same place. Adolescence appears, identity, noise, frustration and that slightly absurd intensity certain things can have when you are still trying to understand who you are.</p>
+		<p>From there the sequence keeps changing.</p>
+		<p>Not as an exact biography.</p>
+		<p>More like an evolution of states.</p>
 
-			<h2 data-i18n="post.building.fracture.heading">THE PERSONAL FRACTURE BEHIND THE ALBUM</h2>
-			<p data-i18n="post.building.fracture.one">
-				Part of this project comes from a personal rupture that happened around 2020, during a
-				period marked by immigration, uncertainty, physical pain, recovery and emotional collapse.
-			</p>
-			<p data-i18n="post.building.fracture.two">
-				At the time, I was living in Argentina, far from Venezuela, trying to build stability
-				while everything around me felt unstable. There were accidents, medical consequences,
-				operations, prosthetics, pain, medication, recovery and the strange feeling of having to
-				rebuild your body, your routine and your sense of self at the same time.
-			</p>
-			<p data-i18n="post.building.fracture.three">
-				Inside that process, other fractures also appeared: love ending when you are already
-				broken, the feeling of being alone in a city that can be beautiful and brutal at once, and
-				the need to keep moving even when the body and the mind feel exhausted.
-			</p>
+		<div class="article-image">
+			<img src="/images/blog/building-axioms/building-axioms-argentina-night-memory.webp.webp" alt="A nocturnal memory image marking the sequence’s movement outward from 199X." loading="lazy" decoding="async" />
+		</div>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/building-axioms/building-axioms-fhugawz-studio-process.webp"
-					alt="Fhugawz studio process while building the AXIOMS dark experimental music project."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.building.image.two.alt"
-				/>
-			</div>
+		<h2>Some ideas find their place much later</h2>
+		<p>This has been happening quite a lot while I build the project.</p>
+		<p>An image appears, a song, or some concept that interests me, and I do not always know immediately where it belongs. I used to feel that I needed to solve that quickly because, if I could not place it inside something, it felt like an idea without direction.</p>
+		<p>Now I try to let it exist for a while.</p>
+		<p>There are things that months later end up finding a much more logical place than whatever I would have chosen at the beginning.</p>
+		<p>Axioms is a good example.</p>
+		<p>For a long time I could think about that record almost exclusively through the idea of reconstruction after a rupture. Now, when I see it inside the complete sequence, it changes quite a lot.</p>
+		<p>There is something before it that explains why that fracture carries weight, and something after it that begins to question even what has just been rebuilt.</p>
+		<p>That changes the way I hear songs I already knew.</p>
+		<p>They stop being only songs from an album.</p>
+		<p>They start creating consequences.</p>
 
-			<h2 data-i18n="post.building.sound.heading">TURNING EXPERIENCE INTO SOUND</h2>
-			<p data-i18n="post.building.sound.one">
-				AXIOMS does not try to document everything literally. It transforms those experiences
-				into songs.
-			</p>
-			<p data-i18n="post.building.sound.two">
-				The album moves through urban nights, emotional pressure, broken promises, toxic bonds,
-				memory, rupture and the moment where a person decides not to disappear inside what
-				happened to them.
-			</p>
-			<p data-i18n="post.building.sound.three">
-				That is why the songs are not only about sadness. They are about what remains after
-				sadness. They are about the proof that something survived.
-			</p>
+		<h2>The story could move away from the literal</h2>
+		<p>I think another important change happened when I stopped worrying so much about whether everything needed to correspond to something that had actually happened.</p>
+		<p>The starting point can be personal and still end up very far from there.</p>
+		<p>A memory can become a character. A feeling can turn into a city, a desert, a room or anything else that works better for representing what I am actually trying to preserve.</p>
+		<p>That gives me much more space.</p>
+		<p>And the further the sequence moves, the more obvious that distance becomes.</p>
+		<p>At the beginning I can still recognize quite easily where many things come from. Later they begin mixing with fiction, horror, technology, surreal spaces and questions that have less to do with a specific memory and more to do with identity, perception or what remains of a person after changing too many times.</p>
+		<p>That is where the project started to stop feeling purely autobiographical.</p>
+		<p>I think I needed to reach that point.</p>
 
-			<h2 data-i18n="post.building.exists.heading">WHY THIS PROJECT EXISTS</h2>
-			<p data-i18n="post.building.exists.one">
-				This album is also a personal statement about building something professional without
-				waiting for perfect conditions.
-			</p>
-			<p data-i18n="post.building.exists.two">
-				Not every artist starts with a perfect studio, a perfect budget or a perfect situation.
-				Sometimes the only thing you have is a strong idea, discipline and the patience to shape
-				the work carefully until it becomes real.
-			</p>
-			<p data-i18n="post.building.exists.three">
-				Fhugawz exists from that place: music, visuals and production built as one emotional
-				world.
-			</p>
+		<div class="article-image">
+			<img src="/images/blog/building-axioms/building-axioms-emotional-reconstruction.webp" alt="A personal reconstruction image at the point where the narrative begins moving beyond literal memory." loading="lazy" decoding="async" />
+		</div>
 
-			<div class="article-image">
-				<img
-					src="/images/blog/building-axioms/building-axioms-emotional-reconstruction.webp"
-					alt="Visual fragment representing emotional reconstruction inside the AXIOMS album world."
-					loading="lazy"
-					decoding="async"
-					data-i18n-alt="post.building.image.three.alt"
-				/>
-			</div>
+		<h2>Stability gradually disappears</h2>
+		<p>There is something I am beginning to see much more clearly: as the sequence moves forward, the world stops behaving in such a stable way.</p>
+		<p>At first there are recognizable places and certain rules still seem fairly clear.</p>
+		<p>That starts breaking apart.</p>
+		<p>That is why Worlds such as <strong>Protocol 7</strong>, <strong>Løst</strong>, <strong>Nadir</strong>, <strong>Moria</strong>, <strong>Phobia</strong> or <strong>Soliloquium</strong> can move very far away from what appears in the first records and still belong to the same journey.</p>
+		<p>They do not need to resemble each other.</p>
+		<p>They are happening in another part of the transformation.</p>
+		<p>By the time we reach <strong>Nowhere</strong> or <strong>314</strong>, I am no longer thinking only about memory or reconstruction. Other questions begin to appear, along with another way of looking at the conflict.</p>
+		<p>314 is especially important because it starts making visible something that had already been appearing underneath the project: the parts do not really work in isolation.</p>
+		<p>Fhugawz, Ehva and Lhilit stop feeling only like three characters moving through a story and begin to represent three different ways of existing inside it.</p>
+		<p>Ehva is <strong>Eros</strong>: life, impulse, desire, movement.</p>
+		<p>Lhilit operates through <strong>Logos</strong>: form, pattern, analysis.</p>
+		<p>And Fhugawz occupies the place of the <strong>Witness</strong>, the consciousness that observes and tries to integrate the tension between the other two.</p>
+		<p>I do not want to turn that into a mathematical explanation inside every record. I am more interested in keeping it underneath and allowing it to appear when it makes sense.</p>
+		<p>But understanding it changed the structure quite a lot.</p>
 
-			<p data-i18n="post.building.closing.one">AXIOMS is the first open door into that world.</p>
-			<p data-i18n="post.building.closing.two">
-				Follow the project, listen to the previews and stay close to the process. More songs,
-				lyrics, notes and visual pieces will keep unfolding from here.
-			</p>
-			<footer class="article-footer">
-				<BlogLikeButton slug="building-axioms" />
-				<BlogSubscribeCTA id="building-axioms-subscribe" />
-			</footer>
-		</article>
-	</section>
-</Layout>
+		<h2>The number thirteen has a reason</h2>
+		<p>The thirteen records did not appear because I needed to fill a list.</p>
+		<p>The number is part of the way I am thinking about the project.</p>
+		<p>There are thirteen Worlds, but behind them the same <strong>3–1–4</strong> structure keeps appearing.</p>
+		<p>Three expressions.</p>
+		<p>One source.</p>
+		<p>And a totality that does not exist until those parts stop functioning as separate elements.</p>
+		<p>That pattern becomes explicit in 314, but it does not belong only to that record. In a way, it had already started organizing everything else.</p>
+		<p>There is also the relationship with <strong>3.14</strong>, with π and with the circle, which increasingly makes sense inside a story that eventually returns to the same point where it began.</p>
+		<p>I do not want numerology to become a trick that someone needs to understand in order to enjoy the music. If somebody listens to the records without knowing any of this, they should still work.</p>
+		<p>But for me it does function as structure.</p>
+		<p>It gives me a way to understand why there are thirteen states and how they can form one evolution instead of simply being thirteen albums placed next to each other.</p>
+
+		<h2>The ending does return to the beginning</h2>
+		<p>There is something here that I did not have completely resolved for a long time and now feels much clearer.</p>
+		<p><strong>Henosis has to close the circle.</strong></p>
+		<p>The intention is not to arrive at the last World, transcend, and leave everything behind as if the character had found a definitive answer.</p>
+		<p>It is to return.</p>
+		<p>After moving through the thirteen states, through fragmentation, through Fhugawz, Ehva and Lhilit, through separation and finally integration, the character arrives at the origin again.</p>
+		<p>But the meaning of that origin is different now.</p>
+		<p>The final line of Henosis connects with the first line at the beginning of 199X.</p>
+		<p>The ending and the beginning are the same point.</p>
+		<p>That is where the circle becomes complete.</p>
+		<p>And that changes the way I understand the entire sequence because it is no longer only about following someone from childhood to the end of their life. There is birth, transformation, transcendence and return.</p>
+		<p>Then it begins again.</p>
+		<p>Not as if nothing had happened, but because the cycle itself is part of what I am trying to represent.</p>
+		<p>I suppose that is why the idea of π ended up fitting so naturally.</p>
+		<p>It is not a line arriving at a conclusion.</p>
+		<p>It is a journey returning to its origin.</p>
+
+		<h2>I am building the map while walking through it</h2>
+		<p>I think that is still the most accurate way of describing where I am right now.</p>
+		<p>The structure exists and I understand its function more clearly every time, but I have no interest in pretending every detail is completely resolved.</p>
+		<p>While rebuilding songs I keep finding new connections. Some lyrics change meaning when I place them inside a different context, and certain images I originally imagined for one World end up working better somewhere else.</p>
+		<p>There are also ideas that simply stop convincing me.</p>
+		<p>That will keep happening.</p>
+		<p>That is precisely why I am interested in writing about these things while the project is still changing rather than five years from now, when it would probably be very easy to tell a much cleaner version of how everything happened.</p>
+		<p>Right now it is not clean.</p>
+		<p>I am building it while I try to understand it.</p>
+		<p>What I do know much more clearly is what I am trying to build.</p>
+		<p>Fhugawz is not thirteen separate projects connected afterward by a story.</p>
+		<p>It is one evolution divided into thirteen states.</p>
+		<p>Each World can work on its own, but when they appear in order they begin to tell something else.</p>
+		<p>The music changes, the images change and the character changes too.</p>
+		<p>And when the character finally reaches the last point, they return to the first.</p>
+		<p>That is where the sequence stops feeling like a collection of records and starts becoming a cycle.</p>
+	</div>
+</ArticleLayout>

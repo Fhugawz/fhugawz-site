@@ -1,15 +1,15 @@
-<div class="cookie-consent" data-cookie-consent hidden>
+<div class="cookie-consent" data-cookie-consent role="region" aria-labelledby="cookie-consent-title" hidden>
 	<div class="cookie-consent-copy">
 		<p class="section-kicker" data-cookie-i18n="kicker">PRIVACY</p>
-		<h2 data-cookie-i18n="title">Cookie preferences</h2>
+		<h2 id="cookie-consent-title" data-cookie-i18n="title">Cookie preferences</h2>
 		<p data-cookie-i18n="description">
-			We use essential cookies to keep the site working and optional analytics cookies to understand how Fhugawz is discovered and improve the experience.
+			We remember site preferences in your browser. Optional analytics cookies help us understand visits only if you accept.
 		</p>
 		<div class="cookie-consent-manage" data-cookie-manage hidden>
 			<label class="cookie-choice required">
 				<input type="checkbox" checked disabled />
 				<span>
-					<strong data-cookie-i18n="essentialTitle">Essential cookies</strong>
+					<strong data-cookie-i18n="essentialTitle">Site preferences</strong>
 					<small data-cookie-i18n="essentialDescription">Always active/required.</small>
 				</span>
 			</label>
@@ -44,14 +44,14 @@
 			en: {
 				kicker: 'PRIVACY',
 				title: 'Cookie preferences',
-				description:
-					'We use essential cookies to keep the site working and optional analytics cookies to understand how Fhugawz is discovered and improve the experience.',
+					description:
+					'We remember site preferences in your browser. Optional analytics cookies help us understand visits only if you accept.',
 				accept: 'Accept analytics',
 				reject: 'Reject',
 				manage: 'Manage',
 				save: 'Save preferences',
-				essentialTitle: 'Essential cookies',
-				essentialDescription: 'Always active/required.',
+				essentialTitle: 'Site preferences',
+				essentialDescription: 'Language and consent settings.',
 				analyticsTitle: 'Analytics cookies',
 				analyticsDescription: 'Optional.',
 			},
@@ -59,13 +59,13 @@
 				kicker: 'PRIVACIDAD',
 				title: 'Preferencias de cookies',
 				description:
-					'Usamos cookies esenciales para mantener el sitio funcionando y cookies analiticas opcionales para entender como se descubre Fhugawz y mejorar la experiencia.',
+					'Guardamos las preferencias del sitio en tu navegador. Las cookies analíticas opcionales ayudan a comprender las visitas solo si las aceptas.',
 				accept: 'Aceptar analiticas',
 				reject: 'Rechazar',
 				manage: 'Gestionar',
 				save: 'Guardar preferencias',
-				essentialTitle: 'Cookies esenciales',
-				essentialDescription: 'Siempre activas/requeridas.',
+				essentialTitle: 'Preferencias del sitio',
+				essentialDescription: 'Idioma y consentimiento.',
 				analyticsTitle: 'Cookies analiticas',
 				analyticsDescription: 'Opcionales.',
 			},
@@ -81,6 +81,7 @@
 		};
 
 		const saveChoice = (analytics) => {
+			const wasLoaded = Boolean(window.fhugawzAnalyticsLoaded);
 			try {
 				localStorage.setItem(
 					storageKey,
@@ -98,16 +99,19 @@
 				window.fhugawzDenyAnalytics?.();
 			}
 			banner.hidden = true;
+			if (!analytics && wasLoaded) window.location.reload();
 		};
 
+		let savedChoice = null;
 		try {
-			if (localStorage.getItem(storageKey)) return;
+			savedChoice = JSON.parse(localStorage.getItem(storageKey) || 'null');
 		} catch {}
 
 		const managePanel = banner.querySelector('[data-cookie-manage]');
 		const analyticsInput = banner.querySelector('[data-cookie-analytics]');
 		const saveButton = banner.querySelector('[data-cookie-save]');
 		const manageButton = banner.querySelector('[data-cookie-toggle]');
+		if (analyticsInput instanceof HTMLInputElement) analyticsInput.checked = savedChoice?.analytics === true;
 
 		banner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => saveChoice(true));
 		banner.querySelector('[data-cookie-reject]')?.addEventListener('click', () => saveChoice(false));
@@ -122,6 +126,13 @@
 
 		applyLanguage();
 		window.addEventListener('fhugawz:languagechange', applyLanguage);
-		banner.hidden = false;
+		window.addEventListener('fhugawz:open-cookie-preferences', () => {
+			if (managePanel instanceof HTMLElement) managePanel.hidden = false;
+			if (saveButton instanceof HTMLButtonElement) saveButton.hidden = false;
+			if (manageButton instanceof HTMLButtonElement) manageButton.hidden = true;
+			banner.hidden = false;
+			(analyticsInput instanceof HTMLInputElement ? analyticsInput : banner.querySelector('[data-cookie-reject]'))?.focus();
+		});
+		banner.hidden = Boolean(savedChoice && typeof savedChoice.analytics === 'boolean') || !window.fhugawzAnalyticsId;
 	})();
 </script>

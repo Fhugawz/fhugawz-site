@@ -1,340 +1,496 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import BlogCard from '../components/BlogCard.astro';
-import ServiceCard from '../components/ServiceCard.astro';
-import TrackPreviewCard from '../components/TrackPreviewCard.astro';
-import WhatsAppLead from '../components/WhatsAppLead.astro';
+import CurrentWorldFeature from '../components/home/CurrentWorldFeature.astro';
+import WorldCatalogue from '../components/home/WorldCatalogue.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { artistUi } from '../data/artist-ui';
+import { selectedJournalEntries } from '../data/journal';
+import { publishedWorlds } from '../data/worlds';
+import { localize, localizedAltAttributes, localizedTextAttributes } from '../utils/localization';
 
-const projects = [
-	{
-		title: 'AXIOMS',
-		kicker: 'EXPERIMENTAL TRAP',
-		description:
-			'Urban pressure, low light and private collapse shape a nocturnal dark experimental record about isolation, tension and emotional reconstruction.',
-		kickerI18nKey: 'projects.axioms.kicker',
-		titleI18nKey: 'projects.axioms.title',
-		descriptionI18nKey: 'projects.axioms.description',
-		image: '/images/projects/project-axioms-dark-pop-reconstruction-card.webp',
-		alt: 'Fhugawz Axioms artwork with cinematic dark experimental music atmosphere and emotional reconstruction imagery',
-		href: '/projects/axioms',
-	},
-	{
-		title: '199X',
-		kicker: 'EXPERIMENTAL FOLK',
-		description:
-			'Wooden textures, intimate strings and warm folk shadows turn memory into something fragile, nostalgic and quietly haunted.',
-		kickerI18nKey: 'projects.199x.kicker',
-		titleI18nKey: 'projects.199x.title',
-		descriptionI18nKey: 'projects.199x.description',
-		image: '/images/projects/project-199X-existential-solitude-card.webp',
-		alt: 'Fhugawz 199X Entropy artwork evoking solitude, memory and cinematic dark experimental tension',
-		href: '/projects/199x',
-	},
-	{
-		title: 'PROTOCOL 7',
-		kicker: 'EXPERIMENTAL GLITCH',
-		description:
-			'Glitch tension, cyberpunk solitude and synthetic pressure push dark experimental music into a colder digital space where paranoia becomes signal.',
-		kickerI18nKey: 'projects.protocol7.kicker',
-		titleI18nKey: 'projects.protocol7.title',
-		descriptionI18nKey: 'projects.protocol7.description',
-		image: '/images/projects/project-protocol-7-digital-disconnection-card.webp',
-		alt: 'Fhugawz Protocol 7 God artwork with digital disconnection and dark experimental noir mood',
-		href: '/projects/protocol-7',
-	},
-];
-
-const tracks = [
-	{
-		id: 'axioms-currents',
-		title: 'AXIOMS \u2014 CURRENTS',
-		description:
-			'A preview from the urban side of AXIOMS: low light, heavy pressure and a pulse built for solitude in motion through the city.',
-		kickerI18nKey: 'audio.cardKicker',
-		titleI18nKey: 'audio.axioms.title',
-		descriptionI18nKey: 'audio.axioms.description',
-		image: '/images/tracks/axioms-currents-dark-pop-track.webp',
-		alt: 'Fhugawz Axioms Currents track image for a cinematic dark experimental music preview',
-		audioSrc: '/audio/previews/axioms-currents-preview.mp3',
-	},
-	{
-		id: '199x-entropy',
-		title: '199X \u2014 ENTROPY',
-		description:
-			'A warmer fragment shaped by wooden textures, nostalgic strings and the quiet loneliness of a dark folk memory.',
-		kickerI18nKey: 'audio.cardKicker',
-		titleI18nKey: 'audio.199x.title',
-		descriptionI18nKey: 'audio.199x.description',
-		image: '/images/tracks/199x-entropy-dark-pop-track.webp',
-		alt: 'Fhugawz 199X Entropy track image with dark experimental solitude and archival tension',
-		audioSrc: '/audio/previews/199x-entropy-preview.mp3',
-	},
-	{
-		id: 'protocol-7-god',
-		title: 'PROTOCOL 7 \u2014 GOD',
-		description:
-			'A colder signal from the digital edge: glitch tension, synthetic sadness and the feeling of becoming human inside the machine.',
-		kickerI18nKey: 'audio.cardKicker',
-		titleI18nKey: 'audio.protocol7.title',
-		descriptionI18nKey: 'audio.protocol7.description',
-		image: '/images/tracks/protocol-7-god-dark-pop-track.webp',
-		alt: 'Fhugawz Protocol 7 God track image with digital rupture and cinematic dark experimental energy',
-		audioSrc: '/audio/previews/protocol-7-god-preview.mp3',
-	},
-];
-
-const services = [
-	{
-		kicker: 'SERVICE',
-		title: 'MUSIC PRODUCTION',
-		description:
-			'Bring a voice memo, rough demo or unfinished idea. We shape the arrangement, sound palette and production until the song feels complete.',
-		kickerI18nKey: 'services.kicker',
-		titleI18nKey: 'services.production.title',
-		descriptionI18nKey: 'services.production.description',
-		image: '/images/services/service-dark-pop-music-production.webp',
-		alt: 'Fhugawz dark experimental music production scene with cinematic studio texture',
-	},
-	{
-		kicker: 'SERVICE',
-		title: 'MIXING & MASTERING',
-		description:
-			'Finished songs are refined with depth, clarity, impact and a professional final sound that translates across platforms.',
-		kickerI18nKey: 'services.kicker',
-		titleI18nKey: 'services.mixing.title',
-		descriptionI18nKey: 'services.mixing.description',
-		image: '/images/services/service-alternative-pop-mixing-engineer.webp',
-		alt: 'Fhugawz alternative pop mixing engineer image with warm noir studio atmosphere',
-	},
-	{
-		kicker: 'SERVICE',
-		title: 'DEMO RECONSTRUCTION',
-		description:
-			'AI generated demos or rough references are rebuilt into original human productions with cleaner sound, stronger identity and release ready direction.',
-		kickerI18nKey: 'services.kicker',
-		titleI18nKey: 'services.demo.title',
-		descriptionI18nKey: 'services.demo.description',
-		image: '/images/services/service-cinematic-music-mastering.webp',
-		alt: 'Fhugawz demo reconstruction service image with cinematic music production atmosphere',
-	},
-	{
-		kicker: 'PREMIUM SERVICE',
-		title: 'ARTIST WORLD BUILDING',
-		description:
-			'A complete creative system for artists who need concept, sonic identity, visual direction, release strategy, web presence and content templates.',
-		kickerI18nKey: 'services.premiumKicker',
-		titleI18nKey: 'services.world.title',
-		descriptionI18nKey: 'services.world.description',
-		image: '/images/services/service-demo-recreation-original-production.webp',
-		alt: 'Fhugawz artist world building service image showing original production and emotional reconstruction',
-	},
-];
-
-const posts = [
-	{
-		title: 'Dark Visuals Make Music Memorable',
-		description:
-			'Dark visuals help music become more memorable by creating mood, identity, atmosphere, and visual signals that connect songs, artists, and creative worlds.',
-		meta: 'CREATIVE RESOURCES',
-		metaI18nKey: 'blog.category.creativeResources',
-		titleI18nKey: 'blog.card.visuals.title',
-		descriptionI18nKey: 'blog.card.visuals.description',
-		image: '/images/blog/blog-dark-visuals-music-memory-fhugawz-resources.webp.webp',
-		alt: 'Dark visual identity and atmospheric resources for independent music memory.',
-		href: '/blog/dark-visuals-make-music-memorable',
-	},
-	{
-		title: 'Songs Need More Than Production',
-		description:
-			'A song needs more than production to feel complete. Explore how creative direction, arrangement, emotional identity, and demo reconstruction can turn a rough idea into a finished world.',
-		meta: 'PRODUCTION NOTES',
-		metaI18nKey: 'blog.category.productionNotes',
-		titleI18nKey: 'blog.card.demo.title',
-		descriptionI18nKey: 'blog.card.demo.description',
-		image: '/images/blog/blog-from-demo-to-direction-music-production-fhugawz.webp.webp',
-		alt: 'Music production direction from demo to finished song world.',
-		href: '/blog/songs-need-more-than-production',
-	},
-	{
-		title: 'BUILDING AXIOMS',
-		description:
-			'A first note on building a dark experimental music project from fracture, memory and proof, and on how a difficult experience can become songs, visuals and artistic direction.',
-		metaI18nKey: 'diary.cardKicker',
-		titleI18nKey: 'diary.building.title',
-		descriptionI18nKey: 'diary.building.description',
-		image: '/images/blog/building-axioms/building-axioms-dark-pop-origin-hero.webp.webp',
-		alt: 'Fhugawz blog image for Building Axioms with cinematic dark experimental music project visuals',
-		href: '/blog/building-axioms',
-	},
-	{
-		title: 'WHY FHUGAWZ EXISTS',
-		description:
-			'A personal note on music, design, recovery and the long process of turning scattered influences into a dark experimental music world.',
-		metaI18nKey: 'diary.cardKicker',
-		titleI18nKey: 'diary.exists.title',
-		descriptionI18nKey: 'diary.exists.description',
-		image: '/images/blog/why-fhugawz-exists/why-fhugawz-exists-music-origin-hero.webp.webp',
-		alt: 'Early musical origin and dark experimental identity behind Fhugawz',
-		href: '/blog/why-fhugawz-exists',
-	},
-	{
-		title: 'THE SOUND OF RECONSTRUCTION',
-		description:
-			'Where AI sketches the outline, real production gives the song its body, its flaws and the emotional tension that makes dark experimental music feel human.',
-		metaI18nKey: 'diary.cardKicker',
-		titleI18nKey: 'diary.sound.title',
-		descriptionI18nKey: 'diary.sound.description',
-		image: '/images/blog/sound-of-reconstruction/sound-of-reconstruction-demo-recreation-hero.webp.webp',
-		alt: 'AI demo recreation and emotional dark experimental music production process',
-		href: '/blog/sound-of-reconstruction',
-	},
-	{
-		title: 'BUILDING AN INDEPENDENT ARTIST WORLD',
-		description:
-			'A practical note on turning songs, visuals, story and release strategy into a coherent artistic world that people can recognize, follow and remember.',
-		meta: 'CREATIVE RESOURCES',
-		metaI18nKey: 'blog.category.creativeResources',
-		titleI18nKey: 'diary.world.title',
-		descriptionI18nKey: 'diary.world.description',
-		image:
-			'/images/blog/building-an-independent-artist-world/building-independent-artist-world-hero.webp.webp',
-		alt: 'Independent artist world building through music, branding and visual identity.',
-		href: '/blog/every-album-is-an-era',
-	},
-];
-
-const jsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'MusicGroup',
-	name: 'FHUGAWZ',
-	url: 'https://fhugawz.com',
-	description:
-		'Dark experimental music, original production and artist world building for songs that need more than a release plan.',
-	image: 'https://fhugawz.com/images/hero/fhugawz-cinematic-dark-pop-hero.webp',
+const currentWorld = publishedWorlds.find((world) => world.featured);
+const [featuredEntry, ...secondaryEntries] = selectedJournalEntries;
+if (!currentWorld || !featuredEntry) throw new Error('The artist homepage requires featured content.');
+const heroLineOne = { en: 'One story told through', es: 'Una historia contada' };
+const heroLineTwo = { en: 'thirteen worlds.', es: 'a través de trece mundos.' };
+const heroEnter = { en: 'Enter the Worlds', es: 'Entrar a los mundos' };
+const projectHeadline = {
+	en: 'Narrative Music Universe',
+	es: 'Universo musical narrativo',
 };
+const projectRotatingTitles = [
+	projectHeadline,
+	{ en: 'Where Memory Becomes Fiction', es: 'Donde la memoria se convierte en ficción' },
+	{ en: 'One Story, Many Forms', es: 'Una historia, muchas formas' },
+];
+const projectSummary = {
+	en: 'Fhugawz begins in autobiographical memory and gradually moves toward speculative fiction, horror, surrealism and transformation. Music, narrative and visual direction evolve together as one continuous work.',
+	es: 'Fhugawz comienza en la memoria autobiográfica y avanza gradualmente hacia la ficción especulativa, el horror, el surrealismo y la transformación. Música, narrativa y dirección visual evolucionan como una sola obra continua.',
+};
+const projectNote = {
+	en: '13 connected worlds · one continuous narrative work',
+	es: '13 mundos conectados · una obra narrativa continua',
+};
+const journalLabel = { en: 'Journal', es: 'Journal' };
+const journalTitle = { en: 'Inside the Work', es: 'Dentro del proceso' };
+const journalDescription = {
+	en: 'Notes from inside the work: process, evolution, experiments, references and the decisions shaping Fhugawz as it develops.',
+	es: 'Notas desde dentro del proceso: evolución, experimentos, referencias y las decisiones que van dando forma a Fhugawz mientras el proyecto se desarrolla.',
+};
+const closingTitle = {
+	en: 'Follow the Story as It Becomes Real',
+	es: 'Sigue la historia mientras se vuelve real',
+};
+const closingDescription = {
+	en: 'Follow the releases, trace the ideas behind them, or reach out directly to enter the world from another angle.',
+	es: 'Sigue los lanzamientos, recorre las ideas detrás de ellos o escríbenos directamente para entrar al mundo desde otro ángulo.',
+};
+const jsonLd = { '@context': 'https://schema.org', '@type': 'MusicGroup', name: 'FHUGAWZ', url: 'https://fhugawz.com', description: artistUi.home.seo.description.en, image: 'https://fhugawz.com/images/hero/fhugawz-cinematic-dark-pop-hero.webp' };
 ---
 
-<Layout
-	title="Fhugawz — Dark Experimental Music & Visual Worlds"
-	description="Dark experimental music, original production and artist world building for songs that need more than a release plan."
-	image="/images/hero/fhugawz-cinematic-dark-pop-hero.webp"
-	imageAlt="Fhugawz dark experimental music visual portrait"
-	jsonLd={jsonLd}
->
-	<Hero
-		kicker="CINEMATIC DARK EXPERIMENTAL MUSIC"
-		title="FHUGAWZ"
-		subtitle="Songs for those who survive the collapse"
-		description="A dark experimental music project shaped around memory, rupture and reconstruction, where each release becomes a world of sound, image and emotional evidence."
-		image="/images/hero/fhugawz-cinematic-dark-pop-hero.webp"
-		alt="Cinematic dark experimental night scene with amber light representing the Fhugawz universe."
-		secondaryActionLabel="VIEW PROJECTS"
-		kickerI18nKey="hero.kicker"
-		subtitleI18nKey="hero.subtitle"
-		descriptionI18nKey="hero.description"
-		primaryActionI18nKey="hero.primaryAction"
-		secondaryActionI18nKey="hero.secondaryAction"
-	/>
+<Layout title={artistUi.home.seo.title.en} spanishTitle={artistUi.home.seo.title.es} description={artistUi.home.seo.description.en} spanishDescription={artistUi.home.seo.description.es} image="/images/hero/fhugawz-cinematic-dark-pop-hero.webp" imageAlt={artistUi.home.hero.imageAlt.en} jsonLd={jsonLd}>
+	<main class="cinematic-home">
+		<section class="opening-frame" aria-labelledby="opening-title">
+			<div class="opening-visual">
+				<img class="opening-image" src="/images/hero/fhugawz-cinematic-dark-pop-hero.webp" alt={localize(artistUi.home.hero.imageAlt, 'en')} {...localizedAltAttributes(artistUi.home.hero.imageAlt)} fetchpriority="high" decoding="async" />
+				<div class="opening-foreground" data-hero-foreground aria-hidden="true"></div>
+			</div>
+			<div class="opening-grade" aria-hidden="true"></div>
+			<div class="site-shell opening-content">
+				<div class="opening-copy">
+					<div class="opening-meta">
+						<span>01 / 13</span>
+						<p {...localizedTextAttributes(artistUi.home.hero.kicker)}>{localize(artistUi.home.hero.kicker, 'en')}</p>
+					</div>
+					<h1 id="opening-title" class="opening-statement">
+						<span {...localizedTextAttributes(heroLineOne)}>{localize(heroLineOne, 'en')}</span>
+						<span {...localizedTextAttributes(heroLineTwo)}>{localize(heroLineTwo, 'en')}</span>
+					</h1>
+					<nav class="opening-actions" aria-label="Introduction">
+						<a class="opening-primary" href="/worlds"><span {...localizedTextAttributes(heroEnter)}>{localize(heroEnter, 'en')}</span><span aria-hidden="true">↗</span></a>
+						<a class="opening-listen" href="#selected-listening" {...localizedTextAttributes(artistUi.home.hero.listen)}>{localize(artistUi.home.hero.listen, 'en')}</a>
+					</nav>
+				</div>
+			</div>
+		</section>
 
-	<section class="section home-question">
-		<div class="site-shell home-question-grid">
-			<div class="home-question-heading">
-				<p class="section-kicker" data-i18n="axioms.kicker">NEW PROJECT</p>
-				<h2 class="home-question-title" data-i18n="axioms.title">AXIOMS</h2>
-				<a class="button primary" href="/projects/axioms" data-i18n="axioms.action">EXPLORE THE ALBUM</a>
+		<section class="manifesto" aria-labelledby="manifesto-title">
+			<video
+				class="project-intro-background"
+				data-project-intro-video
+				autoplay
+				muted
+				loop
+				playsinline
+				disablepictureinpicture
+				disableremoteplayback
+				controlslist="nodownload nofullscreen noremoteplayback"
+				tabindex="-1"
+				preload="metadata"
+				poster="/media/home/project/fhugawz-narrative-universe-night-city-poster.webp"
+				aria-hidden="true"
+			>
+				<source src="/media/home/project/fhugawz-narrative-universe-night-city.mp4" type="video/mp4" />
+			</video>
+			<div class="project-intro-overlay" aria-hidden="true"></div>
+			<div class="project-intro-inner">
+				<div class="project-intro-marker" aria-hidden="true"><span></span></div>
+				<p class="section-kicker" {...localizedTextAttributes(artistUi.home.project.kicker)}>{localize(artistUi.home.project.kicker, 'en')}</p>
+				<h2 id="manifesto-title" class="project-intro-title" data-project-title-rotator>
+					{projectRotatingTitles.map((title, index) => <span class:list={{ 'is-active': index === 0 }} {...localizedTextAttributes(title)}>{localize(title, 'en')}</span>)}
+				</h2>
+				<p class="project-intro-summary" {...localizedTextAttributes(projectSummary)}>{localize(projectSummary, 'en')}</p>
+				<div class="project-intro-divider" aria-hidden="true"></div>
+				<p class="project-intro-note" {...localizedTextAttributes(projectNote)}>{localize(projectNote, 'en')}</p>
 			</div>
-			<div class="home-question-copy">
-				<p data-i18n="axioms.description">
-					The recent Fhugawz project turns fracture into rhythm, city lights into
-					confession and solitude into something that still moves.
-				</p>
-			</div>
-		</div>
-	</section>
+		</section>
 
-	<div class="site-shell">
-		<WhatsAppLead context="home" />
-	</div>
+		<CurrentWorldFeature world={currentWorld} />
+		<WorldCatalogue worlds={publishedWorlds} />
 
-	<section class="section tight home-projects">
-		<div class="site-shell">
-			<div class="section-header">
-				<p class="section-kicker" data-i18n="projects.kicker">ALBUM WORLDS</p>
-				<h2 class="section-title" data-i18n="projects.title">PROJECTS</h2>
+		<section class="field-notes" aria-labelledby="journal-title">
+			<div class="site-shell field-notes-head">
+				<p class="field-notes-label" {...localizedTextAttributes(journalLabel)}>{localize(journalLabel, 'en')}</p>
+				<h2 id="journal-title" {...localizedTextAttributes(journalTitle)}>{localize(journalTitle, 'en')}</h2>
+				<p {...localizedTextAttributes(journalDescription)}>{localize(journalDescription, 'en')}</p>
 			</div>
-			<div class="card-grid">
-				{projects.map((project) => <ProjectCard {...project} />)}
+			<div class="site-shell field-notes-layout">
+				<article class="featured-note"><a href={featuredEntry.href}><figure><img src={featuredEntry.image} alt={localize(featuredEntry.alt, 'en')} {...localizedAltAttributes(featuredEntry.alt)} loading="lazy" decoding="async" /><time class="featured-note-date" datetime={featuredEntry.date}>{featuredEntry.date}</time><div class="featured-note-copy"><p class="note-meta"><span {...localizedTextAttributes(featuredEntry.category)}>{localize(featuredEntry.category, 'en')}</span></p><h3 {...localizedTextAttributes(featuredEntry.title)}>{localize(featuredEntry.title, 'en')}</h3><p {...localizedTextAttributes(featuredEntry.excerpt)}>{localize(featuredEntry.excerpt, 'en')}</p></div></figure></a></article>
+				<div class="secondary-notes">{secondaryEntries.map((entry) => <article><a href={entry.href}><img src={entry.image} alt={localize(entry.alt, 'en')} {...localizedAltAttributes(entry.alt)} loading="lazy" decoding="async" /><div><p class="note-meta"><span {...localizedTextAttributes(entry.category)}>{localize(entry.category, 'en')}</span><time datetime={entry.date}>{entry.date}</time></p><h3 {...localizedTextAttributes(entry.title)}>{localize(entry.title, 'en')}</h3></div></a></article>)}</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<section class="section audio-fragments">
-		<div class="site-shell">
-			<div class="section-header">
-				<p class="section-kicker" data-i18n="audio.kicker">SELECTED SIGNALS</p>
-				<h2 class="section-title" data-i18n="audio.title" data-i18n-mobile-linebreaks>AUDIO FRAGMENTS</h2>
+		<section class="authorship" aria-labelledby="creator-title">
+			<div class="site-shell authorship-inner">
+				<div class="authorship-image"><img src="/images/creator/jean-guevara-creator-direction.webp" alt={localize(artistUi.home.creator.imageAlt, 'en')} {...localizedAltAttributes(artistUi.home.creator.imageAlt)} loading="lazy" decoding="async" /></div>
+				<div class="authorship-copy"><p class="section-kicker" {...localizedTextAttributes(artistUi.home.creator.kicker)}>{localize(artistUi.home.creator.kicker, 'en')}</p><h2 id="creator-title" {...localizedTextAttributes(artistUi.home.creator.title)}>{localize(artistUi.home.creator.title, 'en')}</h2><p class="creator-role" {...localizedTextAttributes(artistUi.home.creator.role)}>{localize(artistUi.home.creator.role, 'en')}</p><p {...localizedTextAttributes(artistUi.home.creator.description)}>{localize(artistUi.home.creator.description, 'en')}</p></div>
 			</div>
-			<div class="card-grid">
-				{tracks.map((track) => <TrackPreviewCard {...track} />)}
-			</div>
-		</div>
-	</section>
+		</section>
 
-	<section class="section paper-band home-studio">
-		<div class="site-shell home-studio-grid">
-			<div class="home-studio-copy">
-				<p class="section-kicker" data-i18n="studio.kicker">STUDIO</p>
-				<h2 class="section-title" data-i18n="studio.title" data-i18n-mobile-linebreaks>BUILD THE SONG WORLD</h2>
-				<p class="section-copy" data-i18n="studio.description">
-					For artists with a strong idea but no finished world yet, Fhugawz Studio turns
-					fragments, demos and references into complete productions with sound, image and
-					direction.
-				</p>
-				<a class="button primary home-studio-cta" href="/services" data-i18n="studio.action">MORE INFORMATION</a>
+		<section class="final-signal" aria-labelledby="closing-title">
+			<div class="site-shell final-signal-grid">
+				<div class="final-signal-feature">
+					<img src="/images/blog/building-an-independent-artist-world/building-independent-artist-world-release-strategy.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+					<div class="final-signal-feature-copy"><p class="section-kicker" {...localizedTextAttributes(artistUi.home.closing.kicker)}>{localize(artistUi.home.closing.kicker, 'en')}</p><h2 id="closing-title" {...localizedTextAttributes(closingTitle)}>{localize(closingTitle, 'en')}</h2></div>
+				</div>
+				<div class="final-signal-copy"><p {...localizedTextAttributes(closingDescription)}>{localize(closingDescription, 'en')}</p><a class="contact-signal" href="/contact"><span {...localizedTextAttributes(artistUi.home.closing.contact)}>{localize(artistUi.home.closing.contact, 'en')}</span><span aria-hidden="true">↗</span></a><SocialLinks /></div>
 			</div>
-			<div class="home-service-grid">
-				{services.map((service) => <ServiceCard {...service} />)}
-			</div>
-		</div>
-	</section>
-
-	<section class="section home-resources">
-		<div class="site-shell home-resources-grid">
-			<div class="home-resources-copy">
-				<p class="section-kicker" data-i18n="home.resources.kicker">RESOURCE INDEX</p>
-				<h2 class="section-title" data-i18n="home.resources.title">Creative Resources</h2>
-				<p class="section-copy" data-i18n="home.resources.description">
-					Explore free and premium AI assisted visual packs, atmospheric assets, experimental
-					music resources, and tools connected to the Fhugawz universe.
-				</p>
-			</div>
-			<div class="home-resources-panel">
-				<p class="meta" data-i18n="home.resources.cardMeta">RESOURCES</p>
-				<h3 class="card-title" data-i18n="home.resources.cardTitle">Free packs, premium assets, tools</h3>
-				<p class="card-copy" data-i18n="home.resources.cardDescription">
-					A growing index for visual world building, dark atmosphere, experimental audio, and
-					creative systems.
-				</p>
-				<a class="button primary" href="/resources" data-i18n="home.resources.button">Explore Resources</a>
-			</div>
-		</div>
-	</section>
-
-	<section class="section tight production-diary">
-		<div class="site-shell">
-			<div class="section-header">
-				<p class="section-kicker" data-i18n="diary.kicker">FIELD NOTES</p>
-				<h2 class="section-title" data-i18n="diary.title">Latest from the Blog</h2>
-				<p class="section-copy" data-i18n="diary.description">
-					Notes on music, production, tools and the process of building an independent artistic
-					world in public, step by step, from the inside.
-				</p>
-			</div>
-			<div class="card-grid two">
-				{posts.map((post) => <BlogCard {...post} />)}
-			</div>
-		</div>
-	</section>
+		</section>
+	</main>
 </Layout>
+
+<script>
+	import { gsap } from 'gsap';
+	import { SplitText } from 'gsap/SplitText';
+
+	gsap.registerPlugin(SplitText);
+
+	const projectMotionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+	const projectVideo = document.querySelector('[data-project-intro-video]');
+	const projectTitleRotator = document.querySelector('[data-project-title-rotator]');
+	const projectTitles = projectTitleRotator ? Array.from(projectTitleRotator.querySelectorAll<HTMLElement>('span')) : [];
+	let projectTitleIndex = 0;
+	let projectTitleTimer = 0;
+	let projectTitleRun = 0;
+	let activeProjectSplit: SplitText | null = null;
+	let activeProjectTitle: HTMLElement | null = null;
+	let activeProjectTween: gsap.core.Tween | null = null;
+	const projectTitleHoldDuration = 1800;
+
+	const projectTitleText = (title) =>
+		document.documentElement.dataset.language === 'es'
+			? title.dataset.artistEs || ''
+			: title.dataset.artistEn || '';
+
+	const restoreProjectTitle = (title) => {
+		title.textContent = projectTitleText(title);
+		title.removeAttribute('aria-label');
+		title.classList.remove('is-active');
+	};
+
+	const revertActiveProjectSplit = () => {
+		activeProjectTween?.kill();
+		activeProjectTween = null;
+		if (activeProjectSplit) {
+			gsap.killTweensOf(activeProjectSplit.chars);
+			activeProjectSplit.revert();
+		}
+		activeProjectSplit = null;
+		if (activeProjectTitle) {
+			gsap.killTweensOf(activeProjectTitle);
+			gsap.set(activeProjectTitle, { clearProps: 'opacity,transform' });
+		}
+		activeProjectTitle = null;
+	};
+
+	const stopProjectTitleRotation = () => {
+		window.clearTimeout(projectTitleTimer);
+		projectTitleTimer = 0;
+		projectTitleRun += 1;
+		projectTitleIndex = 0;
+		revertActiveProjectSplit();
+		projectTitles.forEach((title, index) => {
+			gsap.killTweensOf(title);
+			gsap.set(title, { clearProps: 'opacity,transform' });
+			restoreProjectTitle(title);
+			title.classList.toggle('is-active', index === 0);
+		});
+	};
+
+	const enterProjectTitle = async (title, run) => {
+		title.textContent = projectTitleText(title);
+		title.classList.add('is-active');
+		activeProjectTitle = title;
+		activeProjectSplit = SplitText.create(title, {
+			type: 'words,chars',
+			smartWrap: true,
+			wordsClass: 'split-word',
+			charsClass: 'split-char',
+		});
+		activeProjectTween = gsap.fromTo(
+			activeProjectSplit.chars,
+			{ opacity: 0, y: 32 },
+			{ opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', stagger: 0.055, force3D: true }
+		);
+		await activeProjectTween.then();
+		if (run !== projectTitleRun || projectMotionPreference.matches) return;
+	};
+
+	const rotateProjectTitle = async (run) => {
+		if (run !== projectTitleRun || projectMotionPreference.matches) return;
+		const current = projectTitles[projectTitleIndex];
+		const nextIndex = (projectTitleIndex + 1) % projectTitles.length;
+		const next = projectTitles[nextIndex];
+		await gsap.to(current, { opacity: 0, y: -6, scale: 0.99, duration: 0.35, ease: 'power2.inOut', force3D: true });
+		if (run !== projectTitleRun || projectMotionPreference.matches) return;
+		current.classList.remove('is-active');
+		revertActiveProjectSplit();
+		projectTitleIndex = nextIndex;
+		await enterProjectTitle(next, run);
+		if (run === projectTitleRun && !projectMotionPreference.matches) {
+			projectTitleTimer = window.setTimeout(() => void rotateProjectTitle(run), projectTitleHoldDuration);
+		}
+	};
+
+	const startProjectTitleRotation = () => {
+		if (projectMotionPreference.matches || projectTitles.length < 2 || projectTitleTimer) return;
+		const run = projectTitleRun;
+		projectTitleTimer = window.setTimeout(() => void rotateProjectTitle(run), 3500);
+	};
+
+	const syncProjectMotion = () => {
+		if (projectMotionPreference.matches) {
+			stopProjectTitleRotation();
+			if (projectVideo instanceof HTMLVideoElement) projectVideo.pause();
+			return;
+		}
+		startProjectTitleRotation();
+		if (projectVideo instanceof HTMLVideoElement) projectVideo.play().catch(() => undefined);
+	};
+
+	const initializeProjectTitleMotion = async () => {
+		if (document.fonts?.ready) await document.fonts.ready;
+		if (!projectMotionPreference.matches && projectTitles[0]) await enterProjectTitle(projectTitles[0], projectTitleRun);
+		syncProjectMotion();
+	};
+
+	void initializeProjectTitleMotion();
+	projectMotionPreference.addEventListener('change', () => {
+		stopProjectTitleRotation();
+		if (!projectMotionPreference.matches && projectTitles[0]) void enterProjectTitle(projectTitles[0], projectTitleRun);
+		syncProjectMotion();
+	});
+	window.addEventListener('fhugawz:languagechange', () => {
+		if (projectMotionPreference.matches) return;
+		stopProjectTitleRotation();
+		if (projectTitles[0]) void enterProjectTitle(projectTitles[0], projectTitleRun);
+		startProjectTitleRotation();
+	});
+</script>
+
+<style>
+	.cinematic-home{overflow:clip;background:#070a0c}.opening-frame{position:relative;display:flex;min-height:calc(100svh - 72px);align-items:flex-end;overflow:hidden;background:#070a0c}.opening-image,.opening-grade{position:absolute;inset:0;width:100%;height:100%}.opening-image{object-fit:cover;object-position:56% 42%;filter:saturate(.72) contrast(1.08);transform:scale(1.01)}.opening-grade{background:linear-gradient(90deg,rgba(4,7,9,.92) 0%,rgba(4,7,9,.67) 42%,rgba(4,7,9,.1) 82%),linear-gradient(0deg,#070a0c 0%,transparent 46%)}.opening-content{position:relative;z-index:1;width:100%;padding-top:18vh;padding-bottom:clamp(42px,7vh,76px)}.opening-content h1{width:min-content;margin:18px 0 0;font-family:var(--font-display);font-size:min(16.7vw,15rem);font-weight:900;letter-spacing:-.065em;line-height:.7;text-transform:uppercase}.opening-statement{max-width:760px;margin:clamp(42px,7vh,76px) 0 0;font-size:clamp(1.75rem,3vw,3.25rem);letter-spacing:-.025em;line-height:1.06}.opening-rail{display:grid;grid-template-columns:minmax(260px,1fr) auto;gap:40px;align-items:end;margin-top:clamp(42px,7vh,74px);padding-top:18px;border-top:1px solid rgba(244,240,231,.22)}.opening-rail>p{max-width:380px;margin:0;color:rgba(244,240,231,.58);font-size:.84rem}.opening-rail nav{display:flex;flex-wrap:wrap;gap:18px 36px;justify-content:flex-end}.opening-rail a,.text-signal{padding-bottom:5px;border-bottom:1px solid var(--signal-orange);font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;transition:color .25s ease,border-color .25s ease}.opening-rail a:hover,.opening-rail a:focus-visible,.text-signal:hover,.text-signal:focus-visible{color:var(--signal-orange)}.opening-index{position:absolute;right:20px;bottom:50%;z-index:1;color:rgba(244,240,231,.48);font-family:var(--font-display);font-size:.72rem;letter-spacing:.2em;writing-mode:vertical-rl}
+	.manifesto{position:relative;padding:clamp(105px,15vw,220px) 0 clamp(88px,12vw,170px);background:#eee9de;color:#101417}.manifesto-ghost{position:absolute;top:-.08em;right:-.02em;color:rgba(16,20,23,.045);font-family:var(--font-display);font-size:clamp(18rem,47vw,48rem);font-weight:900;letter-spacing:-.1em;line-height:.8;pointer-events:none}.manifesto-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.22fr) minmax(280px,.78fr);gap:clamp(50px,10vw,150px);align-items:end}.manifesto .section-kicker,.authorship .section-kicker{color:#9b3512}.manifesto h2{max-width:900px;margin:18px 0 0;font-family:var(--font-display);font-size:clamp(4rem,8.6vw,8.8rem);letter-spacing:-.055em;line-height:.83;text-transform:uppercase}.manifesto-copy{position:relative;max-width:560px;padding-left:28px;border-left:1px solid rgba(16,20,23,.24);font-size:clamp(1rem,1.35vw,1.18rem);line-height:1.72}.manifesto-copy p{margin:0}.manifesto-copy p+p{margin-top:24px;color:rgba(16,20,23,.62)}.process-line{position:relative;display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(75px,11vw,140px);padding-left:0;list-style:none}.process-line li{display:flex;gap:16px;align-items:baseline;border-top:1px solid rgba(16,20,23,.24);padding:14px 20px 0 0}.process-line li:before{position:absolute;width:6px;height:6px;margin-top:-18px;border-radius:50%;content:'';background:#9b3512}.process-line span{color:#9b3512;font-family:var(--font-display);font-size:1.2rem}.process-line strong{font-size:.66rem;letter-spacing:.09em;text-transform:uppercase}
+	.field-notes{padding:clamp(100px,13vw,180px) 0;background:#0e1317}.field-notes-head{display:flex;gap:32px;align-items:end;justify-content:space-between;margin-bottom:clamp(50px,7vw,86px)}.field-notes h2{margin:13px 0 0;font-family:var(--font-display);font-size:clamp(4.6rem,10vw,10rem);letter-spacing:-.06em;line-height:.75;text-transform:uppercase}.field-notes-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.65fr);gap:clamp(40px,8vw,120px)}.featured-note a{display:block}.featured-note figure{aspect-ratio:16/9;margin:0;overflow:hidden}.featured-note img,.secondary-notes img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1),filter .4s ease}.featured-note a:hover img,.secondary-notes a:hover img{transform:scale(1.025);filter:brightness(1.07)}.featured-note-copy{width:min(88%,720px);margin:-54px 0 0 auto;padding:28px 0 0 34px;background:#0e1317}.note-meta{display:flex;gap:15px;justify-content:space-between;margin:0;color:var(--signal-orange);font-size:.63rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase}.note-meta time{color:rgba(244,240,231,.42)}.featured-note h3{margin:14px 0;font-family:var(--font-display);font-size:clamp(2.8rem,5vw,5.6rem);letter-spacing:-.045em;line-height:.87;text-transform:uppercase}.featured-note-copy>p:last-child{max-width:600px;margin:0;color:rgba(244,240,231,.6);line-height:1.55}.secondary-notes{display:flex;flex-direction:column;justify-content:flex-end}.secondary-notes article{padding:24px 0;border-top:1px solid rgba(244,240,231,.16)}.secondary-notes a{display:grid;grid-template-columns:112px 1fr;gap:22px;align-items:center}.secondary-notes img{aspect-ratio:1}.secondary-notes .note-meta{display:block}.secondary-notes .note-meta time{display:none}.secondary-notes h3{margin:12px 0 0;font-family:var(--font-display);font-size:clamp(1.55rem,2.5vw,2.5rem);line-height:.95;text-transform:uppercase}
+	@media(max-width:900px){.manifesto-grid,.field-notes-layout{grid-template-columns:1fr}.manifesto-copy{max-width:660px;margin-left:22%}.field-notes-layout{gap:55px}.secondary-notes{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}}
+	@media(max-width:720px){.opening-frame{min-height:max(700px,calc(100svh - 64px))}.opening-image{object-position:64% center}.opening-grade{background:linear-gradient(0deg,#070a0c 0%,rgba(4,7,9,.7) 55%,rgba(4,7,9,.2) 100%),linear-gradient(90deg,rgba(4,7,9,.5),transparent)}.opening-content{padding-top:150px;padding-bottom:36px}.opening-content h1{width:100%;font-size:min(20vw,5.15rem);white-space:nowrap}.opening-statement{max-width:360px;margin-top:42px;font-size:clamp(1.55rem,7vw,2.05rem)}.opening-rail{grid-template-columns:1fr;gap:24px;margin-top:45px}.opening-rail nav{justify-content:flex-start}.opening-index{display:none}.manifesto{padding:100px 0 85px}.manifesto-ghost{top:.1em;font-size:75vw}.manifesto h2{font-size:clamp(3.55rem,17vw,5.2rem)}.manifesto-copy{margin-left:0;padding-left:20px}.process-line{grid-template-columns:repeat(2,1fr);gap:34px 0;margin-top:70px}.field-notes{padding:95px 0}.field-notes-head{align-items:start}.field-notes h2{font-size:min(20vw,6rem)}.featured-note-copy{width:95%;margin-top:-25px;padding:22px 0 0 20px}.secondary-notes{grid-template-columns:1fr;gap:0}}
+	@media(max-width:480px){.opening-rail nav{flex-direction:column;align-items:flex-start;gap:20px}.field-notes-head{flex-direction:column;align-items:flex-start}.featured-note figure{aspect-ratio:4/5}.secondary-notes a{grid-template-columns:84px 1fr;gap:16px}.process-line strong{max-width:120px}}
+	@media(prefers-reduced-motion:reduce){.opening-rail a,.text-signal,.featured-note img,.secondary-notes img{transition:none}}
+
+	/* Opening-frame language: isolated here so the sections below retain their approved composition. */
+	.opening-frame{min-height:100svh;align-items:stretch;background:#070807}
+	.opening-visual,.opening-grade{position:absolute;inset:0;width:100%;height:100%}
+	.opening-visual{overflow:hidden;background:#070807}
+	.opening-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 42%;filter:saturate(.7) contrast(1.08);transform:scale(1);transition:transform .7s cubic-bezier(.22,1,.36,1)}
+	.opening-foreground{position:absolute;inset:0;z-index:1;pointer-events:none}
+	.opening-grade{z-index:2;background:linear-gradient(90deg,rgba(7,8,7,.78) 0%,rgba(7,8,7,.42) 43%,rgba(7,8,7,.08) 76%),linear-gradient(0deg,rgba(7,8,7,.88) 0%,rgba(7,8,7,.18) 50%,rgba(7,8,7,.1) 100%)}
+	.opening-content{position:relative;z-index:3;display:flex;width:min(1160px,calc(100% - 40px));max-width:1160px;min-height:100svh;flex-direction:column;justify-content:flex-end;padding-top:clamp(112px,15vh,168px);padding-right:0;padding-bottom:clamp(56px,8vh,88px);padding-left:0}
+	.opening-meta{display:flex;gap:18px;align-items:center;color:#a39f96;font-size:.7rem;font-weight:650;letter-spacing:.14em;text-transform:uppercase}
+	.opening-meta span{color:var(--signal-orange)}
+	.opening-meta p{margin:0}
+	.opening-copy{width:100%;max-width:560px;margin:0}
+	.opening-content h1.opening-statement{width:auto;max-width:560px;margin:20px 0 0;color:#f1ede4;font-family:var(--font-sans);font-size:clamp(1.875rem,2.8vw,2.875rem);font-weight:450;letter-spacing:-.025em;line-height:1.12;text-transform:none;white-space:normal}
+	.opening-statement span{display:block}
+	.opening-actions{display:flex;gap:20px 38px;align-items:flex-end;margin-top:clamp(30px,4.5vh,44px)}
+	.opening-primary,.opening-listen{position:relative;display:inline-flex;height:42px;align-items:center;padding:0;font-size:.7rem;font-weight:700;letter-spacing:.13em;line-height:1;text-transform:uppercase}
+	.opening-primary{gap:42px;border-bottom:1px solid rgba(255,90,31,.82);color:#f1ede4}
+	.opening-primary span:last-child{color:var(--signal-orange);font-size:1rem;transition:transform .45s cubic-bezier(.22,1,.36,1)}
+	.opening-primary:hover span:last-child,.opening-primary:focus-visible span:last-child{transform:translate(6px,-2px)}
+	.opening-primary:focus-visible,.opening-listen:focus-visible{outline:1px solid var(--signal-orange);outline-offset:7px}
+	.opening-listen{color:#a39f96;transition:color .4s cubic-bezier(.22,1,.36,1)}
+	.opening-listen::after{position:absolute;right:0;bottom:0;left:0;height:1px;content:'';background:rgba(163,159,150,.48);transform:scaleX(.28);transform-origin:left;transition:transform .45s cubic-bezier(.22,1,.36,1),background-color .45s ease}
+	.opening-listen:hover,.opening-listen:focus-visible{color:#f1ede4}
+	.opening-listen:hover::after,.opening-listen:focus-visible::after{background:var(--signal-orange);transform:scaleX(1)}
+	.opening-frame:hover .opening-image{transform:scale(1.012)}
+
+	@media(max-width:720px){
+		.opening-frame{min-height:max(680px,100svh)}
+		.opening-image{object-position:64% center}
+		.opening-grade{background:linear-gradient(0deg,rgba(7,8,7,.94) 0%,rgba(7,8,7,.46) 55%,rgba(7,8,7,.14) 100%),linear-gradient(90deg,rgba(7,8,7,.48),transparent 76%)}
+		.opening-content{width:100%;max-width:none;min-height:max(680px,100svh);padding-top:96px;padding-right:clamp(20px,6vw,24px);padding-bottom:42px;padding-left:clamp(20px,6vw,24px)}
+		.opening-meta{gap:12px;font-size:.64rem;letter-spacing:.12em}
+		.opening-copy{max-width:340px}
+		.opening-content h1.opening-statement{width:auto;max-width:340px;margin-top:17px;font-size:clamp(1.875rem,8vw,2.25rem);font-weight:450;letter-spacing:-.025em;line-height:1.12;white-space:normal}
+		.opening-actions{align-items:flex-start;flex-direction:column;gap:9px;margin-top:30px}
+		.opening-primary{gap:34px}
+		.opening-listen{font-size:.64rem}
+	}
+
+	@media(prefers-reduced-motion:reduce){
+		.opening-image,.opening-primary span:last-child,.opening-listen,.opening-listen::after{transition:none}
+		.opening-frame:hover .opening-image{transform:none}
+	}
+
+	/* Project introduction: one full-width atmospheric field with centered editorial levels. */
+	.manifesto{position:relative;display:flex;min-height:clamp(690px,63vw,900px);align-items:center;padding:clamp(94px,11vw,154px) 0;background:#090a09;color:#f1ede4;isolation:isolate;overflow:hidden}
+	.manifesto::before{position:absolute;inset:0;z-index:-3;content:'';background:url('/media/home/project/fhugawz-narrative-universe-night-city-poster.webp') center/cover no-repeat}
+	.project-intro-background,.project-intro-overlay{position:absolute;inset:0;width:100%;height:100%}
+	.project-intro-background{z-index:-2;object-fit:cover;object-position:center;filter:saturate(.58) contrast(1.08) brightness(.54);transform:scale(1.015);transition:transform .8s cubic-bezier(.22,1,.36,1),filter .8s cubic-bezier(.22,1,.36,1);pointer-events:none}
+	.project-intro-background::-webkit-media-controls,.project-intro-background::-webkit-media-controls-panel,.project-intro-background::-webkit-media-controls-play-button,.project-intro-background::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
+	.project-intro-overlay{z-index:-1;background:radial-gradient(circle at 50% 48%,rgba(7,8,7,.2) 0%,rgba(7,8,7,.62) 70%,rgba(7,8,7,.9) 100%),linear-gradient(180deg,rgba(7,8,7,.78) 0%,rgba(7,8,7,.3) 42%,rgba(7,8,7,.8) 100%);pointer-events:none}
+	.manifesto:hover .project-intro-background{filter:saturate(.62) contrast(1.08) brightness(.57);transform:scale(1.025)}
+	.project-intro-inner{position:relative;z-index:1;display:flex;width:min(1040px,calc(100% - 48px));flex-direction:column;align-items:center;margin:0 auto;text-align:center}
+	.project-intro-marker{display:flex;width:86px;align-items:center;justify-content:center;margin-bottom:28px}
+	.project-intro-marker::before,.project-intro-marker::after{width:32px;height:1px;content:'';background:rgba(241,237,228,.24)}
+	.project-intro-marker span{width:4px;height:4px;margin:0 9px;background:rgba(241,237,228,.52);transform:rotate(45deg)}
+	.manifesto .project-intro-inner .section-kicker{margin:0;color:#a39f96;font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+	.manifesto .project-intro-inner h2{position:relative;display:grid;width:min(850px,100%);min-height:2.1em;place-items:center;margin:24px 0 0;color:#f1ede4;font-family:var(--font-sans);font-size:clamp(2.5rem,4.2vw,4rem);font-weight:450;letter-spacing:-.035em;line-height:1.04;text-wrap:balance;text-transform:none}
+	.project-intro-title>span{grid-area:1/1;max-width:850px;pointer-events:none;visibility:hidden}
+	.project-intro-title>span.is-active{pointer-events:auto;visibility:visible}
+	.split-word{display:inline-block}
+	.split-char{display:inline-block;will-change:transform,opacity}
+	.project-intro-summary{max-width:900px;margin:38px auto 0;color:rgba(241,237,228,.72);font-size:clamp(1rem,1.22vw,1.125rem);line-height:1.7;text-wrap:pretty}
+	.project-intro-divider{width:min(180px,32vw);height:1px;margin-top:clamp(48px,7vw,78px);background:linear-gradient(90deg,transparent,rgba(241,237,228,.32),transparent)}
+	.project-intro-note{margin:20px 0 0;color:rgba(241,237,228,.58);font-size:.68rem;font-weight:550;letter-spacing:.1em;text-transform:none}
+
+	@media(max-width:700px){
+		.manifesto{min-height:640px;padding:78px 0}
+		.manifesto::before{background-position:57% center}
+		.project-intro-background{object-position:57% center}
+		.project-intro-background{filter:saturate(.52) contrast(1.06) brightness(.46)}
+		.project-intro-overlay{background:linear-gradient(180deg,rgba(7,8,7,.82),rgba(7,8,7,.4) 48%,rgba(7,8,7,.88)),radial-gradient(circle at 50% 50%,rgba(7,8,7,.1),rgba(7,8,7,.68))}
+		.project-intro-inner{width:min(100% - 40px,560px)}
+		.project-intro-marker{margin-bottom:22px}
+		.manifesto .project-intro-inner h2{max-width:420px;margin-top:18px;font-size:clamp(2.25rem,11vw,3.2rem);line-height:1.04}
+		.project-intro-summary{max-width:520px;margin-top:28px;font-size:1rem;line-height:1.62}
+		.project-intro-divider{margin-top:42px}
+		.project-intro-note{max-width:330px;line-height:1.55}
+	}
+
+	@media(prefers-reduced-motion:reduce){
+		.project-intro-background{display:none;transition:none}
+		.project-intro-title>span,.project-intro-title>span.is-active,.split-char{animation:none;transition:none}
+		.manifesto:hover .project-intro-background{transform:scale(1.015)}
+	}
+
+	/* Journal: restrained editorial composition over an atmospheric image field. */
+	.field-notes{position:relative;isolation:isolate;overflow:hidden;padding:clamp(88px,11vw,148px) 0;background:#080a0b}
+	.field-notes::before,.field-notes::after{position:absolute;inset:0;content:'';pointer-events:none}
+	.field-notes::before{z-index:-2;background:url('/images/home/fhugawz-home-journal-atmospheric-background.webp') center/cover no-repeat;filter:saturate(.55) contrast(1.06) brightness(.46) blur(2px);transform:scale(1.015)}
+	.field-notes::after{z-index:-1;background:radial-gradient(circle at 30% 42%,rgba(8,10,11,.32),rgba(8,10,11,.78) 78%),linear-gradient(180deg,rgba(8,10,11,.78),rgba(8,10,11,.58) 48%,rgba(8,10,11,.86))}
+	.field-notes-head{display:block;max-width:860px;margin-inline:auto;margin-bottom:clamp(42px,6vw,72px);text-align:center}
+	.field-notes-label{margin:0;color:rgba(241,237,228,.58);font-size:.72rem;font-weight:500;letter-spacing:.08em;line-height:1.4;text-transform:uppercase}
+	.field-notes-head h2{max-width:660px;margin-top:24px;margin-right:auto;margin-bottom:0;margin-left:auto;color:#f1ede4;font-family:var(--font-sans);font-size:clamp(2.5rem,4.2vw,4rem);font-weight:450;letter-spacing:-.035em;line-height:1.04;text-wrap:balance;text-transform:none}
+	.field-notes-head>p:last-child{max-width:820px;margin-top:18px;margin-inline:auto;margin-bottom:0;color:rgba(241,237,228,.62);font-size:clamp(.92rem,1vw,1rem);font-weight:400;line-height:1.62;text-wrap:balance}
+	.field-notes-layout{display:grid;height:clamp(520px,48vw,690px);grid-template-columns:minmax(0,1.55fr) minmax(300px,.65fr);gap:clamp(24px,4vw,54px)}
+	.featured-note,.featured-note>a,.featured-note figure{height:100%}
+	.featured-note a{display:block}
+	.featured-note figure{position:relative;aspect-ratio:auto;margin:0;overflow:hidden}
+	.featured-note figure::after{position:absolute;inset:0;content:'';background:linear-gradient(180deg,transparent 38%,rgba(5,7,8,.82) 100%);pointer-events:none}
+	.featured-note img{width:100%;height:100%;object-fit:cover}
+	.featured-note-date{position:absolute;top:clamp(22px,3vw,34px);left:clamp(22px,3vw,38px);z-index:1;color:rgba(241,237,228,.68);font-size:.62rem;font-weight:500;letter-spacing:.08em;line-height:1.4}
+	.featured-note-copy{position:absolute;right:0;bottom:0;left:0;z-index:1;width:auto;max-width:760px;margin:0;padding:clamp(26px,4vw,48px);background:transparent}
+	.note-meta{display:flex;gap:15px;justify-content:space-between;margin:0;color:rgba(241,237,228,.62);font-size:.61rem;font-weight:600;letter-spacing:.08em;text-transform:none}
+	.note-meta span{color:rgba(255,90,31,.82)}
+	.note-meta time{color:rgba(241,237,228,.4)}
+	.featured-note h3{margin:12px 0 10px;font-family:var(--font-sans);font-size:clamp(2rem,3.7vw,3.5rem);font-weight:450;letter-spacing:-.035em;line-height:1.02;text-transform:none}
+	.featured-note-copy>p:last-child{max-width:600px;margin:0;color:rgba(241,237,228,.66);font-size:.9rem;line-height:1.6}
+	.secondary-notes{display:grid;height:100%;grid-template-rows:repeat(2,minmax(0,1fr))}
+	.secondary-notes article{min-height:0;overflow:hidden;padding:0}
+	.secondary-notes a{position:relative;display:block;height:100%;overflow:hidden}
+	.secondary-notes a::after{position:absolute;inset:0;content:'';background:linear-gradient(180deg,rgba(5,7,8,.78) 0%,rgba(5,7,8,.28) 40%,transparent 72%);pointer-events:none}
+	.secondary-notes img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;filter:saturate(.75) brightness(.82)}
+	.secondary-notes article>a>div{position:absolute;top:0;right:0;left:0;z-index:1;padding:clamp(20px,2.8vw,32px)}
+	.secondary-notes .note-meta{display:block}
+	.secondary-notes .note-meta time{display:none}
+	.secondary-notes h3{max-width:300px;margin:9px 0 0;font-family:var(--font-sans);font-size:clamp(1rem,1.3vw,1.22rem);font-weight:430;letter-spacing:-.018em;line-height:1.22;text-transform:none}
+
+	@media(max-width:900px){
+		.field-notes-layout{height:auto;grid-template-columns:1fr;gap:26px}
+		.featured-note figure{height:auto;aspect-ratio:16/10}
+		.secondary-notes{height:auto;grid-template-columns:repeat(2,1fr);grid-template-rows:none;gap:20px}
+		.secondary-notes article{min-height:260px}
+	}
+
+	@media(max-width:720px){
+		.field-notes{padding:76px 0}
+		.field-notes-head{margin-bottom:36px}
+		.field-notes-head h2{margin-top:18px;font-size:clamp(2.25rem,11vw,3.2rem)}
+		.field-notes-head>p:last-child{margin-top:18px;font-size:.94rem;line-height:1.6}
+		.featured-note figure{aspect-ratio:4/5}
+		.featured-note h3{font-size:2rem}
+		.featured-note-copy>p:last-child{font-size:.82rem}
+		.secondary-notes{grid-template-columns:1fr;gap:0}
+		.secondary-notes article{min-height:240px}
+		.secondary-notes article+article{margin-top:20px}
+	}
+
+	/* Creator / Direction: a unified dark editorial field. */
+	.authorship{position:relative;display:flex;min-height:clamp(760px,96vh,980px);align-items:center;overflow:hidden;padding:clamp(72px,9vh,104px) 0;background:#080a0b;color:#f1ede4;isolation:isolate}
+	.authorship::before,.authorship::after{position:absolute;inset:0;content:'';pointer-events:none}
+	.authorship::before{z-index:-2;background:url('/images/blog/why-fhugawz-exists/why-fhugawz-exists-dark-pop-creative-world.webp.webp') center/cover no-repeat;filter:blur(10px) saturate(.5) contrast(1.08) brightness(.3);transform:scale(1.055)}
+	.authorship::after{z-index:-1;background:radial-gradient(circle at 25% 48%,rgba(8,10,11,.28),rgba(8,10,11,.7) 58%,rgba(8,10,11,.9) 100%),linear-gradient(90deg,rgba(8,10,11,.58),rgba(8,10,11,.84))}
+	.authorship-inner{display:grid;grid-template-columns:minmax(320px,.42fr) minmax(360px,.48fr);gap:clamp(48px,8vw,120px);align-items:center;justify-content:space-between}
+	.authorship-image{position:relative;width:min(100%,500px);height:clamp(520px,48vw,620px);min-height:0;justify-self:start;overflow:hidden}
+	.authorship-image::after{position:absolute;inset:0;content:'';background:linear-gradient(180deg,rgba(5,7,8,.04),rgba(5,7,8,.2) 72%,rgba(5,7,8,.52));pointer-events:none}
+	.authorship-image img{width:100%;height:100%;object-fit:cover;object-position:center 42%;filter:saturate(.72) contrast(1.06) brightness(.84)}
+	.authorship-copy{display:flex;max-width:680px;align-self:center;flex-direction:column;justify-content:center;padding:0}
+	.authorship .section-kicker{margin:0;color:rgba(241,237,228,.58);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+	.authorship h2{max-width:620px;margin:24px 0 0;color:#f1ede4;font-family:var(--font-sans);font-size:clamp(2.5rem,4.2vw,4rem);font-weight:450;letter-spacing:-.035em;line-height:1.04;text-wrap:balance;text-transform:none}
+	.creator-role{position:relative;max-width:650px;margin:26px 0 0;color:rgba(241,237,228,.86);font-size:clamp(1rem,1.25vw,1.2rem);font-weight:450;line-height:1.45;text-wrap:pretty}
+	.creator-role::before{position:absolute;top:.08em;left:-18px;width:2px;height:26px;content:'';background:rgba(255,90,31,.78)}
+	.authorship-copy>p:last-child{max-width:530px;margin:22px 0 0;color:rgba(241,237,228,.64);font-size:clamp(1rem,1.22vw,1.125rem);line-height:1.7}
+
+	@media(min-width:1100px){
+		.creator-role{white-space:nowrap}
+	}
+
+	@media(max-width:900px){
+		.authorship{min-height:760px;padding:76px 0}
+		.authorship-inner{grid-template-columns:minmax(260px,.42fr) minmax(0,.48fr);gap:clamp(38px,6vw,64px)}
+		.authorship-image{height:clamp(480px,62vw,560px)}
+	}
+
+	@media(max-width:700px){
+		.authorship{display:block;min-height:0;padding:76px 0}
+		.authorship::before{background-position:56% center;filter:blur(9px) saturate(.45) contrast(1.06) brightness(.26)}
+		.authorship::after{background:linear-gradient(180deg,rgba(8,10,11,.7),rgba(8,10,11,.84))}
+		.authorship-inner{grid-template-columns:1fr;gap:46px}
+		.authorship-image{width:min(100%,430px);height:auto;aspect-ratio:4/5;justify-self:start}
+		.authorship-copy{max-width:560px}
+		.authorship h2{margin-top:18px;font-size:clamp(2.25rem,11vw,3.2rem)}
+		.creator-role{margin-top:24px}
+	}
+
+	/* Final signal: balanced closing composition over a restrained cinematic field. */
+	.final-signal{position:relative;display:flex;min-height:clamp(620px,76vh,780px);align-items:center;overflow:hidden;padding:clamp(80px,9vw,112px) 0;background:#07090a;isolation:isolate}
+	.final-signal::before,.final-signal::after{position:absolute;inset:0;content:'';pointer-events:none}
+	.final-signal::before{z-index:-2;background:url('/images/blog/sound-of-reconstruction/sound-of-reconstruction-stems-mixing-process.webp') center/cover no-repeat;filter:blur(8px) saturate(.46) contrast(1.08) brightness(.31);transform:scale(1.045)}
+	.final-signal::after{z-index:-1;background:radial-gradient(circle at 24% 48%,rgba(7,9,10,.28),rgba(7,9,10,.76) 65%),linear-gradient(90deg,rgba(7,9,10,.58),rgba(7,9,10,.9))}
+	.final-signal-grid{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(300px,1fr);gap:clamp(42px,6vw,80px);align-items:stretch}
+	.final-signal-feature{position:relative;height:auto;aspect-ratio:16/10;overflow:hidden}
+	.final-signal-feature::after{position:absolute;inset:0;content:'';background:linear-gradient(90deg,rgba(5,7,8,.48),transparent 68%),linear-gradient(180deg,rgba(5,7,8,.2),transparent 36%,rgba(5,7,8,.9) 100%);pointer-events:none}
+	.final-signal-feature>img{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.7) contrast(1.06) brightness(.78)}
+	.final-signal-feature-copy{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(28px,4.2vw,52px)}
+	.final-signal .section-kicker{display:flex;gap:10px;align-items:center;margin:0;color:rgba(255,90,31,.82);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:none}
+	.final-signal .section-kicker::before{width:4px;height:4px;content:'';background:currentColor;transform:rotate(45deg)}
+	.final-signal h2{max-width:600px;margin:0;color:#f1ede4;font-family:var(--font-sans);font-size:clamp(3rem,3.8vw,3.75rem);font-weight:450;letter-spacing:-.035em;line-height:1.04;text-wrap:balance;text-transform:none}
+	.final-signal-copy{display:flex;max-width:480px;align-self:stretch;flex-direction:column;justify-content:flex-start;padding:clamp(8px,1.2vw,18px) 0}
+	.final-signal-copy>p{max-width:390px;margin:0;color:rgba(241,237,228,.64);font-size:clamp(.94rem,1.05vw,1.02rem);line-height:1.65;text-wrap:balance}
+	.contact-signal{display:flex;gap:30px;align-items:center;justify-content:space-between;margin-top:clamp(28px,4vw,44px);padding:16px 0;border-top:1px solid rgba(241,237,228,.24);border-bottom:1px solid rgba(241,237,228,.24);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+	.contact-signal span:last-child{color:var(--signal-orange);font-size:1.1rem;transition:transform .35s ease}
+	.contact-signal:hover span:last-child,.contact-signal:focus-visible span:last-child{transform:translate(4px,-2px)}
+	.final-signal :global(.social-links){align-self:flex-start;justify-content:flex-start;margin-top:18px}
+	.final-signal :global(.social-links a){width:34px;height:34px;border:0;border-radius:0;padding:0;color:rgba(241,237,228,.58)}
+	.final-signal :global(.social-links a:hover),.final-signal :global(.social-links a:focus-visible){background:transparent;color:#f1ede4}
+	.final-signal :global(.social-links svg){width:18px;height:18px}
+
+	@media(max-width:900px){
+		.final-signal{min-height:0;padding:100px 0}
+		.final-signal-grid{grid-template-columns:1fr;gap:58px}
+		.final-signal-copy{max-width:620px;padding:0}
+	}
+
+	@media(max-width:700px){
+		.final-signal{padding:84px 0}
+		.final-signal::before{background-position:58% center;filter:blur(7px) saturate(.42) contrast(1.06) brightness(.26)}
+		.final-signal::after{background:linear-gradient(180deg,rgba(7,9,10,.66),rgba(7,9,10,.9))}
+		.final-signal-grid{gap:42px}
+		.final-signal-feature{aspect-ratio:4/5}
+		.final-signal h2{font-size:clamp(2.35rem,10vw,3.2rem)}
+	}
+
+	@media(prefers-reduced-motion:reduce){
+		.contact-signal span:last-child{transition:none}
+	}
+</style>

@@ -1,0 +1,108 @@
+---
+import type { World } from '../../types/world';
+import { artistUi } from '../../data/artist-ui';
+import { localize, localizedAriaAttributes, localizedTextAttributes } from '../../utils/localization';
+
+interface Props {
+	previous?: World;
+	next?: World;
+}
+
+const { previous, next } = Astro.props;
+---
+
+<nav class="world-navigation site-shell" aria-label={artistUi.navigation.worldSequence.en} {...localizedAriaAttributes(artistUi.navigation.worldSequence)}>
+	<a class="world-navigation-back" href="/worlds" {...localizedTextAttributes(artistUi.navigation.backToWorlds)}>
+		{localize(artistUi.navigation.backToWorlds, 'en')}
+	</a>
+	<div class="world-navigation-grid">
+		{previous ? (
+			<a class="world-navigation-item previous" href={`/worlds/${previous.slug}`}>
+				<span {...localizedTextAttributes(artistUi.navigation.previousWorld)}>{localize(artistUi.navigation.previousWorld, 'en')}</span>
+				<strong>{previous.displayNumber} — {previous.title}</strong>
+			</a>
+		) : <span />}
+		{next && (
+			<a class="world-navigation-item next" href={`/worlds/${next.slug}`}>
+				<span {...localizedTextAttributes(artistUi.navigation.nextWorld)}>{localize(artistUi.navigation.nextWorld, 'en')}</span>
+				<strong>{next.displayNumber} — {next.title}</strong>
+			</a>
+		)}
+	</div>
+</nav>
+
+<style>
+	.world-navigation {
+		padding-top: clamp(42px, 6vw, 76px);
+		padding-bottom: clamp(54px, 7vw, 92px);
+	}
+
+	.world-navigation-back {
+		display: inline-block;
+		margin-bottom: 28px;
+		color: var(--signal-orange);
+		font-size: 0.75rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-decoration: underline;
+		text-underline-offset: 5px;
+		text-transform: uppercase;
+	}
+
+	.world-navigation-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	.world-navigation-item {
+		display: flex;
+		min-width: 0;
+		min-height: 112px;
+		flex-direction: column;
+		justify-content: center;
+		border: 1px solid var(--line);
+		padding: 22px;
+	}
+
+	.world-navigation-item.next {
+		text-align: right;
+	}
+
+	.world-navigation-item span {
+		color: var(--signal-orange);
+		font-size: 0.7rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.world-navigation-item strong {
+		margin-top: 8px;
+		font-family: var(--font-display);
+		font-size: clamp(1.4rem, 3vw, 2.4rem);
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	.world-navigation-item:hover,
+	.world-navigation-item:focus-visible {
+		border-color: var(--signal-orange);
+	}
+
+	.world-navigation-item:focus-visible,
+	.world-navigation-back:focus-visible {
+		outline: 2px solid var(--signal-orange);
+		outline-offset: 4px;
+	}
+
+	@media (max-width: 620px) {
+		.world-navigation-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.world-navigation-item.next {
+			text-align: left;
+		}
+	}
+</style>

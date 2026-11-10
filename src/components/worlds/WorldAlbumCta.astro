@@ -1,0 +1,136 @@
+---
+import type { LocalizedText } from '../../types/world';
+import { localize, localizedTextAttributes } from '../../utils/localization';
+
+interface Props {
+	href: string;
+	variant?: 'default' | 'overlay';
+}
+
+const { href, variant = 'default' } = Astro.props;
+const label: LocalizedText = { en: 'LISTEN TO ALBUM', es: 'LISTEN TO ALBUM' };
+---
+
+<a
+	class:list={['world-album-cta', { 'world-album-cta--overlay': variant === 'overlay' }]}
+	href={href}
+	target="_blank"
+	rel="noopener noreferrer"
+>
+	{variant !== 'overlay' && (
+		<svg class="world-album-cta-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+			<path d="M4 10V9a6 6 0 0 1 12 0v1M4 10h2v5H4a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2Zm12 0h-2v5h2a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+		</svg>
+	)}
+	<span class="world-album-cta-label" {...localizedTextAttributes(label)}>{localize(label, 'en')}</span>
+	{variant === 'overlay' && <span class="world-album-cta-external" aria-hidden="true">↗</span>}
+</a>
+
+<style>
+	.world-album-cta {
+		display: inline-flex;
+		width: max-content;
+		max-width: 100%;
+		min-height: 44px;
+		align-items: center;
+		justify-content: center;
+		border: 0;
+		background: transparent;
+		color: var(--signal-orange);
+		font-family: var(--font-sans);
+		font-size: .5rem;
+		font-weight: 650;
+		letter-spacing: .12em;
+		line-height: 1.2;
+		padding: 8px 0;
+		text-align: center;
+		text-transform: uppercase;
+		transition: color 260ms ease, filter 260ms ease, transform 260ms ease;
+	}
+
+	.world-album-cta-icon {
+		width: 12px;
+		height: 12px;
+		flex: 0 0 auto;
+		margin-right: 9px;
+	}
+
+	.world-album-cta-label {
+		white-space: nowrap;
+		text-shadow: 0 0 10px rgba(255, 90, 31, .16);
+	}
+
+	.world-album-cta--overlay {
+		height: 42px;
+		min-height: 0;
+		gap: 42px;
+		border-bottom: 1px solid rgba(255, 90, 31, .82);
+		color: var(--signal-orange);
+		font-size: .7rem;
+		font-weight: 700;
+		letter-spacing: .13em;
+		line-height: 1;
+		padding: 0;
+	}
+
+	.world-album-cta--overlay .world-album-cta-label {
+		text-shadow: none;
+	}
+
+	.world-album-cta-external {
+		font-size: 1rem;
+		line-height: 1;
+		transition: transform .45s cubic-bezier(.22, 1, .36, 1);
+	}
+
+	.world-album-cta:hover,
+	.world-album-cta:focus-visible {
+		color: #ff7545;
+		filter: drop-shadow(0 0 5px rgba(255, 90, 31, .28));
+		transform: scale(1.025);
+	}
+
+	.world-album-cta--overlay:hover,
+	.world-album-cta--overlay:focus-visible {
+		color: #ff7545;
+		transform: none;
+	}
+
+	.world-album-cta--overlay:hover .world-album-cta-external,
+	.world-album-cta--overlay:focus-visible .world-album-cta-external {
+		transform: translate(6px, -2px);
+	}
+
+	.world-album-cta:focus-visible {
+		outline: none;
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 6px;
+	}
+
+	.world-album-cta--overlay:focus-visible {
+		outline: 1px solid var(--signal-orange);
+		outline-offset: 7px;
+		text-decoration: none;
+	}
+
+	@media (max-width: 700px) {
+		.world-album-cta--overlay { gap: 34px; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.world-album-cta,
+		.world-album-cta:hover,
+		.world-album-cta:focus-visible {
+			transition: none;
+			transform: none;
+		}
+		.world-album-cta-external {
+			transition: none;
+		}
+		.world-album-cta--overlay:hover .world-album-cta-external,
+		.world-album-cta--overlay:focus-visible .world-album-cta-external {
+			transform: none;
+		}
+	}
+</style>

@@ -8,13 +8,16 @@
   "scripts": {
     "dev": "astro dev",
     "test:scorecard": "node --test tests/scorecard.test.js",
+    "test:worlds": "node --test tests/worlds.test.js",
+    "test:journal": "node --test tests/journal.test.js",
     "test:brief-flow": "node scripts/test-brief-flow.mjs",
-    "build": "npm run test:scorecard && astro build",
+    "build": "npm run test:scorecard && npm run test:worlds && npm run test:journal && astro build",
     "optimize:images": "node scripts/optimize-images.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.0.2"
+    "astro": "^7.0.2",
+    "gsap": "^3.15.0"
   }
 }

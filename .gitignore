@@ -29,6 +29,7 @@ pnpm-debug.log*
 
 # Local working data and private source material
 .local/
+/source-assets/
 books/
 references/
 private/

@@ -1,0 +1,74 @@
+---
+import type { World } from '../../types/world';
+import { getWorldArchiveCover } from '../../data/world-archive-covers';
+import { localize, localizedAltAttributes, localizedAriaAttributes, localizedTextAttributes } from '../../utils/localization';
+
+interface Props {
+	world: World;
+	index: number;
+}
+
+const { world, index } = Astro.props;
+const cover = getWorldArchiveCover(world.slug, world.artwork.card);
+const openLabel = {
+	en: `Enter ${world.title}`,
+	es: `Entrar a ${world.title}`,
+};
+---
+
+<li class="world-archive-item">
+	<button
+		class="world-tile"
+		type="button"
+		data-world-open={index}
+		aria-haspopup="dialog"
+		aria-controls="world-archive-dialog"
+		aria-label={localize(openLabel, 'en')}
+		{...localizedAriaAttributes(openLabel)}
+	>
+		<figure>
+			<img
+				src={cover}
+				alt={localize(world.artwork.alt, 'en')}
+				{...localizedAltAttributes(world.artwork.alt)}
+				loading="lazy"
+				decoding="async"
+			/>
+			<div class="world-tile-grade" aria-hidden="true"></div>
+			<figcaption>
+				<div class="world-tile-copy">
+					<span class="world-tile-number">{world.displayNumber}</span>
+					<p {...localizedTextAttributes(world.genre)}>{localize(world.genre, 'en')}</p>
+					<div><h2>{world.title}</h2><span aria-hidden="true">↗</span></div>
+				</div>
+			</figcaption>
+		</figure>
+	</button>
+</li>
+
+<style>
+	.world-archive-item{min-width:0}
+	.world-tile{display:block;width:100%;border:0;padding:0;background:transparent;color:#f1ede4;cursor:pointer;text-align:left}
+	.world-tile figure{position:relative;aspect-ratio:1;margin:0;overflow:hidden;background:#101214}
+	.world-tile img,.world-tile-grade,.world-tile figcaption{position:absolute;inset:0;width:100%;height:100%}
+	.world-tile img{object-fit:cover;filter:saturate(.68) contrast(1.05) brightness(.8);transform:scale(1.001);transition:filter .55s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+	.world-tile-grade{background:linear-gradient(180deg,rgba(5,7,8,.56) 0%,transparent 34%,rgba(5,7,8,.2) 58%,rgba(5,7,8,.91) 100%);transition:opacity .55s cubic-bezier(.22,1,.36,1)}
+	.world-tile figcaption{display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(18px,2.2vw,28px)}
+	.world-tile-copy{transform:translateY(4px);transition:transform .55s cubic-bezier(.22,1,.36,1)}
+	.world-tile-number{display:block;margin:0 0 7px;color:rgba(255,90,31,.88);font-size:.61rem;font-weight:550;letter-spacing:.08em;line-height:1.35}
+	.world-tile-copy>p{margin:0 0 9px;color:rgba(241,237,228,.56);font-size:.64rem;font-weight:550;letter-spacing:.07em;line-height:1.35}
+	.world-tile-copy>div{display:flex;gap:20px;align-items:end;justify-content:space-between}
+	.world-tile h2{margin:0;font-family:var(--font-sans);font-size:clamp(1.65rem,2.5vw,2.45rem);font-weight:440;letter-spacing:-.035em;line-height:1.02;text-transform:none}
+	.world-tile-copy>div>span{color:rgba(255,90,31,.76);font-size:.92rem;opacity:.45;transform:translate(-4px,4px);transition:opacity .45s ease,transform .55s cubic-bezier(.22,1,.36,1)}
+	.world-tile:focus-visible{outline:1px solid rgba(255,90,31,.9);outline-offset:5px}
+	@media(hover:hover) and (pointer:fine){
+		.world-tile:hover img{filter:saturate(.78) contrast(1.08) brightness(.7);transform:scale(1.035)}
+		.world-tile:hover .world-tile-grade{opacity:.9}
+		.world-tile:hover .world-tile-copy{transform:translateY(0)}
+		.world-tile:hover .world-tile-copy>div>span{opacity:1;transform:translate(0,0)}
+	}
+	@media(prefers-reduced-motion:reduce){
+		.world-tile img,.world-tile-grade,.world-tile-copy,.world-tile-copy>div>span{transition:none}
+		.world-tile:hover img{transform:none}
+	}
+</style>

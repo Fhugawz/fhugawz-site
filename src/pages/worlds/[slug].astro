@@ -1,0 +1,171 @@
+---
+import type { World } from '../../types/world';
+import Layout from '../../layouts/Layout.astro';
+import ReleaseLinks from '../../components/worlds/ReleaseLinks.astro';
+import WorldHero from '../../components/worlds/WorldHero.astro';
+import WorldNavigation from '../../components/worlds/WorldNavigation.astro';
+import WorldTrackList from '../../components/worlds/WorldTrackList.astro';
+import { artistUi } from '../../data/artist-ui';
+import { publishedWorlds } from '../../data/worlds';
+import { localize, localizedTextAttributes } from '../../utils/localization';
+
+export function getStaticPaths() {
+	return publishedWorlds.map((world) => ({
+		params: { slug: world.slug },
+		props: { world },
+	}));
+}
+
+interface Props {
+	world: World;
+}
+
+const { world } = Astro.props;
+const worldIndex = publishedWorlds.findIndex((entry) => entry.slug === world.slug);
+const previous = worldIndex > 0 ? publishedWorlds[worldIndex - 1] : undefined;
+const next = worldIndex < publishedWorlds.length - 1 ? publishedWorlds[worldIndex + 1] : undefined;
+const hasSound = world.tracks.length > 0 || Boolean(world.prototypePlaylistUrl);
+const socialImage = world.seo.image || world.artwork.social || world.artwork.hero;
+const jsonLd = [{
+	'@context': 'https://schema.org',
+	'@type': 'MusicAlbum',
+	name: world.title,
+	url: `https://fhugawz.com/worlds/${world.slug}`,
+	description: world.seo.description.en,
+	image: `https://fhugawz.com${socialImage}`,
+	byArtist: { '@type': 'MusicGroup', name: 'Fhugawz', url: 'https://fhugawz.com' },
+	genre: world.genre.en,
+}, {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://fhugawz.com/' },
+		{ '@type': 'ListItem', position: 2, name: 'Worlds', item: 'https://fhugawz.com/worlds' },
+		{ '@type': 'ListItem', position: 3, name: world.title, item: `https://fhugawz.com/worlds/${world.slug}` },
+	],
+}];
+---
+
+<Layout
+	title={world.seo.title.en}
+	description={world.seo.description.en}
+	spanishTitle={world.seo.title.es}
+	spanishDescription={world.seo.description.es}
+	image={socialImage}
+	imageAlt={world.artwork.alt.en}
+	jsonLd={jsonLd}
+>
+	<WorldHero world={world} />
+
+	<section class="section world-narrative">
+		<div class="site-shell world-narrative-grid">
+			<div>
+				<p class="section-kicker" {...localizedTextAttributes(artistUi.sections.narrative)}>{localize(artistUi.sections.narrative, 'en')}</p>
+				{world.quote && (
+					<blockquote {...localizedTextAttributes(world.quote)}>{localize(world.quote, 'en')}</blockquote>
+				)}
+			</div>
+			<p class="world-narrative-copy" {...localizedTextAttributes(world.narrative)}>{localize(world.narrative, 'en')}</p>
+		</div>
+	</section>
+
+	{world.themes.length > 0 && (
+		<section class="world-themes">
+			<div class="site-shell world-themes-grid">
+				<h2 {...localizedTextAttributes(artistUi.sections.themes)}>{localize(artistUi.sections.themes, 'en')}</h2>
+				<ul>
+					{world.themes.map((theme) => (
+						<li {...localizedTextAttributes(theme)}>{localize(theme, 'en')}</li>
+					))}
+				</ul>
+			</div>
+		</section>
+	)}
+
+	{hasSound && <WorldTrackList tracks={world.tracks} prototypePlaylistUrl={world.prototypePlaylistUrl} />}
+
+	{world.releaseLinks && (
+		<section class="section world-releases">
+			<div class="site-shell">
+				<ReleaseLinks links={world.releaseLinks} />
+			</div>
+		</section>
+	)}
+
+	<WorldNavigation previous={previous} next={next} />
+</Layout>
+
+<style>
+	.world-narrative-grid {
+		display: grid;
+		grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+		gap: clamp(32px, 7vw, 96px);
+		align-items: start;
+	}
+
+	.world-narrative-grid > * {
+		min-width: 0;
+	}
+
+	blockquote {
+		margin: 28px 0 0;
+		border-left: 2px solid var(--signal-orange);
+		color: rgba(223, 211, 187, 0.84);
+		font-size: clamp(1.15rem, 2vw, 1.55rem);
+		font-style: normal;
+		line-height: 1.55;
+		padding-left: 20px;
+	}
+
+	.world-narrative-copy {
+		margin: 0;
+		color: rgba(223, 211, 187, 0.82);
+		font-size: clamp(1.05rem, 1.45vw, 1.22rem);
+		line-height: 1.8;
+	}
+
+	.world-themes {
+		border-block: 1px solid var(--line);
+		padding: 30px 0;
+	}
+
+	.world-themes-grid {
+		display: grid;
+		grid-template-columns: minmax(180px, 0.4fr) minmax(0, 1fr);
+		gap: 28px;
+		align-items: center;
+	}
+
+	.world-themes h2 {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: clamp(1.8rem, 4vw, 3rem);
+		text-transform: uppercase;
+	}
+
+	.world-themes ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 9px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.world-themes li {
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		font-size: 0.75rem;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		padding: 9px 13px;
+		text-transform: uppercase;
+	}
+
+	@media (max-width: 720px) {
+		.world-narrative-grid,
+		.world-themes-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
