@@ -13,12 +13,12 @@ const jsonLd = {
 	'@type': 'CollectionPage',
 	name: artistUi.worldsPage.seoTitle.en,
 	description: artistUi.worldsPage.seoDescription.en,
-	url: 'https://fhugawz.com/worlds',
+	url: 'https://fhugawz.com/worlds/',
 	hasPart: publishedWorlds.map((world) => ({
 		'@type': 'CreativeWork',
 		position: world.order,
 		name: world.title,
-		url: `https://fhugawz.com/worlds/${world.slug}`,
+		url: `https://fhugawz.com/worlds/${world.slug}/`,
 		description: world.summary.en,
 	})),
 };
@@ -33,7 +33,7 @@ const jsonLd = {
 	imageAlt="Fhugawz creating music in a dark home studio"
 	jsonLd={jsonLd}
 >
-	<main class="world-archive">
+	<div class="world-archive">
 		<section class="archive-opening" aria-labelledby="archive-title">
 			<img src={worldsHeroImage} alt="" aria-hidden="true" />
 			<div class="archive-opening-grade" aria-hidden="true"></div>
@@ -52,7 +52,7 @@ const jsonLd = {
 
 		<WorldArchiveGrid worlds={publishedWorlds} />
 		<WorldArchiveDetail worlds={publishedWorlds} />
-	</main>
+	</div>
 </Layout>
 
 <style>

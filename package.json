@@ -11,7 +11,7 @@
     "test:worlds": "node --test tests/worlds.test.js",
     "test:journal": "node --test tests/journal.test.js",
     "test:brief-flow": "node scripts/test-brief-flow.mjs",
-    "build": "npm run test:scorecard && npm run test:worlds && npm run test:journal && astro build",
+    "build": "npm run test:scorecard && npm run test:worlds && npm run test:journal && astro build && node --test tests/seo-output.test.js",
     "optimize:images": "node scripts/optimize-images.mjs",
     "preview": "astro preview",
     "astro": "astro"

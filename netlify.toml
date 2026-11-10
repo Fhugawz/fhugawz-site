@@ -50,3 +50,9 @@ from = "/blog"
 to = "/journal"
 status = 301
 force = true
+
+[[redirects]]
+from = "/terms-of-service"
+to = "/privacy-policy"
+status = 301
+force = true

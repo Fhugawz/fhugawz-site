@@ -2,9 +2,23 @@
 import Layout from '../../layouts/Layout.astro';
 import JournalArchive from '../../components/journal/JournalArchive.astro';
 import { artistUi } from '../../data/artist-ui';
-import { getJournalPageEntries, journalPageCount } from '../../data/journal';
+import { getJournalPageEntries, journalEntries, journalPageCount } from '../../data/journal';
 
 const entries = getJournalPageEntries(1);
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: artistUi.journalPage.seoTitle.en,
+	description: artistUi.journalPage.seoDescription.en,
+	url: 'https://fhugawz.com/journal/',
+	hasPart: journalEntries.map((entry) => ({
+		'@type': 'BlogPosting',
+		headline: entry.title.en,
+		url: `https://fhugawz.com${entry.href}/`,
+		description: entry.excerpt.en,
+		image: `https://fhugawz.com${entry.image}`,
+	})),
+};
 ---
 
 <Layout
@@ -14,6 +28,7 @@ const entries = getJournalPageEntries(1);
 	spanishDescription={artistUi.journalPage.seoDescription.es}
 	image="/images/journal/fhugawz-journal-creative-process-hero.webp"
 	imageAlt="Fhugawz journal creative process"
+	jsonLd={jsonLd}
 >
 	<JournalArchive page={1} totalPages={journalPageCount} {...entries} />
 </Layout>

@@ -1,6 +1,6 @@
 ---
 import type { LocalizedText, World } from '../../types/world';
-import { artistUi, worldStageLabels } from '../../data/artist-ui';
+import { artistUi } from '../../data/artist-ui';
 import { localize, localizedAltAttributes, localizedAriaAttributes, localizedTextAttributes } from '../../utils/localization';
 import DotWavePlayer from '../DotWavePlayer.astro';
 import WorldAlbumCta from '../worlds/WorldAlbumCta.astro';
@@ -78,7 +78,7 @@ const copy = {
 							<div class="world-explorer-image-grade" aria-hidden="true"></div>
 							<span class="world-explorer-count">{world.displayNumber} / 13</span>
 							<div class="world-explorer-image-copy">
-								<p><span {...localizedTextAttributes(world.genre)}>{localize(world.genre, 'en')}</span> · <span {...localizedTextAttributes(worldStageLabels[world.stage])}>{localize(worldStageLabels[world.stage], 'en')}</span></p>
+								<p {...localizedTextAttributes(world.genre)}>{localize(world.genre, 'en')}</p>
 								<h3>{world.title}</h3>
 								<p class="world-explorer-summary" {...localizedTextAttributes(world.summary)}>{localize(world.summary, 'en')}</p>
 							</div>
@@ -135,7 +135,7 @@ const copy = {
 							<img src={world.artwork.hero} alt={localize(world.artwork.alt, 'en')} {...localizedAltAttributes(world.artwork.alt)} loading="lazy" decoding="async" />
 							<div class="world-explorer-image-grade" aria-hidden="true"></div>
 							<div class="world-accordion-copy">
-								<p class="world-accordion-meta"><span {...localizedTextAttributes(world.genre)}>{localize(world.genre, 'en')}</span> · <span {...localizedTextAttributes(worldStageLabels[world.stage])}>{localize(worldStageLabels[world.stage], 'en')}</span></p>
+								<p class="world-accordion-meta" {...localizedTextAttributes(world.genre)}>{localize(world.genre, 'en')}</p>
 								<h3>{world.title}</h3>
 								<p class="world-accordion-summary" {...localizedTextAttributes(world.summary)}>{localize(world.summary, 'en')}</p>
 							</div>

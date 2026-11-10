@@ -45,11 +45,11 @@ const closingDescription = {
 	en: 'Follow the releases, trace the ideas behind them, or reach out directly to enter the world from another angle.',
 	es: 'Sigue los lanzamientos, recorre las ideas detrás de ellos o escríbenos directamente para entrar al mundo desde otro ángulo.',
 };
-const jsonLd = { '@context': 'https://schema.org', '@type': 'MusicGroup', name: 'FHUGAWZ', url: 'https://fhugawz.com', description: artistUi.home.seo.description.en, image: 'https://fhugawz.com/images/hero/fhugawz-cinematic-dark-pop-hero.webp' };
+const jsonLd = { '@context': 'https://schema.org', '@type': 'MusicGroup', name: 'FHUGAWZ', url: 'https://fhugawz.com/', description: artistUi.home.seo.description.en, image: 'https://fhugawz.com/images/hero/fhugawz-cinematic-dark-pop-hero.webp' };
 ---
 
 <Layout title={artistUi.home.seo.title.en} spanishTitle={artistUi.home.seo.title.es} description={artistUi.home.seo.description.en} spanishDescription={artistUi.home.seo.description.es} image="/images/hero/fhugawz-cinematic-dark-pop-hero.webp" imageAlt={artistUi.home.hero.imageAlt.en} jsonLd={jsonLd}>
-	<main class="cinematic-home">
+	<div class="cinematic-home">
 		<section class="opening-frame" aria-labelledby="opening-title">
 			<div class="opening-visual">
 				<img class="opening-image" src="/images/hero/fhugawz-cinematic-dark-pop-hero.webp" alt={localize(artistUi.home.hero.imageAlt, 'en')} {...localizedAltAttributes(artistUi.home.hero.imageAlt)} fetchpriority="high" decoding="async" />
@@ -136,7 +136,7 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'MusicGroup', name: 
 				<div class="final-signal-copy"><p {...localizedTextAttributes(closingDescription)}>{localize(closingDescription, 'en')}</p><a class="contact-signal" href="/contact"><span {...localizedTextAttributes(artistUi.home.closing.contact)}>{localize(artistUi.home.closing.contact, 'en')}</span><span aria-hidden="true">↗</span></a><SocialLinks /></div>
 			</div>
 		</section>
-	</main>
+	</div>
 </Layout>
 
 <script>

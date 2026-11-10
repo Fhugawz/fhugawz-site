@@ -28,20 +28,20 @@ const hasSound = world.tracks.length > 0 || Boolean(world.prototypePlaylistUrl);
 const socialImage = world.seo.image || world.artwork.social || world.artwork.hero;
 const jsonLd = [{
 	'@context': 'https://schema.org',
-	'@type': 'MusicAlbum',
+	'@type': 'CreativeWork',
 	name: world.title,
-	url: `https://fhugawz.com/worlds/${world.slug}`,
+	url: `https://fhugawz.com/worlds/${world.slug}/`,
 	description: world.seo.description.en,
 	image: `https://fhugawz.com${socialImage}`,
-	byArtist: { '@type': 'MusicGroup', name: 'Fhugawz', url: 'https://fhugawz.com' },
+	byArtist: { '@type': 'MusicGroup', name: 'Fhugawz', url: 'https://fhugawz.com/' },
 	genre: world.genre.en,
 }, {
 	'@context': 'https://schema.org',
 	'@type': 'BreadcrumbList',
 	itemListElement: [
 		{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://fhugawz.com/' },
-		{ '@type': 'ListItem', position: 2, name: 'Worlds', item: 'https://fhugawz.com/worlds' },
-		{ '@type': 'ListItem', position: 3, name: world.title, item: `https://fhugawz.com/worlds/${world.slug}` },
+		{ '@type': 'ListItem', position: 2, name: 'Worlds', item: 'https://fhugawz.com/worlds/' },
+		{ '@type': 'ListItem', position: 3, name: world.title, item: `https://fhugawz.com/worlds/${world.slug}/` },
 	],
 }];
 ---
